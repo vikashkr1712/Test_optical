@@ -44,7 +44,7 @@ for(const[name,width,height]of[['desktop-large',1920,1080],['desktop',1440,900],
   assert.ok(geometry.caption.x>=0&&geometry.caption.right<=width&&geometry.caption.y>=geometry.hero.y&&geometry.caption.bottom<=geometry.hero.bottom);
   const overlap=(a,b)=>a.x<b.right&&a.right>b.x&&a.y<b.bottom&&a.bottom>b.y;
   assert.equal(overlap(geometry.caption,geometry.control),false);assert.equal(overlap(geometry.caption,geometry.dots),false);
-  if(width<1024)assert.ok(geometry.caption.bottom<=geometry.displayed.top,'Narrow-screen captions stay outside the complete landscape picture');
+  if(width<1024)assert.ok(geometry.caption.top>=geometry.displayed.top+geometry.displayed.height+24,'Portrait captions align below the complete landscape picture');
   await page.screenshot({path:`${out}/${name}-scene-${i+1}.png`});
   checks.push({time:times[i],scene:i+1,...geometry});
  }

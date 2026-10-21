@@ -12,7 +12,7 @@ Existing application files modified:
 New application files:
 
 - `src/components/FirstHeroCampaign.jsx` — playback, original-audio controls and timestamp-driven captions.
-- `src/components/FirstHeroCampaign.css` — styles scoped to this campaign only.
+- `src/components/FirstHeroCampaign.css` — styles scoped to this campaign only, including the revised scene alignment and warm ivory portrait background.
 - `public/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4` — exact supplied MP4.
 - `public/assets/gkb-hero/first-campaign-manifest.json` — source file, checksum and original media metadata.
 
@@ -47,7 +47,9 @@ Intervals include their start and exclude their end; the native loop resets to s
 
 Caption selection reads the native video's `currentTime` through `requestVideoFrameCallback`, with `timeupdate` and `seeked` fallbacks. Pauses hold the current text; seeks select the appropriate pair; native looping resets it. Caption transitions use a 180ms opacity fade with a single pair mounted at a time. There are no independent caption timers.
 
-The first video's complete 16:9 picture is contained within the existing hero dimensions. Tablet/mobile captions sit in the upper letterbox area to keep faces, eyewear and the entire landscape frame visible. Desktop uses small localized translucent caption backgrounds. Existing carousel dimensions and controls remain unchanged.
+The first video's complete 16:9 picture is contained within the existing hero dimensions. Overlays are now positioned relative to the actual picture, so their alignment stays consistent across desktop aspect ratios. Desktop captions have no rectangular background panels: dark text sits over light scenes, warm white text over dark scenes, and feathered ivory shading helps the first and shop scenes. Balanced headline wrapping and shared left edges align each headline with its supporting line.
+
+On portrait tablet/mobile screens, a warm ivory background replaces the black letterboxing. The complete video sits above a consistently left-aligned caption with 30px spacing. Playback controls and pagination use dark tones for contrast on ivory; controls also switch to dark icons for the two bright desktop scenes. Existing carousel dimensions, timings, controls and all other slides are preserved.
 
 ## Screenshots and validation
 

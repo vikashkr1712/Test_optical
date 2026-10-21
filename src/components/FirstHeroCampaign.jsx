@@ -99,14 +99,16 @@ export default memo(function FirstHeroCampaign({ src, active, warm, reducedMotio
 
   const scene = campaignScenes[sceneIndex];
   return <>
-    <video ref={video} className="gkb-hero__video first-campaign-video" src={loadedSource === src ? src : undefined}
-      muted={muted} loop playsInline preload={active ? 'auto' : warm ? 'metadata' : 'none'} aria-label="Eyewear campaign"
-      onPlay={() => setPaused(false)} onPause={() => setPaused(true)} onError={() => setFailed(true)} />
-    {failed && <span className="gkb-hero__media-error" role="status">This video could not be loaded.</span>}
-    <div className={`first-campaign-caption first-campaign-caption--${scene.placement}`} data-scene={sceneIndex + 1}>
-      <div className="first-campaign-caption__text" key={sceneIndex}>
-        <h2>{scene.headline}</h2>
-        <p>{scene.tagline}</p>
+    <div className="first-campaign-stage" data-scene={sceneIndex + 1}>
+      <video ref={video} className="gkb-hero__video first-campaign-video" src={loadedSource === src ? src : undefined}
+        muted={muted} loop playsInline preload={active ? 'auto' : warm ? 'metadata' : 'none'} aria-label="Eyewear campaign"
+        onPlay={() => setPaused(false)} onPause={() => setPaused(true)} onError={() => setFailed(true)} />
+      {failed && <span className="gkb-hero__media-error" role="status">This video could not be loaded.</span>}
+      <div className={`first-campaign-caption first-campaign-caption--${scene.placement}`} data-scene={sceneIndex + 1}>
+        <div className="first-campaign-caption__text" key={sceneIndex}>
+          <h2>{scene.headline}</h2>
+          <p>{scene.tagline}</p>
+        </div>
       </div>
     </div>
     <div className="gkb-hero__video-controls">
