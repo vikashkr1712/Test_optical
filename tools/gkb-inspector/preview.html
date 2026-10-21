@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GKB hero validation</title>
+    <link rel="icon" href="data:," />
+    <style>
+      body { margin: 0; background: #fff; }
+      .header-space { height: 112px; }
+      @media (max-width: 1023px) { .header-space { height: 56px; } }
+    </style>
+  </head>
+  <body>
+    <!-- Test harness only: reserve the reference header's space without implementing a header. -->
+    <div class="header-space" aria-hidden="true"></div>
+    <div id="root"></div>
+    <script type="module" src="/tools/gkb-inspector/preview.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+node_modules/
+.npm-cache/
+tools/gkb-inspector/dist/
+dist/
+.vite/
+
+# Local browser captures and research notes
+reference/
+validation/
+research/
+MEMORY.md
+
+# Local credentials and environment settings
+.env
+.env.*
+!.env.example
+*.log

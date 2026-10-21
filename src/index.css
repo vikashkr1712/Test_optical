@@ -1,0 +1,5 @@
+html { background: #fff; color: #0b0b0b; }
+body { margin: 0 auto; max-width: 1920px; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 100; padding: 12px 20px; background: #fff; color: #000; transform: translateY(-150%); }
+.skip-link:focus { transform: translateY(0); }

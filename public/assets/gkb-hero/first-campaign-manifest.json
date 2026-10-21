@@ -1,0 +1,31 @@
+{
+  "file": "/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4",
+  "suppliedFile": "C:/Users/vikas/Downloads/Eyewear_campaign_video_sequence_20261021162004.mp4",
+  "bytes": 2735128,
+  "sha256": "b24219282551c185d641b64ecee7752de09d1a97c6594534c3fdb3c5ed310e2a",
+  "durationSeconds": 8,
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "tracks": [
+    {
+      "kind": "vide",
+      "codec": "avc1",
+      "timescale": 12288,
+      "durationTicks": 98304,
+      "durationSeconds": 8,
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "kind": "soun",
+      "codec": "mp4a",
+      "timescale": 48000,
+      "durationTicks": 385024,
+      "durationSeconds": 8.021333333333333,
+      "channels": 2,
+      "sampleRate": 48000
+    }
+  ]
+}
