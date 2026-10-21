@@ -45,9 +45,9 @@ Intervals include their start and exclude their end; the native loop resets to s
 | 5 | 5.17–6.50 | Timeless by Design | Confidence Never Fades | Left |
 | 6 | 6.50–8.00 | Every Detail Matters | Find Your Signature Frame | Upper left |
 
-Caption selection reads the native video's `currentTime` through `requestVideoFrameCallback`, with `timeupdate` and `seeked` fallbacks. Pauses hold the current text; seeks select the appropriate pair; native looping resets it. Caption transitions use a 180ms opacity fade with a single pair mounted at a time. There are no independent caption timers.
+Caption selection reads the native video's `currentTime` through `requestVideoFrameCallback`, with `timeupdate` and `seeked` fallbacks. Pauses hold the current text; seeks select the appropriate pair; native looping resets it. A single, fully opaque caption pair is mounted at a time, without fade effects or independent caption timers.
 
-The first video's complete 16:9 picture is contained within the existing hero dimensions. Overlays are now positioned relative to the actual picture, so their alignment stays consistent across desktop aspect ratios. Desktop captions have no rectangular background panels: dark text sits over light scenes, warm white text over dark scenes, and feathered ivory shading helps the first and shop scenes. Balanced headline wrapping and shared left edges align each headline with its supporting line.
+The first video's complete 16:9 picture is contained within the existing hero dimensions. Captions are positioned relative to the actual picture, so their alignment stays consistent across desktop aspect ratios. Desktop captions have no background panels, white gradients, video washes or text shadows. Dark text sits over light scenes and warm white text over dark scenes. Balanced headline wrapping and shared left edges align each headline with its supporting line. The video picture has no added visual effects or transparency.
 
 On portrait tablet/mobile screens, a warm ivory background replaces the black letterboxing. The complete video sits above a consistently left-aligned caption with 30px spacing. Playback controls and pagination use dark tones for contrast on ivory; controls also switch to dark icons for the two bright desktop scenes. Existing carousel dimensions, timings, controls and all other slides are preserved.
 
