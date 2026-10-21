@@ -20,6 +20,8 @@ npm run preview
 
 The production output is in `dist/`. All header and hero navigation stays on this app's own origin. Account, checkout, search, and catalogue destination pages are not implemented yet. The original public media URLs are retained only as research/provenance records; runtime media loads from local files.
 
+For Vercel, import the app at the repository root (`./`). The root `vercel.json` selects Vite, builds with `npm run build`, publishes `dist`, and rewrites application URLs to `index.html` so navigation and direct reloads do not return Vercel's 404 page. These URLs currently render the same homepage hero; separate destination pages are outside this project's scope.
+
 The hero uses 600ms eased transitions with a forward loop. Only the visible video plays; upcoming media is prepared without playing hidden videos. The first slide uses the supplied eight-second campaign with six synchronized caption pairs and its original audio. It attempts sound autoplay, with muted playback and an unmute button when the browser requires a gesture. Original reference media is also retained locally.
 
 ## Source and validation
