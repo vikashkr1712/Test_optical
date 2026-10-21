@@ -8,7 +8,7 @@ Existing application files modified:
 
 - `src/components/GKBHero.slides.js` — only the first slide's desktop/mobile media paths and campaign flag.
 - `src/components/GKBHero.jsx` — integrates the first-slide component and waits for the complete native video playback before advancing this slide.
-- `src/components/GKBHeader.jsx` and `src/components/GKBHeader.css` — replace the GKB image logo with a responsive candiclie wordmark and update announcement copy.
+- `src/components/GKBHeader.jsx` and `src/components/GKBHeader.css` — replace the GKB image logo with the actual CandiClie Consultancy logo and update announcement copy.
 - `src/index.css` — remove the 1920px page-width cap.
 - `index.html` — candiclie page title and description; the carousel accessibility label also uses candiclie.
 
@@ -19,6 +19,7 @@ New application files:
 - `public/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4` — exact supplied MP4.
 - `public/assets/gkb-hero/Eyewear_campaign_video_sequence_clean.mp4` — displayed copy with the embedded Gemini mark removed locally.
 - `public/assets/gkb-hero/first-campaign-manifest.json` — original/cleaned checksums, cleanup region, media metadata and encoded audio verification.
+- `public/assets/candiclie/logo.png` and `public/assets/candiclie/manifest.json` — original company logo image plus its source URL and checksum. The logo was obtained from the company's [public LinkedIn profile](https://www.linkedin.com/company/candiclie-consultancy-pvt-ltd/), and its colors and downloaded bytes are preserved. CSS clips only the excess white canvas around the mark. The header logo links to this app's homepage.
 
 Verification/support files:
 
@@ -95,7 +96,7 @@ npm run build
 ```
 
 - Seven viewport layouts and all 42 scene captures passed, including full viewport width, video coverage without side bars, caption bounds and separation from controls. All five boundaries were checked on both sides at every size: 70 boundary checks.
-- The production header was separately checked at widths 320, 390, 768, 1024, 1440 and 2560px. The candiclie wordmark and navigation have no overlapping controls or horizontal overflow; mobile menus and announcements work. Run `node tools/gkb-inspector/smoke-app.mjs` with `npm run preview` serving the production build on port 4173 to repeat these checks.
+- The production header was separately checked at widths 320, 390, 768, 1024, 1440 and 2560px. The original CandiClie logo loads locally, and the logo and navigation have no overlapping controls or horizontal overflow; mobile menus and announcements work. Run `node tools/gkb-inspector/smoke-app.mjs` with `npm run preview` serving the production build on port 4173 to repeat these checks.
 - Pause/seek synchronization, native loop reset, original playback speed and full first-video playback passed.
 - Sound-allowed and sound-blocked Chromium policies passed, including manual unmute and retained mute preference. Native-event fallback was tested with `requestVideoFrameCallback` disabled.
 - MP4 sample-table verification confirms the complete eight-second duration, 192 video frames and unchanged encoded AAC audio in the cleaned copy. All six scenes were inspected for successful mark removal.
@@ -107,6 +108,6 @@ Evidence: [scene checks](validation/first-hero-campaign/results.json), [audio ch
 
 ## Preserved scope and limitations
 
-The seven remaining slide definitions and all 29 original media assets are unchanged. The user-authorized rebrand updates the header wordmark, announcement copy, page metadata and carousel accessibility label. The user-authorized layout change removes the global page-width cap and changes the first campaign's desktop fitting. SHA-256 checks confirm that the app entry, existing general hero stylesheet, routing container, Vite configuration and dependencies remain unchanged. Existing buttons and navigation keep their local destinations. No official-site links or externally hosted media were added to the interface.
+The seven remaining slide definitions and all 29 original media assets are unchanged. The user-authorized rebrand updates the header logo, announcement copy, page metadata and carousel accessibility label. The user-authorized layout change removes the global page-width cap and changes the first campaign's desktop fitting. SHA-256 checks confirm that the app entry, existing general hero stylesheet, routing container, Vite configuration and dependencies remain unchanged. Existing buttons and navigation keep their local destinations. No official-site links or externally hosted media were added to the interface.
 
 No unresolved functional issues were found in the tested Chromium browser. Sound autoplay remains subject to browser policy. Safari/iOS and Firefox were not tested. Narrow layouts intentionally have letterboxing to preserve the whole landscape video and the existing hero dimensions.

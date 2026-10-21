@@ -18,7 +18,10 @@ for (const [name, width, height] of [['ultrawide', 2560, 1440], ['desktop', 1440
   assert.equal(rect.x, 0);
   assert.equal(rect.width, width);
   assert.equal(await page.title(), 'candiclie — Featured Collections');
-  assert.equal(await page.getByRole('link', { name: 'candiclie home', exact: true }).textContent(), 'candiclie');
+  const brand = page.getByRole('link', { name: 'candiclie home', exact: true });
+  assert.equal(await brand.locator('img').getAttribute('src'), '/assets/candiclie/logo.png');
+  assert.equal(await brand.locator('img').getAttribute('alt'), 'CandiClie Consultancy');
+  assert.equal(await brand.locator('img').evaluate(img => img.complete && img.naturalWidth === 200 && img.naturalHeight === 200), true);
   assert.doesNotMatch(await page.locator('header').innerText(), /\bGKB\b/);
   const headerLinks = await page.locator('.gkb-header__navigation a, .gkb-header__navigation button').evaluateAll(items => items.map(el => ({label: el.textContent || el.getAttribute('aria-label'), rect: el.getBoundingClientRect().toJSON()})).filter(item => item.rect.width && item.rect.height));
   for (let i=0;i<headerLinks.length;i++) for(let j=i+1;j<headerLinks.length;j++) {

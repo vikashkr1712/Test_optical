@@ -25,7 +25,7 @@ for(const[name,width,height]of[['ultrawide',2560,1440],['desktop-large',1920,108
  const metadata=await video.evaluate(v=>({duration:v.duration,width:v.videoWidth,height:v.videoHeight,rate:v.playbackRate,volume:v.volume,muted:v.muted,loop:v.loop,playsInline:v.playsInline,fit:getComputedStyle(v).objectFit}));
  assert.equal(metadata.duration,8);assert.equal(metadata.width/metadata.height,16/9);assert.equal(metadata.rate,1);assert.equal(metadata.volume,1);assert.equal(metadata.fit,'cover');
  assert.equal(await page.title(),'candiclie — Featured Collections');
- assert.equal(await page.locator('.gkb-header__brand').textContent(),'candiclie');
+ assert.equal(await page.locator('.gkb-header__brand img').getAttribute('alt'),'CandiClie Consultancy');
  const checks=[];
  async function seek(time,expected){
   await video.evaluate(async(v,time)=>{v.currentTime=time;await new Promise(r=>v.addEventListener('seeked',r,{once:true}));},time);

@@ -47,7 +47,9 @@ export default function GKBHeader() {
         <button type="button" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(value => !value)}><Icon name="menu" /></button>
         <a href="/search" aria-label="Search"><Icon name="search" /></a>
       </div>
-      <a className="gkb-header__brand" href="/" aria-label="candiclie home"><span className="gkb-header__wordmark">candiclie</span></a>
+      <a className="gkb-header__brand" href="/" aria-label="candiclie home">
+        <span className="gkb-header__logo-frame"><img className="gkb-header__logo-image" src="/assets/candiclie/logo.png" alt="CandiClie Consultancy" width="200" height="200" fetchPriority="high" /></span>
+      </a>
       <nav className="gkb-header__desktop-links" aria-label="Main navigation">
         {navigation.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
       </nav>
