@@ -18,22 +18,17 @@
   z-index: 1;
   width: 28%;
   padding: 0;
-  color: #29251f;
+  color: #fff;
   pointer-events: none;
   text-align: left;
 }
 .first-campaign-caption--left { left: 5%; top: 32%; }
-.first-campaign-caption--right { right: 5%; top: 32%; color: #253038; }
+.first-campaign-caption--right { right: 5%; top: 32%; }
 .first-campaign-caption--upper-left { left: 5%; top: 8%; width: 55%; }
 .first-campaign-caption--shop { right: 3.5%; top: 33%; width: 22%; }
-.first-campaign-caption[data-scene="2"] { color: #1f1a15; }
 .first-campaign-caption[data-scene="5"] {
   top: 34%;
   width: 31%;
-  color: #faf4e9;
-}
-.first-campaign-caption[data-scene="6"] {
-  color: #faf4e9;
 }
 .gkb-hero [data-campaign="first"]:has(.first-campaign-stage:is([data-scene="1"], [data-scene="3"])) .gkb-hero__video-controls svg {
   filter: brightness(0);

@@ -5,8 +5,8 @@ export default [
     "type": "video",
     "href": "/eyewear/smart-eyewear/rayban-x-meta",
     "cta": null,
-    "desktop": "/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4",
-    "mobile": "/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4",
+    "desktop": "/assets/gkb-hero/Eyewear_campaign_video_sequence_clean.mp4",
+    "mobile": "/assets/gkb-hero/Eyewear_campaign_video_sequence_clean.mp4",
     "campaign": true
   },
   {

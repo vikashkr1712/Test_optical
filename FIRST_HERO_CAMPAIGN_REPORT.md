@@ -1,6 +1,6 @@
 # First hero campaign update
 
-The first hero now uses the supplied eight-second campaign MP4 with six synchronized HTML caption pairs. The development site is running at **http://127.0.0.1:5173/**.
+The first hero now uses a cleaned copy of the supplied eight-second campaign MP4 with six synchronized HTML caption pairs. The development site is running at **http://127.0.0.1:5173/**.
 
 ## Files changed
 
@@ -14,7 +14,8 @@ New application files:
 - `src/components/FirstHeroCampaign.jsx` — playback, original-audio controls and timestamp-driven captions.
 - `src/components/FirstHeroCampaign.css` — styles scoped to this campaign only, including the revised scene alignment and warm ivory portrait background.
 - `public/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4` — exact supplied MP4.
-- `public/assets/gkb-hero/first-campaign-manifest.json` — source file, checksum and original media metadata.
+- `public/assets/gkb-hero/Eyewear_campaign_video_sequence_clean.mp4` — displayed copy with the embedded Gemini mark removed locally.
+- `public/assets/gkb-hero/first-campaign-manifest.json` — original/cleaned checksums, cleanup region, media metadata and encoded audio verification.
 
 Verification/support files:
 
@@ -25,10 +26,18 @@ Verification/support files:
 ## Video and audio
 
 - Supplied source: `C:/Users/vikas/Downloads/Eyewear_campaign_video_sequence_20261021162004.mp4`.
-- Served locally: `/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4`.
-- 2,735,128 bytes; 1280 × 720; 16:9; eight-second playback; original H.264 video and stereo AAC audio.
-- SHA-256: `b24219282551c185d641b64ecee7752de09d1a97c6594534c3fdb3c5ed310e2a`.
-- Local and supplied files have identical checksums. No trimming, re-encoding, audio replacement or speed changes. Native volume remains 1 and playback rate remains 1.
+- Served locally: `/assets/gkb-hero/Eyewear_campaign_video_sequence_clean.mp4`.
+- Cleaned copy: 2,952,297 bytes; 1280 × 720; 16:9; eight seconds; 24 fps; all 192 video frames retained.
+- Cleaned SHA-256: `50592c12d00774908a519c9e8f1c62a16fb2aec458fd15a321cd3310e106198f`.
+- The original local file remains unchanged: 2,735,128 bytes, SHA-256 `b24219282551c185d641b64ecee7752de09d1a97c6594534c3fdb3c5ed310e2a`.
+- Removing the embedded mark requires re-encoding the video. FFmpeg's localized `delogo` filter reconstructs the 56 × 56 region at `(1132, 572)`, using H.264 CRF 16. There is no cropping, scaling, speed change, global shading or added imagery. The reconstructed area can be slightly softer than the surrounding original texture.
+- Audio is copied without re-encoding. All 376 original stereo AAC sample payloads match byte-for-byte, SHA-256 `0d9f953add2e9765cfb67c7eedb1177bf63f08e3dc877ea3348c64d25f85bf0d`. Native volume remains 1 and playback rate remains 1.
+
+Reproduce the cleaned asset with a full FFmpeg build:
+
+```text
+ffmpeg -i public/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4 -map 0:v:0 -map 0:a:0 -vf delogo=x=1132:y=572:w=56:h=56 -c:v libx264 -crf 16 -preset slow -pix_fmt yuv420p -c:a copy -map_metadata 0 -movflags +faststart public/assets/gkb-hero/Eyewear_campaign_video_sequence_clean.mp4
+```
 
 The first video attempts unmuted playback. If browser policy rejects sound autoplay, it retries muted and exposes the existing accessible **Unmute video** button. The chosen mute state persists through the carousel's first-slide buffer. Other videos retain their original muted behavior. Browsers may require a user gesture before allowing sound.
 
@@ -47,9 +56,9 @@ Intervals include their start and exclude their end; the native loop resets to s
 
 Caption selection reads the native video's `currentTime` through `requestVideoFrameCallback`, with `timeupdate` and `seeked` fallbacks. Pauses hold the current text; seeks select the appropriate pair; native looping resets it. A single, fully opaque caption pair is mounted at a time, without fade effects or independent caption timers.
 
-The first video's complete 16:9 picture is contained within the existing hero dimensions. Captions are positioned relative to the actual picture, so their alignment stays consistent across desktop aspect ratios. Desktop captions have no background panels, white gradients, video washes or text shadows. Dark text sits over light scenes and warm white text over dark scenes. Balanced headline wrapping and shared left edges align each headline with its supporting line. The video picture has no added visual effects or transparency.
+The first video's complete 16:9 picture is contained within the existing hero dimensions. Captions are positioned relative to the actual picture, so their alignment stays consistent across desktop aspect ratios. Captions over the video are clean white (`#fff`), as selected by the user. There are no caption background panels, white gradients, video washes, text shadows or transparency effects. Balanced headline wrapping and shared left edges align each headline with its supporting line. Existing text positions and sizing remain unchanged.
 
-On portrait tablet/mobile screens, a warm ivory background replaces the black letterboxing. The complete video sits above a consistently left-aligned caption with 30px spacing. Playback controls and pagination use dark tones for contrast on ivory; controls also switch to dark icons for the two bright desktop scenes. Existing carousel dimensions, timings, controls and all other slides are preserved.
+On portrait tablet/mobile screens, the warm ivory background remains. The complete video sits above a consistently left-aligned caption with 30px spacing. This caption is outside the video and retains dark text for contrast on ivory. Playback controls and pagination use dark tones for contrast on ivory; controls also switch to dark icons for the two bright desktop scenes. Existing carousel dimensions, timings, controls and all other slides are preserved.
 
 ## Screenshots and validation
 
@@ -80,6 +89,7 @@ npm run build
 - Six viewport layouts and all 36 scene captures passed, including caption bounds and separation from controls. All five boundaries were checked on both sides at every size: 60 boundary checks.
 - Pause/seek synchronization, native loop reset, original playback speed and full first-video playback passed.
 - Sound-allowed and sound-blocked Chromium policies passed, including manual unmute and retained mute preference. Native-event fallback was tested with `requestVideoFrameCallback` disabled.
+- MP4 sample-table verification confirms the complete eight-second duration, 192 video frames and unchanged encoded AAC audio in the cleaned copy. All six scenes were inspected for successful mark removal.
 - The general carousel suite checks all eight slides, both real videos' changing frames, video controls, keyboard navigation, mobile touch swipe, hover pause and reduced motion.
 - No captured browser console errors, React warnings, failed resource requests, horizontal scrolling or clipped caption words.
 - Production build passed.
