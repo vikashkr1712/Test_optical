@@ -26,6 +26,8 @@
 .first-campaign-caption--right { right: 5%; top: 32%; }
 .first-campaign-caption--upper-left { left: 5%; top: 8%; width: 55%; }
 .first-campaign-caption--shop { right: 3.5%; top: 33%; width: 22%; }
+.first-campaign-caption:is([data-scene="1"], [data-scene="4"]) { color: #181818; }
+.first-campaign-caption[data-scene="3"] { color: #253038; }
 .first-campaign-caption[data-scene="5"] {
   top: 34%;
   width: 31%;
@@ -53,6 +55,9 @@
   line-height: 1.45;
   text-wrap: pretty;
   overflow-wrap: break-word;
+}
+@media (min-width: 1024px) {
+  .first-campaign-caption[data-scene="1"] h2 { max-width: 7.5em; }
 }
 /* A single, aligned caption below the full picture on portrait screens. */
 @media (max-width: 1023px) and (orientation: portrait) {

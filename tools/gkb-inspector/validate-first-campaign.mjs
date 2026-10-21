@@ -52,7 +52,8 @@ for(const[name,width,height]of[['desktop-large',1920,1080],['desktop',1440,900],
   const time=scenes[i][0]+delta;await seek(time,delta<0?i-1:i);
  }
  await seek(4.45,3);const pausedScene=await caption.getAttribute('data-scene');await page.waitForTimeout(350);assert.equal(await caption.getAttribute('data-scene'),pausedScene);
- await seek(7.75,5);await video.evaluate(v=>{v.muted=true;return v.play();});await page.waitForTimeout(650);
+ await seek(7.75,5);await video.evaluate(v=>{v.muted=true;return v.play();});
+ await page.waitForFunction(()=>document.querySelector('[data-slide="0"] video').currentTime<1&&document.querySelector('[data-slide="0"] .first-campaign-caption').dataset.scene==='1',undefined,{timeout:4000});
  assert.equal(await caption.getAttribute('data-scene'),'1');assert.ok(await video.evaluate(v=>v.currentTime<1));
  result.views[name]={metadata,scenes:checks,boundaries:'all ten checks passed',pause:'passed',loopReset:'passed'};
  await page.close();console.log(name,'six scenes, ten boundary checks, pause and loop passed');

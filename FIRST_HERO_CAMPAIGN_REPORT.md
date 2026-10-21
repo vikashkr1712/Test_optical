@@ -56,13 +56,15 @@ Intervals include their start and exclude their end; the native loop resets to s
 
 Caption selection reads the native video's `currentTime` through `requestVideoFrameCallback`, with `timeupdate` and `seeked` fallbacks. Pauses hold the current text; seeks select the appropriate pair; native looping resets it. A single, fully opaque caption pair is mounted at a time, without fade effects or independent caption timers.
 
-The first video's complete 16:9 picture is contained within the existing hero dimensions. Captions are positioned relative to the actual picture, so their alignment stays consistent across desktop aspect ratios. Captions over the video are clean white (`#fff`), as selected by the user. There are no caption background panels, white gradients, video washes, text shadows or transparency effects. Balanced headline wrapping and shared left edges align each headline with its supporting line. Existing text positions and sizing remain unchanged.
+The first video's complete 16:9 picture is contained within the existing hero dimensions. Captions are positioned relative to the actual picture, so their alignment stays consistent across desktop aspect ratios. After comparing charcoal, espresso and slate on the actual frames, the woman and shop scenes use the same neutral charcoal (`#181818`). The outdoor man scene restores the earlier dark slate (`#253038`) for contrast against the pale sky. The other three scenes retain white (`#fff`). There are no caption background panels, white gradients, video washes, text shadows or transparency effects. Balanced headline wrapping and shared left edges align each headline with its supporting line. Text anchors and font sizes remain unchanged; the first heading has a compact maximum width on desktop to keep its words clear of the woman's dark hair.
 
 On portrait tablet/mobile screens, the warm ivory background remains. The complete video sits above a consistently left-aligned caption with 30px spacing. This caption is outside the video and retains dark text for contrast on ivory. Playback controls and pagination use dark tones for contrast on ivory; controls also switch to dark icons for the two bright desktop scenes. Existing carousel dimensions, timings, controls and all other slides are preserved.
 
 ## Screenshots and validation
 
 [Open the complete 36-image gallery](validation/first-hero-campaign/index.html), or use the running server at http://127.0.0.1:5173/validation/first-hero-campaign/index.html.
+
+[Neutral color comparison on the woman and shop scenes](validation/first-hero-campaign/neutral-color-comparison.png).
 
 Six scenes were captured at **0.50, 1.80, 3.20, 4.45, 5.70 and 7.00 seconds** at each requested size:
 
