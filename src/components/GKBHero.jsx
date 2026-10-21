@@ -118,6 +118,7 @@ export default function GKBHero({ className = '' }) {
   const dragOffset = useRef(0);
   const dragFrame = useRef(0);
   const preventClick = useRef(false);
+  const markerPress = useRef(null);
   const remaining = useRef(mobile ? 3000 : 5000);
   const goTo = useCallback((next, rewind = false) => {
     const target = rewind && next === slides.length ? slides.length : Math.max(0, Math.min(slides.length - 1, next));
@@ -176,9 +177,9 @@ export default function GKBHero({ className = '' }) {
 
   const startDrag = (event) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
+    preventClick.current = false;
     if (event.target.closest('button')) return;
     gesture.current = { x: event.clientX, y: event.clientY, started: performance.now(), id: event.pointerId, dragging: false };
-    preventClick.current = false;
   };
   const moveDrag = (event) => {
     const start = gesture.current;
@@ -241,8 +242,27 @@ export default function GKBHero({ className = '' }) {
         warm={i === (index + 1) % slides.length} reducedMotion={reducedMotion} onCampaignComplete={slide.campaign ? handleCampaignComplete : undefined} campaignAudio={slide.campaign ? campaignAudio : undefined} />)}
       <HeroSlide slide={slides[0]} number={0} mobile={mobile} active={position === slides.length && !hidden} warm={position >= slides.length - 1} reducedMotion={reducedMotion} onCampaignComplete={handleCampaignComplete} campaignAudio={campaignAudio} clone />
     </div>
-    <div className="gkb-hero__pagination" aria-label="Choose a slide">
-      {slides.map((slide, i) => <button type="button" key={slide.name} aria-label={`Go to slide ${i + 1}: ${slide.name}`} aria-current={index === i ? 'true' : undefined} className={`gkb-hero__bullet${i === index ? ' gkb-hero__bullet--active' : ''}`} onClick={() => goTo(i)} />)}
+    <div className="gkb-hero__pagination" aria-label="Choose a slide" onPointerDown={event => {
+      preventClick.current = false;
+      markerPress.current = { id: event.pointerId, x: event.clientX, y: event.clientY, cancelled: false, handled: false };
+      event.stopPropagation();
+    }} onPointerMove={event => {
+      const press = markerPress.current;
+      if (press && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 10) press.cancelled = true;
+    }} onPointerCancel={() => { markerPress.current = null; }} onClickCapture={event => {
+      // Touch selects on release, even when the browser suppresses a click after a swipe.
+      // Ignore its subsequent compatibility click; keyboard and mouse keep native clicks.
+      if (markerPress.current?.handled && event.detail > 0) { event.preventDefault(); event.stopPropagation(); }
+      markerPress.current = null;
+    }}>
+      {slides.map((slide, i) => <button type="button" key={slide.name} aria-label={`Go to slide ${i + 1}: ${slide.name}`} aria-current={index === i ? 'true' : undefined} className={`gkb-hero__bullet${i === index ? ' gkb-hero__bullet--active' : ''}`} onPointerUp={event => {
+        const press = markerPress.current;
+        const box = event.currentTarget.getBoundingClientRect();
+        if (event.pointerType === 'touch' && press?.id === event.pointerId && !press.cancelled && event.clientX >= box.left && event.clientX <= box.right && event.clientY >= box.top && event.clientY <= box.bottom) {
+          press.handled = true;
+          goTo(i);
+        }
+      }} onClick={() => goTo(i)} />)}
     </div>
   </section>;
 }

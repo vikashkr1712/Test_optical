@@ -19,7 +19,7 @@
   color: #0a0a0a;
   background: #fff;
   touch-action: pan-y;
-  cursor: pointer;
+  cursor: auto;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -54,21 +54,25 @@
 .gkb-hero__video-controls { position: absolute; bottom: 40px; left: 48px; z-index: 20; display: flex; gap: 24px; }
 .gkb-hero__video-controls button { display: block; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
 .gkb-hero__video-controls svg { display: block; vertical-align: middle; }
-.gkb-hero__pagination { position: absolute; bottom: 48px; left: 0; z-index: 10; display: flex; justify-content: center; align-items: center; gap: 12px; width: 100%; height: 6px; }
-.gkb-hero__bullet { flex-shrink: 1; width: 32px; height: 4px; margin: 0 4px; padding: 0; border: .5px solid rgba(0, 0, 0, .486); border-radius: 9999px; background: rgba(255, 255, 255, .35); opacity: 1; cursor: pointer; transition: width 300ms ease, height 300ms ease, background-color 300ms ease; }
-.gkb-hero__bullet--active { width: 80px; height: 6px; border: 1px solid #000; background: #fff; box-shadow: 2px 2px 13px 2px #000; }
+/* Keep the original marker positions while making their surrounding area clickable.
+   The row also catches clicks in its gaps, instead of opening the banner below it. */
+.gkb-hero__pagination { position: absolute; bottom: 29px; left: 50%; z-index: 10; display: flex; justify-content: center; align-items: center; gap: 12px; width: 452px; max-width: 100%; height: 44px; transform: translateX(-50%); }
+.gkb-hero__bullet { flex: 1 1 40px; min-width: 0; height: 44px; display: grid; place-items: center; margin: 0; padding: 0 4px; border: 0; border-radius: 0; background: transparent; color: inherit; cursor: pointer; }
+.gkb-hero__bullet::before { content: ''; display: block; width: 100%; height: 4px; border: .5px solid rgba(0, 0, 0, .486); border-radius: 9999px; background: rgba(255, 255, 255, .35); transition: background-color 300ms ease; }
+.gkb-hero__bullet--active { flex-basis: 88px; }
+.gkb-hero__bullet--active::before { height: 6px; border: 1px solid #000; background: #fff; box-shadow: 2px 2px 13px 2px #000; }
 .gkb-hero :is(button, a):focus-visible { outline: 2px solid #fff; outline-offset: 5px; box-shadow: 0 0 0 3px #000; }
 .gkb-hero__media-error { position: absolute; inset: 40% 0 auto; text-align: center; }
 
 @media (max-width: 1023px) {
   .gkb-hero__video-controls { bottom: 64px; }
 }
-@media (max-width: 768px) { .gkb-hero__pagination { bottom: 20px; } }
+@media (max-width: 768px) { .gkb-hero__pagination { bottom: 1px; } }
 @media (max-width: 767px) {
   .gkb-hero { height: calc(100vh - var(--gkb-hero-mobile-offset, 56px)); }
   .gkb-hero__image-link img { position: static; width: 100%; height: auto; object-fit: contain; }
   .gkb-hero__cta { font-size: 14px; line-height: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .gkb-hero__track, .gkb-hero__bullet, .gkb-hero__cta { transition: none; }
+  .gkb-hero__track, .gkb-hero__bullet::before, .gkb-hero__cta { transition: none; }
 }
