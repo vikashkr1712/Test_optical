@@ -12,7 +12,7 @@ const scenes=[
 ];
 const browser=await chromium.launch({headless:true,executablePath:'C:/Users/vikas/AppData/Local/ms-playwright/chromium-1228/chrome-win64/chrome.exe'});
 const result={testedAt:new Date().toISOString(),views:{},errors:[]};
-for(const[name,width,height]of[['desktop-large',1920,1080],['desktop',1440,900],['laptop',1366,768],['tablet',768,1024],['mobile',390,844],['mobile-small',375,812]]){
+for(const[name,width,height]of[['ultrawide',2560,1440],['desktop-large',1920,1080],['desktop',1440,900],['laptop',1366,768],['tablet',768,1024],['mobile',390,844],['mobile-small',375,812]]){
  const page=await browser.newPage({viewport:{width,height}});
  page.on('pageerror',e=>result.errors.push({view:name,error:String(e)}));
  page.on('console',e=>{if(e.type()==='error')result.errors.push({view:name,error:e.text()});});
@@ -23,7 +23,9 @@ for(const[name,width,height]of[['desktop-large',1920,1080],['desktop',1440,900],
  const video=page.locator('[data-slide="0"] video'),caption=page.locator('[data-slide="0"] .first-campaign-caption');
  await video.evaluate(v=>v.pause());
  const metadata=await video.evaluate(v=>({duration:v.duration,width:v.videoWidth,height:v.videoHeight,rate:v.playbackRate,volume:v.volume,muted:v.muted,loop:v.loop,playsInline:v.playsInline,fit:getComputedStyle(v).objectFit}));
- assert.equal(metadata.duration,8);assert.equal(metadata.width/metadata.height,16/9);assert.equal(metadata.rate,1);assert.equal(metadata.volume,1);assert.equal(metadata.fit,'contain');
+ assert.equal(metadata.duration,8);assert.equal(metadata.width/metadata.height,16/9);assert.equal(metadata.rate,1);assert.equal(metadata.volume,1);assert.equal(metadata.fit,'cover');
+ assert.equal(await page.title(),'candiclie — Featured Collections');
+ assert.equal(await page.locator('.gkb-header__brand').textContent(),'candiclie');
  const checks=[];
  async function seek(time,expected){
   await video.evaluate(async(v,time)=>{v.currentTime=time;await new Promise(r=>v.addEventListener('seeked',r,{once:true}));},time);
@@ -37,10 +39,12 @@ for(const[name,width,height]of[['desktop-large',1920,1080],['desktop',1440,900],
   const geometry=await page.evaluate(()=>{
    const slide=document.querySelector('[data-slide="0"]'),cap=slide.querySelector('.first-campaign-caption'),v=slide.querySelector('video'),controls=slide.querySelector('.gkb-hero__video-controls'),pagination=document.querySelector('.gkb-hero__pagination');
    const box=e=>e.getBoundingClientRect().toJSON(),hero=box(slide),caption=box(cap),video=box(v),control=box(controls),dots=box(pagination);
-   const scale=Math.min(video.width/v.videoWidth,video.height/v.videoHeight);const displayed={left:video.x+(video.width-v.videoWidth*scale)/2,top:video.y+(video.height-v.videoHeight*scale)/2,width:v.videoWidth*scale,height:v.videoHeight*scale};
+   const scale=Math.max(video.width/v.videoWidth,video.height/v.videoHeight);const displayed={left:video.x+(video.width-v.videoWidth*scale)/2,top:video.y,width:v.videoWidth*scale,height:v.videoHeight*scale};
    return{hero,caption,control,dots,displayed,headline:box(cap.querySelector('h2')),tagline:box(cap.querySelector('p')),overflow:document.documentElement.scrollWidth>innerWidth,captionOverflow:cap.scrollWidth>cap.clientWidth};
   });
   assert.equal(geometry.overflow,false);assert.equal(geometry.captionOverflow,false);
+  assert.ok(Math.abs(geometry.hero.x)<1&&Math.abs(geometry.hero.width-width)<1,'Hero spans the full viewport width');
+  assert.ok(geometry.displayed.left<=1&&geometry.displayed.left+geometry.displayed.width>=width-1,'Video picture reaches both viewport edges without side bars');
   assert.ok(geometry.caption.x>=0&&geometry.caption.right<=width&&geometry.caption.y>=geometry.hero.y&&geometry.caption.bottom<=geometry.hero.bottom);
   const overlap=(a,b)=>a.x<b.right&&a.right>b.x&&a.y<b.bottom&&a.bottom>b.y;
   assert.equal(overlap(geometry.caption,geometry.control),false);assert.equal(overlap(geometry.caption,geometry.dots),false);

@@ -7,7 +7,8 @@ import slides from '../../src/components/GKBHero.slides.js';
 const out = 'validation/first-hero-campaign';
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const before = JSON.parse(await fs.readFile(`${out}/before-scope.json`));
-const allowed = ['src/components/GKBHero.jsx', 'src/components/GKBHero.slides.js'];
+// Later requests also explicitly authorized the candiclie rebrand and full-width layout.
+const allowed = ['src/components/GKBHero.jsx', 'src/components/GKBHero.slides.js', 'src/components/GKBHeader.jsx', 'src/components/GKBHeader.css', 'src/index.css', 'index.html'];
 const protectedFiles = [];
 for (const [file, original] of Object.entries(before.hashes)) {
   if (allowed.includes(file)) continue;
@@ -25,9 +26,10 @@ for (const item of manifest.downloads) {
   assert.ok(unchanged, `${file} original asset was modified`);
   originalAssets.push({ file, unchanged });
 }
-await fs.writeFile(`${out}/scope-verification.json`, JSON.stringify({ protectedFiles, remainingSevenSlidesUnchanged: true, firstSlideNavigationUnchanged: true, originalAssets }, null, 2));
+await fs.writeFile(`${out}/scope-verification.json`, JSON.stringify({ protectedFiles, authorizedRebrandAndLayoutFiles: allowed.slice(2), remainingSevenSlidesUnchanged: true, firstSlideNavigationUnchanged: true, originalAssets }, null, 2));
 
 const views = [
+  ['ultrawide', 'Ultrawide 2560 × 1440'],
   ['desktop-large', 'Desktop 1920 × 1080'], ['desktop', 'Desktop 1440 × 900'],
   ['laptop', 'Laptop 1366 × 768'], ['tablet', 'Tablet 768 × 1024'],
   ['mobile', 'Mobile 390 × 844'], ['mobile-small', 'Mobile 375 × 812'],
@@ -35,7 +37,7 @@ const views = [
 const times = ['0.50', '1.80', '3.20', '4.45', '5.70', '7.00'];
 const headlines = ['Find Your Perfect Fit', 'Crafted for Clarity', 'Own the Sunshine', 'Discover Your Look', 'Timeless by Design', 'Every Detail Matters'];
 const sections = views.map(([name, title]) => `<section id="${name}"><h2>${title}</h2><div class="grid">${times.map((time, i) => `<figure><a href="${name}-scene-${i + 1}.png"><img src="${name}-scene-${i + 1}.png" alt="${title}: scene ${i + 1}, ${headlines[i]}" loading="lazy"></a><figcaption>Scene ${i + 1} · ${time}s · ${headlines[i]}</figcaption></figure>`).join('')}</div></section>`).join('');
-await fs.writeFile(`${out}/index.html`, `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>First hero campaign — scene screenshots</title><style>body{margin:0;padding:24px;font:16px/1.5 system-ui;background:#111;color:#eee}main{max-width:1600px;margin:auto}a{color:#c9dcff}nav{display:flex;gap:16px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}figure{margin:0;background:#222}img{display:block;width:100%;height:auto}figcaption{padding:12px}section{margin:40px 0}@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:500px){.grid{grid-template-columns:1fr}}</style><main><h1>First hero campaign</h1><p>36 screenshots, six scenes at six viewport sizes. Select an image to inspect the original full-resolution capture.</p><nav>${views.map(([name, title]) => `<a href="#${name}">${title}</a>`).join('')}</nav><p><a href="results.json">Scene, timing and layout checks</a> · <a href="audio-policy-results.json">Audio policy checks</a> · <a href="scope-verification.json">Unchanged file verification</a> · <a href="media-verification.json">Original media verification</a></p>${sections}</main></html>`);
+await fs.writeFile(`${out}/index.html`, `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>candiclie — scene screenshots</title><style>body{margin:0;padding:24px;font:16px/1.5 system-ui;background:#111;color:#eee}main{max-width:1600px;margin:auto}a{color:#c9dcff}nav{display:flex;gap:16px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}figure{margin:0;background:#222}img{display:block;width:100%;height:auto}figcaption{padding:12px}section{margin:40px 0}@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:500px){.grid{grid-template-columns:1fr}}</style><main><h1>candiclie hero campaign</h1><p>${views.length * times.length} screenshots, six scenes at ${views.length} viewport sizes. Select an image to inspect the original full-resolution capture.</p><nav>${views.map(([name, title]) => `<a href="#${name}">${title}</a>`).join('')}</nav><p><a href="results.json">Scene, timing and layout checks</a> · <a href="audio-policy-results.json">Audio policy checks</a> · <a href="scope-verification.json">Unchanged file verification</a> · <a href="media-verification.json">Original media verification</a></p>${sections}</main></html>`);
 
 // Review sheets combine captures only; the supplied campaign media is never edited.
 for (const name of ['desktop', 'tablet', 'mobile']) {

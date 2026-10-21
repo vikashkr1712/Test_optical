@@ -3,16 +3,14 @@
   background: #f4f0e9;
 }
 
-/* Anchor overlays to the actual 16:9 picture, including when it is letterboxed. */
+/* Fill the desktop hero; portrait screens keep the complete landscape frame below. */
 .first-campaign-stage {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(100cqw, 177.777778cqh);
-  height: min(100cqh, 56.25cqw);
-  transform: translate(-50%, -50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
-.gkb-hero .first-campaign-video { object-fit: contain; object-position: center; }
+.gkb-hero .first-campaign-video { object-fit: cover; object-position: center top; }
 .first-campaign-caption {
   position: absolute;
   z-index: 1;

@@ -12,8 +12,8 @@ const navigation = [
   ['Gift Card', '/gift-card'],
 ];
 const announcements = [
-  ['A legacy of over 50 years | About us', '/about-us'],
-  ['Purchase a GKB gift card for your loved ones', '/gift-card'],
+  ['Discover candiclie | About us', '/about-us'],
+  ['Purchase a candiclie gift card for your loved ones', '/gift-card'],
 ];
 
 function Icon({ name }) {
@@ -47,7 +47,7 @@ export default function GKBHeader() {
         <button type="button" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(value => !value)}><Icon name="menu" /></button>
         <a href="/search" aria-label="Search"><Icon name="search" /></a>
       </div>
-      <a className="gkb-header__brand" href="/" aria-label="GKB Opticals home"><img src="/assets/gkb-header/logo.png" alt="GKB Opticals" width="100" height="50" /></a>
+      <a className="gkb-header__brand" href="/" aria-label="candiclie home"><span className="gkb-header__wordmark">candiclie</span></a>
       <nav className="gkb-header__desktop-links" aria-label="Main navigation">
         {navigation.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
       </nav>

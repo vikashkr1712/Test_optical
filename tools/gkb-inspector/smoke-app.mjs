@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 const browser = await chromium.launch({ headless: true, executablePath: 'C:/Users/vikas/AppData/Local/ms-playwright/chromium-1228/chrome-win64/chrome.exe' });
 const errors = [];
 const results = { testedAt: new Date().toISOString(), target: 'http://127.0.0.1:4173/', views: [], errors };
-for (const [name, width, height] of [['desktop', 1440, 900], ['tablet', 768, 1024], ['mobile', 390, 844]]) {
+for (const [name, width, height] of [['ultrawide', 2560, 1440], ['desktop', 1440, 900], ['desktop-compact', 1024, 768], ['tablet', 768, 1024], ['mobile', 390, 844], ['mobile-small', 320, 812]]) {
   const page = await browser.newPage({ viewport: { width, height } });
   page.on('pageerror', error => errors.push(String(error)));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
@@ -15,6 +15,16 @@ for (const [name, width, height] of [['desktop', 1440, 900], ['tablet', 768, 102
   await page.locator('.gkb-header img').evaluateAll(images => Promise.all(images.filter(img => img.getBoundingClientRect().width).map(img => img.decode())));
   const rect = await page.locator('.gkb-header').boundingBox();
   assert.equal(rect.height, width >= 1024 ? 112 : 56);
+  assert.equal(rect.x, 0);
+  assert.equal(rect.width, width);
+  assert.equal(await page.title(), 'candiclie — Featured Collections');
+  assert.equal(await page.getByRole('link', { name: 'candiclie home', exact: true }).textContent(), 'candiclie');
+  assert.doesNotMatch(await page.locator('header').innerText(), /\bGKB\b/);
+  const headerLinks = await page.locator('.gkb-header__navigation a, .gkb-header__navigation button').evaluateAll(items => items.map(el => ({label: el.textContent || el.getAttribute('aria-label'), rect: el.getBoundingClientRect().toJSON()})).filter(item => item.rect.width && item.rect.height));
+  for (let i=0;i<headerLinks.length;i++) for(let j=i+1;j<headerLinks.length;j++) {
+    const a=headerLinks[i].rect,b=headerLinks[j].rect;
+    assert.ok(!(a.x<b.right&&a.right>b.x&&a.y<b.bottom&&a.bottom>b.y), `${width}px header overlap: ${headerLinks[i].label} / ${headerLinks[j].label}`);
+  }
   assert.equal(await page.locator('.gkb-hero__slide').count(), 8);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   if (width < 1024) {
@@ -37,4 +47,4 @@ for (const [name, width, height] of [['desktop', 1440, 900], ['tablet', 768, 102
 await browser.close();
 await fs.writeFile('validation/gkb-hero/production-results.json', JSON.stringify(results, null, 2));
 assert.equal(errors.length, 0, JSON.stringify(errors));
-console.log('Production app smoke checks passed at all three sizes.');
+console.log('Production app smoke checks passed at all six sizes.');

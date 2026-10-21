@@ -1,6 +1,6 @@
 # Test_optical
 
-A React/Vite app containing the GKB Opticals hero and a responsive header to frame it. All eight hero slides use locally saved original media, including genuine desktop/mobile videos. No product sections or footer are included.
+A React/Vite eyewear homepage branded candiclie, with a responsive header and eight locally hosted hero slides. The desktop campaign fills the browser width, including screens wider than 1920px. No product sections or footer are included.
 
 ## Run
 

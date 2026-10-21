@@ -1,6 +1,6 @@
 # First hero campaign update
 
-The first hero now uses a cleaned copy of the supplied eight-second campaign MP4 with six synchronized HTML caption pairs. The development site is running at **http://127.0.0.1:5173/**.
+The candiclie homepage uses a cleaned copy of the supplied eight-second campaign MP4 with six synchronized HTML caption pairs. The desktop hero now fills the browser width without side gaps. The development site is running at **http://127.0.0.1:5173/**.
 
 ## Files changed
 
@@ -8,6 +8,9 @@ Existing application files modified:
 
 - `src/components/GKBHero.slides.js` — only the first slide's desktop/mobile media paths and campaign flag.
 - `src/components/GKBHero.jsx` — integrates the first-slide component and waits for the complete native video playback before advancing this slide.
+- `src/components/GKBHeader.jsx` and `src/components/GKBHeader.css` — replace the GKB image logo with a responsive candiclie wordmark and update announcement copy.
+- `src/index.css` — remove the 1920px page-width cap.
+- `index.html` — candiclie page title and description; the carousel accessibility label also uses candiclie.
 
 New application files:
 
@@ -56,13 +59,15 @@ Intervals include their start and exclude their end; the native loop resets to s
 
 Caption selection reads the native video's `currentTime` through `requestVideoFrameCallback`, with `timeupdate` and `seeked` fallbacks. Pauses hold the current text; seeks select the appropriate pair; native looping resets it. A single, fully opaque caption pair is mounted at a time, without fade effects or independent caption timers.
 
-The first video's complete 16:9 picture is contained within the existing hero dimensions. Captions are positioned relative to the actual picture, so their alignment stays consistent across desktop aspect ratios. After comparing charcoal, espresso and slate on the actual frames, the woman and shop scenes use the same neutral charcoal (`#181818`). The outdoor man scene restores the earlier dark slate (`#253038`) for contrast against the pale sky. The other three scenes retain white (`#fff`). There are no caption background panels, white gradients, video washes, text shadows or transparency effects. Balanced headline wrapping and shared left edges align each headline with its supporting line. Text anchors and font sizes remain unchanged; the first heading has a compact maximum width on desktop to keep its words clear of the woman's dark hair.
+The source video retains its native 16:9 aspect ratio. On desktop, the first campaign fills the existing hero using `object-fit: cover` and top-center positioning, eliminating both side bars without stretching the image. Some vertical or horizontal cropping can occur as the viewport aspect ratio changes; top alignment protects the faces. The page itself is no longer capped at 1920px, so the header and hero also span wider displays. Portrait tablet/mobile layouts retain the complete landscape picture above their captions.
+
+After comparing charcoal, espresso and slate on the actual frames, the woman and shop scenes use the same neutral charcoal (`#181818`). The outdoor man scene restores the earlier dark slate (`#253038`) for contrast against the pale sky. The other three scenes retain white (`#fff`). There are no caption background panels, white gradients, video washes, text shadows or transparency effects. Balanced headline wrapping and shared left edges align each headline with its supporting line. Text anchors and font sizes remain unchanged; the first heading has a compact maximum width on desktop to keep its words clear of the woman's dark hair.
 
 On portrait tablet/mobile screens, the warm ivory background remains. The complete video sits above a consistently left-aligned caption with 30px spacing. This caption is outside the video and retains dark text for contrast on ivory. Playback controls and pagination use dark tones for contrast on ivory; controls also switch to dark icons for the two bright desktop scenes. Existing carousel dimensions, timings, controls and all other slides are preserved.
 
 ## Screenshots and validation
 
-[Open the complete 36-image gallery](validation/first-hero-campaign/index.html), or use the running server at http://127.0.0.1:5173/validation/first-hero-campaign/index.html.
+[Open the complete 42-image gallery](validation/first-hero-campaign/index.html), or use the running server at http://127.0.0.1:5173/validation/first-hero-campaign/index.html.
 
 [Neutral color comparison on the woman and shop scenes](validation/first-hero-campaign/neutral-color-comparison.png).
 
@@ -70,6 +75,7 @@ Six scenes were captured at **0.50, 1.80, 3.20, 4.45, 5.70 and 7.00 seconds** at
 
 | Viewport | First scene | All six scenes |
 | --- | --- | --- |
+| Ultrawide 2560 × 1440 | [Screenshot](validation/first-hero-campaign/ultrawide-scene-1.png) | [Gallery](validation/first-hero-campaign/index.html#ultrawide) |
 | Desktop 1920 × 1080 | [Screenshot](validation/first-hero-campaign/desktop-large-scene-1.png) | [Gallery](validation/first-hero-campaign/index.html#desktop-large) |
 | Desktop 1440 × 900 | [Screenshot](validation/first-hero-campaign/desktop-scene-1.png) | [Review sheet](validation/first-hero-campaign/desktop-review-sheet.png) |
 | Laptop 1366 × 768 | [Screenshot](validation/first-hero-campaign/laptop-scene-1.png) | [Gallery](validation/first-hero-campaign/index.html#laptop) |
@@ -88,7 +94,8 @@ npm run validate:hero
 npm run build
 ```
 
-- Six viewport layouts and all 36 scene captures passed, including caption bounds and separation from controls. All five boundaries were checked on both sides at every size: 60 boundary checks.
+- Seven viewport layouts and all 42 scene captures passed, including full viewport width, video coverage without side bars, caption bounds and separation from controls. All five boundaries were checked on both sides at every size: 70 boundary checks.
+- The production header was separately checked at widths 320, 390, 768, 1024, 1440 and 2560px. The candiclie wordmark and navigation have no overlapping controls or horizontal overflow; mobile menus and announcements work. Run `node tools/gkb-inspector/smoke-app.mjs` with `npm run preview` serving the production build on port 4173 to repeat these checks.
 - Pause/seek synchronization, native loop reset, original playback speed and full first-video playback passed.
 - Sound-allowed and sound-blocked Chromium policies passed, including manual unmute and retained mute preference. Native-event fallback was tested with `requestVideoFrameCallback` disabled.
 - MP4 sample-table verification confirms the complete eight-second duration, 192 video frames and unchanged encoded AAC audio in the cleaned copy. All six scenes were inspected for successful mark removal.
@@ -100,6 +107,6 @@ Evidence: [scene checks](validation/first-hero-campaign/results.json), [audio ch
 
 ## Preserved scope and limitations
 
-The seven remaining slide definitions and all 29 original media assets are unchanged. SHA-256 checks also confirm the navbar/logo component, its stylesheet, app entry, global styles, existing hero stylesheet, routing container, Vite configuration and dependencies are unchanged. Existing buttons and navigation keep their local destinations. No official-site links or externally hosted media were added to the interface.
+The seven remaining slide definitions and all 29 original media assets are unchanged. The user-authorized rebrand updates the header wordmark, announcement copy, page metadata and carousel accessibility label. The user-authorized layout change removes the global page-width cap and changes the first campaign's desktop fitting. SHA-256 checks confirm that the app entry, existing general hero stylesheet, routing container, Vite configuration and dependencies remain unchanged. Existing buttons and navigation keep their local destinations. No official-site links or externally hosted media were added to the interface.
 
 No unresolved functional issues were found in the tested Chromium browser. Sound autoplay remains subject to browser policy. Safari/iOS and Firefox were not tested. Narrow layouts intentionally have letterboxing to preserve the whole landscape video and the existing hero dimensions.

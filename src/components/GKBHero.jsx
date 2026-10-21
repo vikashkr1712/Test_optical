@@ -223,7 +223,7 @@ export default function GKBHero({ className = '' }) {
     if (region.current.hasPointerCapture(event.pointerId)) region.current.releasePointerCapture(event.pointerId);
   };
 
-  return <section ref={region} className={`gkb-hero${transitioning || dragging ? ' gkb-hero--moving' : ''} ${className}`} role="region" aria-roledescription="carousel" aria-label="GKB featured collections"
+  return <section ref={region} className={`gkb-hero${transitioning || dragging ? ' gkb-hero--moving' : ''} ${className}`} role="region" aria-roledescription="carousel" aria-label="candiclie featured collections"
     onPointerEnter={event => { if (event.pointerType === 'mouse') setHovered(true); }} onPointerLeave={event => { if (event.pointerType === 'mouse') setHovered(false); }}
     onFocusCapture={event => { if (event.target.matches(':focus-visible')) setFocused(true); }} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
     onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={() => {
