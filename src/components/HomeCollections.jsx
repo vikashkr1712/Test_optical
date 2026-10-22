@@ -1,22 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import './HomeCollections.css';
 import HomeEditorial from './HomeEditorial.jsx';
+import { productGroups as products, currency } from './shopProducts.js';
 
 const asset = (name, size) => `/assets/home/${name}-${size}.webp`;
-const currency = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
-
-const products = {
-  best: [
-    { id: 'product-1', brand: 'Maui Jim', model: 'MJ-H407 02', colour: 'Black · Rimless', type: 'Sunglasses', price: 14690 },
-    { id: 'product-2', brand: 'Emporio Armani', model: '0EA4232 6106/87', colour: 'Transparent grey', type: 'Sunglasses', price: 15390 },
-    { id: 'product-3', brand: 'Emporio Armani', model: '0EA3038 5063', colour: 'Matt black', type: 'Eyeglasses', price: 12490 },
-  ],
-  edit: [
-    { id: 'edit-1', brand: 'Burberry', model: '0BE4438U 300187', colour: 'Black', type: 'Sunglasses', price: 34290 },
-    { id: 'edit-2', brand: 'Burberry', model: '0BE4403 409680', colour: 'Brown', type: 'Sunglasses', price: 22590 },
-    { id: 'edit-3', brand: 'Champ', model: 'S5018 C4', colour: 'Blue · Junior', type: 'Sunglasses', price: 1500 },
-  ],
-};
 
 const audiences = [
   { id: 'for-him', title: 'Shop for him', eyebrow: 'EFFORTLESS. EVERY DAY.', description: 'From clean optical frames to statement sunglasses, find a look that feels like you.', collection: 'The men’s edit' },
@@ -46,7 +33,7 @@ function Photo({ name, alt, kind = 'category', className = '' }) {
     alt={alt} loading="lazy" decoding="async" />;
 }
 
-function PreviewDialog({ selection, onClose }) {
+export function PreviewDialog({ selection, onClose, shopping, onOpenBag }) {
   const dialog = useRef(null);
   useEffect(() => {
     if (!selection) return;
@@ -57,23 +44,25 @@ function PreviewDialog({ selection, onClose }) {
     return () => { modal.close(); document.body.style.overflow = previousOverflow; };
   }, [selection]);
   const product = selection?.brand;
-  return <dialog ref={dialog} className="home-preview" aria-labelledby="preview-title" onClose={onClose} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
-    {selection && <div className="home-preview__content">
+  const textOnly = selection?.navigation && !selection.media;
+  return <dialog ref={dialog} className={`home-preview${textOnly ? ' home-preview--text' : ''}`} aria-labelledby="preview-title" onClose={onClose} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+    {selection && <div className={`home-preview__content${textOnly ? ' home-preview__content--text' : ''}`}>
       <button type="button" className="home-preview__close" aria-label="Close preview" onClick={onClose} autoFocus>×</button>
-      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : <Photo name={selection.id} kind={product ? 'product' : selection.id.startsWith('for-') ? 'audience' : 'category'} alt={product ? `${selection.brand} ${selection.model}` : selection.title} />}
+      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : !textOnly && <Photo name={selection.id} kind={product ? 'product' : selection.id.startsWith('for-') ? 'audience' : 'category'} alt={product ? `${selection.brand} ${selection.model}` : selection.title} />}
       <div className="home-preview__copy">
         <p className="home-eyebrow">{product ? selection.type : selection.eyebrow || 'THE CANDICLIE EDIT'}</p>
         <h2 id="preview-title">{product ? selection.brand : selection.collection || selection.title}</h2>
-        {product ? <><p>{selection.model}</p><p className="home-muted">{selection.colour}</p><p className="home-preview__price">{currency.format(selection.price)}</p><p className="home-preview__note">A preview of our featured selection. Online ordering is not available yet; prices and availability will be confirmed when shopping launches.</p></> : <p>{selection.description}</p>}
-        <a className="home-text-link" href={product || selection.media ? '#top-categories' : '#featured-picks'} onClick={onClose}>{product || selection.media ? 'Discover more styles' : 'Explore featured frames'}<Arrow /></a>
+        {product ? <><p>{selection.model}</p><p className="home-muted">{selection.colour}</p><p className="home-preview__price">{currency.format(selection.price)}</p><div className="home-preview__shopping"><button type="button" className="shop-primary" onClick={() => { shopping.addToBag(selection.id); onOpenBag(); }} disabled={shopping.cart.some(item => item.id === selection.id && item.quantity >= 10)}>{shopping.cart.some(item => item.id === selection.id && item.quantity >= 10) ? 'Bag limit reached' : 'Add to bag'}</button><button type="button" className="shop-save-frame" aria-pressed={shopping.saved.includes(selection.id)} onClick={() => shopping.toggleSaved(selection.id)}>{shopping.saved.includes(selection.id) ? '♥ Saved frame' : '♡ Save frame'}</button></div><p className="home-preview__note">Keep your favourites in your bag. Online checkout is coming soon; final prices and availability will be confirmed when shopping launches.</p></> : <p>{selection.description}</p>}
+        {selection.details?.length > 0 && <ul className="home-preview__details">{selection.details.map(detail => <li key={detail}>{detail}</li>)}</ul>}
+        {selection.note && <p className="home-preview__note">{selection.note}</p>}
+        <a className="home-text-link" href={selection.cta?.href || (product || selection.media ? '#top-categories' : '#featured-picks')} onClick={onClose}>{selection.cta?.label || (product || selection.media ? 'Discover more styles' : 'Explore featured frames')}<Arrow /></a>
       </div>
     </div>}
   </dialog>;
 }
 
-export default function HomeCollections() {
+export default function HomeCollections({ onSelect: setSelection }) {
   const [tab, setTab] = useState('best');
-  const [selection, setSelection] = useState(null);
   const productRail = useRef(null);
   const categoryRail = useRef(null);
   const scrollRail = (ref, direction) => ref.current?.scrollBy({ left: direction * ref.current.clientWidth * .8, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
@@ -131,6 +120,5 @@ export default function HomeCollections() {
       <div className="home-rail-controls home-rail-controls--categories"><span>Swipe to find your style</span><div><button type="button" onClick={() => scrollRail(categoryRail, -1)} aria-label="Previous categories"><Arrow direction="left" /></button><button type="button" onClick={() => scrollRail(categoryRail, 1)} aria-label="Next categories"><Arrow /></button></div></div>
     </section>
     <HomeEditorial onPreview={setSelection} />
-    <PreviewDialog selection={selection} onClose={() => setSelection(null)} />
   </div>;
 }

@@ -1,17 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './HomeEditorial.css';
 
-// Editable display names; reference photography and provenance live in the asset manifest.
-const brands = [
-  { image: 'brand-vincent-chase', title: 'Aurel', style: 'serif', line: 'A different kind of classic', description: 'Confident silhouettes and small, considered details. Explore a classic point of view with a little unexpected character.', alt: 'Close-up of a model in dark sunglasses surrounded by purple grapes' },
-  { image: 'brand-john-jacobs', title: 'Northline', style: 'wide', line: 'Quiet confidence. Sharp perspective.', description: 'A refined edit of expressive frames and clean lines. Find your balance between timeless and distinctive.', alt: 'Model in dark optical frames and a black coat in a chandelier-lit room' },
-  { image: 'brand-lenskart-air', title: 'CandiClie Studio', style: 'studio', line: 'Lighten your everyday', description: 'An understated approach to everyday eyewear. Discover soft tones, open shapes and an effortless sense of style.', alt: 'Portrait of a model wearing transparent optical frames beside a white cockatoo' },
-  { image: 'brand-owndays', title: 'Forma', style: 'wide', line: 'See things a little differently', description: 'Clean geometry and a fresh perspective. Explore the expressive side of everyday shapes.', alt: 'Close-up of metal eyeglasses reflected in a rippled silver surface' },
-  { image: 'brand-meller', title: 'Solstice', style: 'serif', line: 'Chase a brighter point of view', description: 'A sun-inspired edit with bold silhouettes and playful proportions. Find the pair that sets the mood.', alt: 'Model wearing black sunglasses behind hanging silver chains' },
-  { image: 'brand-hustlr', title: 'Offscript', style: 'bold', line: 'A little less expected', description: 'For the days you feel like changing things up. Discover expressive shapes and details with a character all their own.', alt: 'Model wearing yellow optical frames and an olive coat against a gold doorway' },
-  { image: 'brand-lpl', title: 'Atelier 08', style: 'serif', line: 'An eye for the details', description: 'Thoughtful shapes, sculptural lines and a considered approach to personal style. Explore a more individual point of view.', alt: 'Model wearing optical frames and a cobalt blue coat in an icy landscape' },
-  { image: 'brand-fossil', title: 'Lumen', style: 'wide', line: 'Everyday, reimagined', description: 'A fresh take on the familiar. Explore versatile eyewear that brings a new perspective to your daily rotation.', alt: 'Model wearing eyeglasses and a sculptural white coat on dark stairs' },
-];
+import { brands } from './brandCollections.js';
 
 const stories = [
   { image: 'street-user1', title: 'The city after dark', label: 'OFFSCRIPT / CITY EDIT', description: 'Dark frames, a sharp silhouette and a little city energy. An everyday outfit with a stronger point of view.', alt: 'Black-and-white street-style portrait of a man wearing rectangular black eyeglasses' },
