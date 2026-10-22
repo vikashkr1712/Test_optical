@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1",
-    "validate:hero": "node tools/gkb-inspector/validate.mjs"
+    "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
     "react": "19.3.1",
