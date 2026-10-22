@@ -1,6 +1,6 @@
 .home-hero [data-campaign="first"] {
   container-type: size;
-  background: #f4f0e9;
+  background: #fff;
 }
 
 /* Fill the desktop hero; portrait screens keep the complete landscape frame below. */
@@ -47,8 +47,8 @@
   text-wrap: pretty;
   overflow-wrap: break-word;
 }
-.first-campaign-caption__text { animation: campaign-caption-in 160ms ease-out; }
-@keyframes campaign-caption-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.first-campaign-caption__text { animation: campaign-caption-in 240ms ease-out; }
+@keyframes campaign-caption-in { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .first-campaign-caption__text { animation: none; } }
 /* Short landscape screens reserve the lower right corner for playback controls. */
 @media (max-width: 1023px) and (orientation: landscape) {

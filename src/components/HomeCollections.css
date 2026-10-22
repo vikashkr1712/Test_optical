@@ -1,4 +1,4 @@
-.home-collections { --home-ink: #242722; --home-muted: #5d6457; --home-paper: #f6f5f1; --home-accent: #656b4b; color: var(--home-ink); font: 16px/1.6 'CandiClie Hero Avenir', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+.home-collections { --home-ink: #242722; --home-muted: #5d6457; --home-paper: #fff; --home-accent: #656b4b; color: var(--home-ink); font: 16px/1.6 'CandiClie Hero Avenir', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 .home-collections *, .home-preview, .home-preview * { box-sizing: border-box; }
 .home-collections button, .home-preview button { font: inherit; color: inherit; cursor: pointer; }
 .home-collections :is(button, a), .home-preview :is(button, a) { -webkit-tap-highlight-color: transparent; }
@@ -57,7 +57,7 @@
 .home-brand__caption { padding: 26px clamp(24px, 5.55vw, 100px); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .home-brand__caption .home-eyebrow { font-size: 13px; margin-bottom: 6px; color: #535d40; }
 .home-brand__caption > div > p:last-child { font-size: clamp(18px, 1.4vw, 22px); font-weight: 500; }
-.home-categories { background: #fafaf7; padding-top: 78px; padding-bottom: 86px; }
+.home-categories { background: #fff; padding-top: 78px; padding-bottom: 86px; }
 .home-categories h2 { font-size: clamp(28px, 2.4vw, 36px); line-height: 1.25; letter-spacing: -.025em; font-weight: 600; margin-top: 12px; }
 .home-categories__hint { font-size: 15px; color: var(--home-muted); flex-shrink: 0; padding-bottom: 4px; }
 .home-categories__rail { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 72px) / 5); gap: 18px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; padding: 6px; margin: -6px; }
@@ -71,7 +71,7 @@
 .home-category > p { font-size: 14px; line-height: 1.5; color: var(--home-muted); margin-top: 6px; }
 /* Skip painting distant sections without delaying their semantic content or images. */
 .home-audiences, .home-brand, .home-categories { content-visibility: auto; contain-intrinsic-size: auto 580px; }
-.home-preview { --home-muted: #5d6457; width: min(860px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; background: #fafaf7; color: #242722; font: 16px/1.6 'CandiClie Hero Avenir', Arial, sans-serif; }
+.home-preview { --home-muted: #5d6457; width: min(860px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; background: #fff; color: #242722; font: 16px/1.6 'CandiClie Hero Avenir', Arial, sans-serif; }
 .home-preview::backdrop { background: #141b19a6; }
 .home-preview__content { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
 .home-preview--text { max-width: 680px; }
@@ -80,7 +80,7 @@
 .home-preview__details li + li { margin-top: 8px; }
 .home-preview__content > img { display: block; width: 100%; height: 100%; max-height: 520px; object-fit: cover; background: white; }
 .home-preview__content > img[src*="product-"], .home-preview__content > img[src*="edit-"] { object-fit: contain; }
-.home-preview__close { position: absolute; top: 12px; right: 12px; z-index: 1; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border: 1px solid #dadcd2; border-radius: 50%; background: #fafaf7; font-size: 28px !important; line-height: 1 !important; }
+.home-preview__close { position: absolute; top: 12px; right: 12px; z-index: 1; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border: 1px solid #dadcd2; border-radius: 50%; background: #fff; font-size: 28px !important; line-height: 1 !important; }
 .home-preview__copy { padding: 68px 34px 42px; }
 .home-preview__copy h2 { font-weight: 600; font-size: 30px; line-height: 1.2; margin: 12px 0 20px; }
 .home-preview__copy .home-muted { margin-top: 8px; }

@@ -1,4 +1,4 @@
-.shop-panel { box-sizing: border-box; position: fixed; inset: 0 0 0 auto; width: min(560px, 100%); height: 100dvh; max-width: 100%; max-height: 100dvh; margin: 0; padding: 0; border: 0; background: #faf9f5; color: #242722; font: 16px/1.5 'CandiClie Hero Avenir', Arial, sans-serif; box-shadow: -16px 0 60px #0002; }
+.shop-panel { box-sizing: border-box; position: fixed; inset: 0 0 0 auto; width: min(560px, 100%); height: 100dvh; max-width: 100%; max-height: 100dvh; margin: 0; padding: 0; border: 0; background: #fff; color: #242722; font: 16px/1.5 'CandiClie Hero Avenir', Arial, sans-serif; box-shadow: -16px 0 60px #0002; }
 .shop-panel[open] { display: flex; flex-direction: column; }
 .shop-panel--search { width: min(860px, 100%); }
 .shop-panel::backdrop { background: #171c187d; }
@@ -9,7 +9,7 @@
 .shop-panel :is(button, input, select):focus-visible, .home-preview__shopping button:focus-visible { outline: 2px solid #626a4e; outline-offset: 4px; }
 .shop-panel h2, .shop-panel h3, .shop-panel p { margin: 0; }
 .shop-panel h3 { font-size: 18px; line-height: 1.4; font-weight: 600; }
-.shop-panel__header { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 30px 24px; border-bottom: 1px solid #dfe1d7; background: #f0eee5; }
+.shop-panel__header { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 30px 24px; border-bottom: 1px solid #dfe1d7; background: #fff; }
 .shop-eyebrow { font-size: 11px; letter-spacing: .1em; line-height: 1.6; font-weight: 600; text-transform: uppercase; color: #626a55; }
 .shop-panel__header h2 { margin-top: 8px; font-size: clamp(25px, 3vw, 32px); font-weight: 500; line-height: 1.2; letter-spacing: -.03em; }
 .shop-close { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border: 1px solid #cfd2c4; border-radius: 50%; background: transparent; font-size: 30px !important; line-height: 1; }
@@ -49,7 +49,7 @@
 .shop-empty > span { display: grid; place-items: center; width: 70px; height: 70px; margin: 0 auto 24px; border: 1px solid #c9cebe; border-radius: 50%; color: #626a55; font-size: 38px; font-weight: 400; }
 .shop-empty h3 { margin-top: 8px; font-size: 26px; font-weight: 500; letter-spacing: -.025em; }
 .shop-empty > p:not(.shop-eyebrow) { max-width: 340px; margin: 14px auto 24px; color: #646b5c; }
-.shop-empty--small { padding: 24px 10px; background: #f0eee5; }
+.shop-empty--small { padding: 24px 10px; background: #fff; }
 .shop-empty--small h3 { font-size: 22px; }
 .shop-empty--small > span { width: 50px; height: 50px; margin-bottom: 16px; border: 0; }
 .shop-bag-item { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; padding: 24px 0; border-bottom: 1px solid #dfe1d7; }

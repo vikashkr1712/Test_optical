@@ -25,7 +25,7 @@
 @font-face { font-family: 'Community Gantari'; src: url('/assets/editorial/gantari-latin.woff2') format('woff2'); font-style: normal; font-weight: 300 700; font-display: swap; }
 @font-face { font-family: 'Community Playfair'; src: url('/assets/editorial/playfair-latin.woff2') format('woff2'); font-style: normal; font-weight: 400 700; font-display: swap; }
 @font-face { font-family: 'Community Playfair'; src: url('/assets/editorial/playfair-italic-latin.woff2') format('woff2'); font-style: italic; font-weight: 400 700; font-display: swap; }
-.home-community.home-section { position: relative; width: 100%; max-width: 2060px; margin: 0 auto; padding: 64px 0 96px; background: #fffefc; color: #080808; font-family: 'Community Gantari', Arial, sans-serif; }
+.home-community.home-section { position: relative; width: 100%; max-width: 2060px; margin: 0 auto; padding: 64px 0 96px; background: #fff; color: #080808; font-family: 'Community Gantari', Arial, sans-serif; }
 .home-community__intro { display: flex; flex-direction: column; gap: 4px; padding: 0 clamp(52px, 4.63vw, 80px); }
 .home-community__intro .home-eyebrow { font: 600 14px/1.5 Helvetica, Arial, sans-serif; letter-spacing: 1.54px; color: #080808; }
 .home-community__intro h2 { margin: 0; font: 600 clamp(60px, 6.94vw, 120px)/1.05 'Community Playfair', Georgia, serif; letter-spacing: -7.2px; }
