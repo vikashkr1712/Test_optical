@@ -1,0 +1,57 @@
+.site-footer { background: #171c18; color: #f7f8f2; font: 400 16px/1.6 'CandiClie Hero Avenir', Arial, sans-serif; }
+.site-footer *, .site-footer *::before, .site-footer *::after { box-sizing: border-box; }
+.site-footer__inner { max-width: 1920px; margin: 0 auto; padding: 72px clamp(24px, 5.55vw, 100px) 24px; }
+.site-footer :is(h2, h3, p, ul) { margin: 0; }
+.site-footer a { color: inherit; text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.site-footer :is(a, button, summary):focus-visible { outline: 2px solid #d7e5ad; outline-offset: 5px; }
+.site-footer__intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; padding-bottom: 56px; border-bottom: 1px solid #454c42; }
+.site-footer__eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .12em; color: #d4dfc0; }
+.site-footer__intro h2 { margin-top: 18px; font-size: clamp(44px, 5.5vw, 80px); font-weight: 600; line-height: 1.08; letter-spacing: -.045em; }
+.site-footer__intro h2 span { color: #d4dfb9; }
+.site-footer__intro-copy { max-width: 390px; padding-bottom: 4px; }
+.site-footer__intro-copy > p { color: #d6dccf; font-size: 18px; line-height: 1.65; }
+.site-footer__cta { display: inline-flex; align-items: center; justify-content: space-between; gap: 36px; margin-top: 26px; padding: 13px 20px; border: 1px solid #9da98e; font-size: 16px; font-weight: 600; }
+.site-footer__cta span { font-size: 24px; line-height: 1; }
+.site-footer__directory { display: grid; grid-template-columns: 1.5fr repeat(3, minmax(0, 1fr)); gap: 40px; padding: 48px 0; }
+.site-footer__brand > a { display: inline-block; font-size: 37px; font-weight: 700; line-height: 1.2; letter-spacing: -.04em; }
+.site-footer__brand > p { margin-top: 18px; font-size: 16px; color: #c9d0c3; }
+.site-footer__group h3 { font-size: 16px; font-weight: 700; line-height: 1.5; }
+.site-footer__group ul { list-style: none; padding: 14px 0 0; }
+.site-footer__group a { display: inline-flex; align-items: center; min-height: 40px; font-size: 16px; color: #d4dacd; }
+.site-footer__help { padding: 30px 0 36px; border-top: 1px solid #454c42; }
+.site-footer__help > h3 { margin-bottom: 20px; font-size: 20px; font-weight: 600; }
+.site-footer__help-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; align-items: start; }
+.site-footer details { border-top: 1px solid #454c42; scroll-margin-top: 140px; }
+.site-footer summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 58px; padding: 14px 0; font-size: 16px; font-weight: 600; cursor: pointer; list-style: none; }
+.site-footer summary::-webkit-details-marker { display: none; }
+.site-footer summary > span { font-size: 26px; font-weight: 400; line-height: 1; }
+.site-footer details[open] summary > span { transform: rotate(45deg); }
+.site-footer details > p { padding-bottom: 20px; color: #d4dacd; font-size: 15px; line-height: 1.7; }
+.site-footer details > p a { text-decoration: underline; text-underline-offset: 3px; }
+.site-footer__bottom { display: flex; align-items: center; gap: 28px; padding-top: 24px; border-top: 1px solid #454c42; color: #bfc8b7; font-size: 14px; }
+.site-footer__bottom > p { margin-right: auto; }
+.site-footer__bottom button { display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 44px; padding: 0; border: 0; background: transparent; color: #f7f8f2; font: 600 14px/1.5 'CandiClie Hero Avenir', Arial, sans-serif; cursor: pointer; }
+.site-footer__bottom button span { font-size: 24px; }
+@media (max-width: 1000px) {
+  .site-footer__directory { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .site-footer__brand { grid-column: 1 / -1; }
+  .site-footer__brand > p br { display: none; }
+  .site-footer__help-grid { grid-template-columns: 1fr; gap: 0; }
+  .site-footer__intro-copy > p { font-size: 16px; }
+}
+@media (max-width: 600px) {
+  .site-footer__inner { padding-top: 48px; }
+  .site-footer__intro { display: block; padding-bottom: 36px; }
+  .site-footer__intro h2 { font-size: 48px; }
+  .site-footer__intro-copy { margin-top: 26px; }
+  .site-footer__intro-copy > p br { display: none; }
+  .site-footer__cta { margin-top: 22px; }
+  .site-footer__directory { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; row-gap: 32px; padding: 36px 0; }
+  .site-footer__group a { min-height: 44px; font-size: 15px; }
+  .site-footer__group:last-child { grid-column: 1 / -1; }
+  .site-footer__bottom { flex-wrap: wrap; column-gap: 24px; row-gap: 12px; }
+  .site-footer__bottom > p { width: 100%; }
+  .site-footer__bottom button { margin-left: auto; }
+  .site-footer details { scroll-margin-top: 80px; }
+}

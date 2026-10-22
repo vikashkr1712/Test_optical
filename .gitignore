@@ -1,6 +1,6 @@
 node_modules/
 .npm-cache/
-tools/gkb-inspector/dist/
+tools/site-inspector/dist/
 dist/
 .vite/
 
@@ -9,20 +9,27 @@ reference/
 validation/
 research/
 MEMORY.md
-/tools/gkb-inspector/
+/tools/site-inspector/
 
 # Keep project notes locally; publish only README Markdown files.
 *.[mM][dD]
 ![Rr][Ee][Aa][Dd][Mm][Ee].[mM][dD]
 
 # Unused original media retained locally for reference and inspection.
-/public/assets/gkb-header/logo.png
-/public/assets/gkb-hero/Eyewear_campaign_video_sequence_20261021162004.mp4
-/public/assets/gkb-hero/slide-01-*.mp4
-/public/assets/gkb-hero/slide-*-desktop.png
-/public/assets/gkb-hero/slide-*-mobile.png
-/public/assets/gkb-hero/slide-*-desktop.jpg
-/public/assets/gkb-hero/slide-*-mobile.jpg
+/public/assets/header/logo.png
+/public/assets/hero/Eyewear_campaign_video_sequence_20261021162004.mp4
+/public/assets/hero/Eyewear_campaign_video_sequence_clean.mp4
+/public/assets/hero/slide-01-*.mp4
+/public/assets/hero/slide-*-desktop.png
+/public/assets/hero/slide-*-mobile.png
+/public/assets/hero/slide-*-desktop.jpg
+/public/assets/hero/slide-*-mobile.jpg
+/public/assets/hero/slide-0[245678]-*-browser.*
+
+# Removed homepage cards: retain their photos only in this workspace.
+/public/assets/home/product-4-*.webp
+/public/assets/home/edit-4-*.webp
+/public/assets/home/category-accessories-*.webp
 
 # Local credentials and environment settings
 .env

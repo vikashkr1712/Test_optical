@@ -1,12 +1,16 @@
-import GKBHeader from './components/GKBHeader.jsx';
-import GKBHero from './components/GKBHero.jsx';
+import SiteHeader from './components/SiteHeader.jsx';
+import HomeHero from './components/HomeHero.jsx';
+import HomeCollections from './components/HomeCollections.jsx';
+import SiteFooter from './components/SiteFooter.jsx';
 
 export default function App() {
   return <>
     <a className="skip-link" href="#main">Skip to featured collections</a>
-    <GKBHeader />
-    <main id="main">
-      <GKBHero />
+    <SiteHeader />
+    <main id="main" tabIndex="-1">
+      <HomeHero />
+      <HomeCollections />
     </main>
+    <SiteFooter />
   </>;
 }
