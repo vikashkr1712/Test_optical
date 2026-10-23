@@ -3,6 +3,7 @@ import './HomeHero.css';
 import './HeroImageCampaign.css';
 import slides from './HomeHero.slides.js';
 import FirstHeroCampaign from './FirstHeroCampaign.jsx';
+import HeroVideoCaption from './HeroVideoCaption.jsx';
 
 function useMediaQuery(query) {
   const [matches, setMatches] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches);
@@ -28,8 +29,9 @@ function SoundIcon({ muted }) {
 }
 
 const TRANSITION_MS = 600;
+const IMAGE_DWELL_MS = 5000;
 
-const VideoSlide = memo(function VideoSlide({ src, label, reducedMotion, active, warm, clone = false }) {
+const VideoSlide = memo(function VideoSlide({ src, label, caption, reducedMotion, selected, active, warm, restartKey, onComplete, clone = false }) {
   const video = useRef(null);
   const [loadedSource, setLoadedSource] = useState(null);
   const [paused, setPaused] = useState(true);
@@ -37,10 +39,12 @@ const VideoSlide = memo(function VideoSlide({ src, label, reducedMotion, active,
   const [muted, setMuted] = useState(true);
   const [failed, setFailed] = useState(false);
   useEffect(() => {
+    if (!selected) return;
+    video.current.currentTime = 0;
     setMuted(true);
     setUserPaused(false);
     setFailed(false);
-  }, [src]);
+  }, [src, selected, restartKey]);
   useEffect(() => {
     if (active || warm) setLoadedSource(src);
   }, [src, active, warm]);
@@ -53,10 +57,13 @@ const VideoSlide = memo(function VideoSlide({ src, label, reducedMotion, active,
     let cancelled = false;
     player.play().catch(() => { if (!cancelled) setPaused(true); });
     return () => { cancelled = true; player.pause(); };
-  }, [src, loadedSource, active, reducedMotion, userPaused]);
+  }, [src, loadedSource, active, reducedMotion, userPaused, restartKey]);
   return <>
-    <video ref={video} className="home-hero__video" src={loadedSource === src ? src : undefined} autoPlay={active && !reducedMotion && !userPaused} muted={muted} loop playsInline preload={active ? 'auto' : warm ? 'metadata' : 'none'}
-      aria-label={label} onError={() => setFailed(true)} onPlay={() => setPaused(false)} onPause={() => setPaused(true)} />
+    <div className={`hero-video-stage${caption ? ' hero-video-stage--captioned' : ''}`}>
+      <video ref={video} className="home-hero__video" src={loadedSource === src ? src : undefined} muted={muted} playsInline preload={active ? 'auto' : warm ? 'metadata' : 'none'}
+        aria-label={label} onEnded={() => { if (active) onComplete(); }} onError={() => setFailed(true)} onPlay={() => setPaused(false)} onPause={() => setPaused(true)} />
+      {caption && <HeroVideoCaption {...caption} />}
+    </div>
     {failed && <span className="home-hero__media-error" role="status">This video could not be loaded.</span>}
     <div className="home-hero__video-controls">
       <button type="button" tabIndex={active && !clone ? 0 : -1} aria-label={paused ? 'Play video' : 'Pause video'} onClick={() => {
@@ -73,16 +80,16 @@ const VideoSlide = memo(function VideoSlide({ src, label, reducedMotion, active,
   </>;
 });
 
-const HeroSlide = memo(function HeroSlide({ slide, number, mobile, active, warm, reducedMotion, clone = false, onCampaignComplete, campaignAudio }) {
+const HeroSlide = memo(function HeroSlide({ slide, number, mobile, selected, active, warm, reducedMotion, restartKey, clone = false, onVideoComplete, campaignAudio }) {
   const [imageReady, setImageReady] = useState(active || warm);
   useEffect(() => { if (active || warm) setImageReady(true); }, [active, warm]);
   return <div className={clone ? 'home-hero__clone' : 'home-hero__slide'} data-slide={clone ? 'clone' : number} data-campaign={slide.campaign ? 'first' : undefined} data-editorial={slide.editorial || undefined} data-theme={slide.theme}
     role={clone ? 'presentation' : 'group'} aria-roledescription={clone ? undefined : 'slide'}
-    aria-label={clone ? undefined : `${number + 1} of ${slides.length}: ${slide.name}`} aria-hidden={clone || !active}>
+    aria-label={clone ? undefined : `${number + 1} of ${slides.length}: ${slide.name}`} aria-hidden={clone || !selected}>
     {slide.type === 'video' ? <>
-      {slide.campaign ? <FirstHeroCampaign src={mobile ? slide.mobile : slide.desktop} active={active} warm={warm} reducedMotion={reducedMotion} clone={clone}
-        PauseIcon={PauseIcon} SoundIcon={SoundIcon} onComplete={onCampaignComplete} audioPreference={campaignAudio} /> :
-        <VideoSlide src={mobile ? slide.mobile : slide.desktop} label={slide.name} active={active} warm={warm} reducedMotion={reducedMotion} clone={clone} />}
+      {slide.campaign ? <FirstHeroCampaign src={mobile ? slide.mobile : slide.desktop} selected={selected} active={active} warm={warm} restartKey={restartKey} reducedMotion={reducedMotion} clone={clone}
+        PauseIcon={PauseIcon} SoundIcon={SoundIcon} onComplete={() => onVideoComplete(number)} audioPreference={campaignAudio} /> :
+        <VideoSlide src={mobile ? slide.mobile : slide.desktop} label={slide.name} caption={slide.caption} selected={selected} active={active} warm={warm} restartKey={restartKey} onComplete={() => onVideoComplete(number)} reducedMotion={reducedMotion} clone={clone} />}
       <a className="home-hero__media-link" href={slide.href} tabIndex={active && !clone ? 0 : -1} aria-label={`Explore ${slide.name}`} draggable="false" />
     </> : <div className={slide.editorial ? 'hero-image-campaign' : undefined}>
       <a className="home-hero__image-link" href={slide.href} tabIndex={-1} aria-hidden="true" draggable="false">
@@ -111,40 +118,38 @@ export default function HomeHero({ className = '' }) {
   const [index, setIndex] = useState(0);
   const [position, setPosition] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [cycle, setCycle] = useState(0);
   const [hidden, setHidden] = useState(false);
   const [inView, setInView] = useState(true);
-  const [campaignComplete, setCampaignComplete] = useState(false);
+  const [completedVideo, setCompletedVideo] = useState(null);
   const campaignAudio = useRef(undefined);
-  const handleCampaignComplete = useCallback(() => setCampaignComplete(true), []);
   const region = useRef(null);
   const track = useRef(null);
   const currentPosition = useRef(0);
+  const handleVideoComplete = useCallback(number => {
+    if (currentPosition.current % slides.length === number) setCompletedVideo(number);
+  }, []);
   const gesture = useRef(null);
   const dragOffset = useRef(0);
   const dragFrame = useRef(0);
   const preventClick = useRef(false);
   const markerPress = useRef(null);
-  const remaining = useRef(mobile ? 3000 : 5000);
+  const remaining = useRef(IMAGE_DWELL_MS);
   const goTo = useCallback((next, rewind = false) => {
     const target = rewind && next === slides.length ? slides.length : Math.max(0, Math.min(slides.length - 1, next));
     const changed = target !== currentPosition.current;
     currentPosition.current = target;
     setPosition(target);
     setIndex(target % slides.length);
-    if (target % slides.length === 0) setCampaignComplete(false);
+    setCompletedVideo(null);
     setTransitioning(changed && !reducedMotion);
     setCycle(value => value + 1);
   }, [reducedMotion]);
 
   const finishTransition = useCallback(() => {
     if (currentPosition.current === slides.length) {
-      const cloneVideo = track.current.querySelector('[data-slide="clone"] video');
-      const firstVideo = track.current.querySelector('[data-slide="0"] video');
-      if (firstVideo?.readyState >= 1 && cloneVideo?.readyState >= 1) firstVideo.currentTime = cloneVideo.currentTime;
       // Reset behind the identical first-slide buffer, without sweeping through seven slides.
       track.current.style.transitionDuration = '0ms';
       currentPosition.current = 0;
@@ -166,11 +171,11 @@ export default function HomeHero({ className = '' }) {
   }, []);
 
   useEffect(() => {
-    remaining.current = slides[index].campaign && campaignComplete ? 0 : mobile ? 3000 : 5000;
-  }, [index, cycle, mobile, campaignComplete]);
+    remaining.current = completedVideo === index ? 0 : IMAGE_DWELL_MS;
+  }, [index, cycle, completedVideo]);
 
   useEffect(() => {
-    if (reducedMotion || focused || hidden || !inView || dragging || hovered || transitioning || (slides[index].campaign && !campaignComplete)) return;
+    if (reducedMotion || focused || hidden || !inView || dragging || transitioning || (slides[index].type === 'video' && completedVideo !== index)) return;
     const started = performance.now();
     const timer = setTimeout(() => {
       goTo(currentPosition.current + 1, true);
@@ -179,7 +184,7 @@ export default function HomeHero({ className = '' }) {
       clearTimeout(timer);
       remaining.current = Math.max(0, remaining.current - (performance.now() - started));
     };
-  }, [index, cycle, mobile, hovered, focused, reducedMotion, hidden, inView, dragging, transitioning, goTo, campaignComplete]);
+  }, [index, cycle, focused, reducedMotion, hidden, inView, dragging, transitioning, goTo, completedVideo]);
 
   useEffect(() => {
     if (position === slides.length && reducedMotion) finishTransition();
@@ -240,7 +245,6 @@ export default function HomeHero({ className = '' }) {
   };
 
   return <section ref={region} className={`home-hero${transitioning || dragging ? ' home-hero--moving' : ''} ${className}`} role="region" aria-roledescription="carousel" aria-label="candiclie featured collections"
-    onPointerEnter={event => { if (event.pointerType === 'mouse') setHovered(true); }} onPointerLeave={event => { if (event.pointerType === 'mouse') setHovered(false); }}
     onFocusCapture={event => { if (event.target.matches(':focus-visible')) setFocused(true); }} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
     onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={() => {
       gesture.current = null; cancelAnimationFrame(dragFrame.current); dragFrame.current = 0; dragOffset.current = 0;
@@ -253,9 +257,9 @@ export default function HomeHero({ className = '' }) {
     <div ref={track} className="home-hero__track" onTransitionEnd={event => {
       if (event.target === event.currentTarget && event.propertyName === 'transform') finishTransition();
     }} style={{ transform: `translate3d(calc(${-position * 100}% + ${dragOffset.current}px), 0, 0)`, transitionDuration: dragging || reducedMotion || !transitioning ? '0ms' : `${TRANSITION_MS}ms` }}>
-      {slides.map((slide, i) => <HeroSlide key={slide.name} slide={slide} number={i} mobile={mobile} active={position === i && !hidden && inView}
-        warm={inView && i === (index + 1) % slides.length} reducedMotion={reducedMotion} onCampaignComplete={slide.campaign ? handleCampaignComplete : undefined} campaignAudio={slide.campaign ? campaignAudio : undefined} />)}
-      <HeroSlide slide={slides[0]} number={0} mobile={mobile} active={position === slides.length && !hidden && inView} warm={inView && position >= slides.length - 1} reducedMotion={reducedMotion} onCampaignComplete={handleCampaignComplete} campaignAudio={campaignAudio} clone />
+      {slides.map((slide, i) => <HeroSlide key={slide.name} slide={slide} number={i} mobile={mobile} selected={position === i} active={position === i && !hidden && inView && !transitioning}
+        warm={inView && i === (index + 1) % slides.length} restartKey={cycle} reducedMotion={reducedMotion} onVideoComplete={handleVideoComplete} campaignAudio={slide.campaign ? campaignAudio : undefined} />)}
+      <HeroSlide slide={slides[0]} number={0} mobile={mobile} selected={false} active={false} warm={inView && position >= slides.length - 1} restartKey={cycle} reducedMotion={reducedMotion} onVideoComplete={handleVideoComplete} campaignAudio={campaignAudio} clone />
     </div>
     <div className="home-hero__pagination" aria-label="Choose a slide" onPointerDown={event => {
       preventClick.current = false;

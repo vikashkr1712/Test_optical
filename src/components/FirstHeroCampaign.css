@@ -16,10 +16,10 @@
 .first-campaign-caption {
   position: absolute;
   z-index: 1;
-  left: 5%;
+  left: var(--hero-copy-inset);
   top: 32%;
-  width: 34%;
-  max-width: 600px;
+  width: 46%;
+  max-width: 900px;
   padding: 0;
   color: #fff;
   text-shadow: 0 2px 10px rgb(0 0 0 / 20%);
@@ -27,29 +27,6 @@
   text-align: left;
 }
 .home-hero [data-campaign="first"] .home-hero__video-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff70; border-radius: 50%; background: rgb(9 16 12 / 75%); }
-.first-campaign-caption h2 {
-  margin: 0;
-  color: inherit;
-  font-family: 'CandiClie Hero Avenir', sans-serif;
-  font-size: clamp(34px, 3.6cqw, 62px);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -.025em;
-  text-wrap: balance;
-  overflow-wrap: break-word;
-}
-.first-campaign-caption p {
-  margin: 16px 0 0;
-  color: inherit;
-  font-size: clamp(18px, 1.55cqw, 24px);
-  font-weight: 600;
-  line-height: 1.45;
-  text-wrap: pretty;
-  overflow-wrap: break-word;
-}
-.first-campaign-caption__text { animation: campaign-caption-in 240ms ease-out; }
-@keyframes campaign-caption-in { from { opacity: 0; } to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .first-campaign-caption__text { animation: none; } }
 /* Short landscape screens reserve the lower right corner for playback controls. */
 @media (max-width: 1023px) and (orientation: landscape) {
   .home-hero [data-campaign="first"] .home-hero__video-controls { left: auto; right: 20px; bottom: 20px; gap: 12px; }
@@ -68,8 +45,8 @@
   .first-campaign-caption[data-scene],
   .first-campaign-stage[data-tone="light"] .first-campaign-caption {
     top: calc(100% + 30px);
-    left: clamp(24px, 5cqw, 40px);
-    right: clamp(24px, 5cqw, 40px);
+    left: var(--hero-copy-inset);
+    right: var(--hero-copy-inset);
     width: auto;
     max-width: none;
     color: #29251f;
@@ -78,8 +55,6 @@
   }
   .first-campaign-stage::after { display: none; }
   .home-hero .first-campaign-video { object-fit: contain; object-position: center; }
-  .first-campaign-caption h2 { font-size: clamp(32px, 4.8cqw, 42px); line-height: 1.15; }
-  .first-campaign-caption p { margin-top: 12px; font-size: clamp(18px, 2.6cqw, 22px); }
   .home-hero [data-campaign="first"] .home-hero__video-controls button { border-color: #29251f40; background: #ffffffb3; }
   .home-hero [data-campaign="first"] .home-hero__video-controls svg { filter: brightness(0); opacity: .8; }
   .home-hero:has([data-slide="0"][aria-hidden="false"]) .home-hero__bullet::before { background: #aca69d; border: 0; }
