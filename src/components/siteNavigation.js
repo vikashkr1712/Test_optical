@@ -23,14 +23,14 @@ const gifting = (title, description, details) => info(title, 'A LITTLE SOMETHING
 
 export const navigation = [
   {
-    id: 'eyewear', label: 'Eyewear', heading: 'Find your kind of frame.',
+    id: 'eyewear', label: 'Glasses', heading: 'Find your kind of frame.',
     description: 'Everyday essentials and a little more personality. Start with a style that feels like you.',
     overview: eyewear('Explore eyewear', 'Discover optical frames, sunglasses and expressive shapes in our featured edits.', images.eyewear, ['Explore frames for him, her and kids.', 'Compare classic and statement silhouettes.']),
     groups: [
       { title: 'Shop by type', items: [
         choice('Eyeglasses', 'Your everyday essential', eyewear('Eyeglasses', 'Clean optical frames, classic silhouettes and a fresh point of view. Browse our everyday eyewear edit.')),
         choice('Sunglasses', 'A brighter point of view', eyewear('Sunglasses', 'From understated shapes to bold proportions, discover sunglasses that complement your personal style.', images.fashion)),
-        choice('Fresh perspectives', 'Discover the latest edit', eyewear('Fresh perspectives', 'Explore the second featured-frame edit for different colours, expressive silhouettes and a fresh look.', images.fashion)),
+        choice('New In', 'Discover the latest edit', eyewear('New In', 'Explore the second featured-frame edit for different colours, expressive silhouettes and a fresh look.', images.fashion)),
       ] },
       { title: 'For everyone', items: [
         choice('For men', 'Make it your signature', eyewear('The men’s edit', 'Explore clean opticals, distinctive details and statement sunglasses for your everyday rotation.', images.men)),
@@ -46,7 +46,7 @@ export const navigation = [
     ],
   },
   {
-    id: 'contact-lens', label: 'Contact Lens', heading: 'Explore your lens options.',
+    id: 'contact-lens', label: 'Contact Lenses', heading: 'Explore your lens options.',
     description: 'A simple introduction to the categories, with a clear place to start.',
     overview: lens('Contact lenses', 'Explore the lens categories below before discussing the right option with an eye-care professional.', ['Daily lenses', 'Monthly lenses', 'Coloured lenses']),
     groups: [
@@ -62,7 +62,7 @@ export const navigation = [
     ],
   },
   {
-    id: 'accessories', label: 'Accessories', heading: 'The little things, considered.',
+    id: 'accessories', label: 'Care & Accessories', heading: 'The little things, considered.',
     description: 'Explore the finishing touches that belong alongside your favourite pair.',
     overview: accessory('Eyewear accessories', 'Discover the categories for storing, carrying and caring for your frames.', ['Cases and pouches', 'Cleaning cloths', 'Everyday care essentials']),
     groups: [
@@ -78,13 +78,13 @@ export const navigation = [
     ],
   },
   {
-    id: 'brands', label: 'Brands', heading: 'Different identities. Your point of view.',
+    id: 'brands', label: 'Designer Brands', heading: 'Different identities. Your point of view.',
     description: 'Explore the eight style identities in our House of Brands.',
     overview: info('House of Brands', 'THE DIRECTORY', 'Discover eight distinct style identities, from considered classics to expressive everyday frames.', { media: images.fashion, cta: cta('Explore House of Brands', '#house-of-brands') }),
     groups: [0, 4].map((start, index) => ({ title: index === 0 ? 'Considered classics' : 'Expressive perspectives', items: brands.slice(start, start + 4).map(brand => choice(brand.title, brand.line, info(brand.title, 'HOUSE OF BRANDS', brand.description, { media: photo(brand.image, brand.alt, true), cta: cta('Explore House of Brands', '#house-of-brands') }))) })),
   },
   {
-    id: 'about', label: 'About', heading: 'A fresh point of view.',
+    id: 'about', label: 'Our Story', heading: 'A fresh point of view.',
     description: 'Get to know CandiClie through our frames, style edits and community.',
     overview: info('About CandiClie', 'SEE LIFE. YOUR WAY.', 'CandiClie brings eyewear discovery, considered style edits and everyday inspiration together in one place.', { details: ['Explore a selection of optical frames and sunglasses.', 'Find different points of view in our brand and community edits.'], cta: cta('Discover our collections', '#collection-edits') }),
     groups: [
@@ -99,12 +99,12 @@ export const navigation = [
     ],
   },
   {
-    id: 'offers', label: 'Offers', heading: 'Find your next favourite.',
+    id: 'offers', label: 'Special Offers', heading: 'Find your next favourite.',
     description: 'Explore the featured edits and learn how offers will be shown when shopping opens.',
-    overview: info('Offers & featured edits', 'THE CANDICLIE SELECTION', 'Browse the featured selection for frame inspiration. No discount or promotional code is active on this preview homepage.', { media: images.eyewear, cta: cta('Browse featured frames') }),
+    overview: info('Offers & featured edits', 'THE CANDICLIE EDIT', 'Browse the featured selection for frame inspiration. No discount or promotional code is active on this preview homepage.', { media: images.eyewear, cta: cta('Browse featured frames') }),
     groups: [
       { title: 'Explore the edits', items: [
-        choice('Featured frames', 'Start with the current selection', eyewear('Featured frames', 'Explore our three best-seller previews and the Fresh perspectives tab for a different look.')),
+        choice('Featured frames', 'Start with the current selection', eyewear('Featured frames', 'Explore our Signature Picks and New In edits for different points of view.')),
         choice('Sunglasses edit', 'A little more character', eyewear('The sunglasses edit', 'Discover expressive sunglasses among our featured frames and fashion categories.', images.fashion)),
       ] },
       { title: 'Before you shop', items: [
@@ -114,7 +114,7 @@ export const navigation = [
     ],
   },
   {
-    id: 'festive-sale', label: 'Festive Sale', heading: 'A little celebration. A lot of style.',
+    id: 'festive-sale', label: 'Seasonal Edit', heading: 'A little celebration. A lot of style.',
     description: 'Discover frames and gift inspiration for your next special occasion.',
     overview: info('The festive edit', 'STYLE FOR EVERY CELEBRATION', 'Explore expressive frames and considered gift inspiration. This edit does not currently include a live sale discount.', { media: images.fashion, cta: cta('Explore the featured selection') }),
     groups: [
@@ -129,7 +129,7 @@ export const navigation = [
     ],
   },
   {
-    id: 'gift-card', label: 'Gift Card', heading: 'Let them find their own look.',
+    id: 'gift-card', label: 'Gift Cards', heading: 'Let them find their own look.',
     description: 'Explore gifting information and frame inspiration before gift card shopping opens.',
     overview: gifting('Gift cards', 'A gift card could give someone room to choose a frame that feels like them. Gift card shopping is not open on this homepage.', ['Explore frame inspiration for the people you have in mind.', 'Purchasing and redemption details will be provided if gift cards launch.']),
     groups: [

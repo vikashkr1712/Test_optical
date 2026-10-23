@@ -43,6 +43,9 @@
 .home-street:focus-visible .home-street__content { width: 100%; }
 .home-street:focus-visible .home-street__image { height: clamp(380px, 41.09vw, 710px); }
 .home-directory, .home-community { content-visibility: auto; contain-intrinsic-size: auto 850px; }
+@media (min-width: 1001px) {
+  .home-community__grid > .home-street:nth-child(2) { top: 24px; }
+}
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .home-label:hover > img { transform: scale(1.035); }
   .home-directory__controls button:hover:not(:disabled) { background: #f1f2eb; }

@@ -3,7 +3,7 @@ import './SiteHeader.css';
 import { navigation } from './siteNavigation.js';
 
 const announcements = [
-  ['Discover candiclie | About us', '/about-us'],
+  ['Discover CandiClie · Our story', '/about-us'],
   ['Purchase a candiclie gift card for your loved ones', '/gift-card'],
 ];
 
@@ -16,6 +16,7 @@ function Icon({ name }) {
     location: <><path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="3" /></>,
     left: <path d="m15 6-6 6 6 6" />,
     right: <path d="m9 6 6 6-6 6" />,
+    arrow: <><path d="M5 12h14m-5-5 5 5-5 5" /></>,
   };
   return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;
 }
@@ -106,7 +107,7 @@ export default function SiteHeader({ onSelect, onOpenPanel, bagCount = 0 }) {
         <a href={announcements[announcement][1]}>{announcements[announcement][0]}</a>
         <button type="button" aria-label="Next announcement" onClick={() => setAnnouncement(value => (value + 1) % announcements.length)}><Icon name="right" /></button>
       </div>
-      <a className="site-header__eye-link" href="/store-locator?appointment=true">Book an Eye Test</a>
+      <a className="site-header__eye-link" href="/store-locator?appointment=true">Book an Eye Test<Icon name="arrow" /></a>
     </div>
     <div className="site-header__navigation">
       <div className="site-header__mobile-actions">

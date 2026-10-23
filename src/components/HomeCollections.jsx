@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import './HomeCollections.css';
 import HomeEditorial from './HomeEditorial.jsx';
+import HomeGuidance from './HomeGuidance.jsx';
 import { productGroups as products, currency } from './shopProducts.js';
 
 const asset = (name, size) => `/assets/home/${name}-${size}.webp`;
 
 const audiences = [
-  { id: 'for-him', title: 'Shop for him', eyebrow: 'EFFORTLESS. EVERY DAY.', description: 'From clean optical frames to statement sunglasses, find a look that feels like you.', collection: 'The men’s edit' },
-  { id: 'for-her', title: 'Shop for her', eyebrow: 'A LITTLE MAIN-CHARACTER ENERGY.', description: 'Explore soft shapes, expressive silhouettes and everyday favourites with a different point of view.', collection: 'The women’s edit' },
-  { id: 'for-kids', title: 'Shop for kids', eyebrow: 'SMALL FRAMES. BIG PERSONALITY.', description: 'Colourful frames and playful shapes for their everyday adventures. A comfortable fit comes first.', collection: 'The junior edit' },
+  { id: 'for-him', title: 'Men’s Collection', eyebrow: 'EFFORTLESS. EVERY DAY.', description: 'From clean optical frames to statement sunglasses, find a look that feels like you.', collection: 'The men’s edit' },
+  { id: 'for-her', title: 'Women’s Collection', eyebrow: 'A LITTLE MAIN-CHARACTER ENERGY.', description: 'Explore soft shapes, expressive silhouettes and everyday favourites with a different point of view.', collection: 'The women’s edit' },
+  { id: 'for-kids', title: 'Kids’ Collection', eyebrow: 'SMALL FRAMES. BIG PERSONALITY.', description: 'Colourful frames and playful shapes for their everyday adventures. A comfortable fit comes first.', collection: 'The junior edit' },
 ];
 
 const categories = [
@@ -78,14 +79,14 @@ export default function HomeCollections({ onSelect: setSelection }) {
   return <div className="home-collections">
     <section className="home-featured home-section" id="featured-picks" aria-labelledby="featured-heading">
       <div className="home-section__intro">
-        <div><p className="home-eyebrow">THE CANDICLIE SELECTION</p><h1 id="featured-heading">A world of frames.<br /><span>A look that’s yours.</span></h1></div>
-        <p className="home-section__description">Considered design. Distinctive details.<br /> Find your next everyday favourite.</p>
+        <div><p className="home-eyebrow home-featured__eyebrow">THE CANDICLIE EDIT</p><h1 id="featured-heading">Frames for every side of you.<span>Made to fit your everyday style.</span></h1></div>
+        <p className="home-section__description">Thoughtfully chosen styles with clean lines,<br /> comfortable fits, and a look you’ll reach for daily.</p>
       </div>
       <div className="home-featured__toolbar">
         <div className="home-tabs" role="tablist" aria-label="Featured frame selections" onKeyDown={moveTab}>
-          {[['best', 'Best sellers'], ['edit', 'Fresh perspectives']].map(([id, label]) => <button type="button" key={id} id={`tab-${id}`} role="tab" aria-selected={tab === id} aria-controls="featured-products" tabIndex={tab === id ? 0 : -1} onClick={() => selectTab(id)}>{label}</button>)}
+          {[['best', 'Signature Picks'], ['edit', 'New In']].map(([id, label]) => <button type="button" key={id} id={`tab-${id}`} role="tab" aria-selected={tab === id} aria-controls="featured-products" tabIndex={tab === id ? 0 : -1} onClick={() => selectTab(id)}>{label}</button>)}
         </div>
-        <a className="home-text-link home-featured__explore" href="#top-categories">Explore categories<Arrow /></a>
+        <a className="home-text-link home-featured__explore" href="#top-categories">Explore styles<Arrow /></a>
       </div>
       <div id="featured-products" role="tabpanel" aria-labelledby={`tab-${tab}`} tabIndex="0" className="home-products" ref={productRail}>
         {products[tab].map((product, index) => <article className="home-product" key={product.id}>
@@ -101,18 +102,18 @@ export default function HomeCollections({ onSelect: setSelection }) {
     <section className="home-audiences home-section" id="collection-edits" aria-labelledby="audience-heading">
       <div className="home-audiences__intro"><p className="home-eyebrow">GOOD STYLE HAS NO SINGLE LOOK</p><h2 id="audience-heading">Find your kind of frame.</h2></div>
       <div className="home-audiences__grid">{audiences.map(item => <button type="button" key={item.id} className="home-audience" onClick={() => setSelection(item)}>
-        <div className="home-audience__photo"><Photo name={item.id} kind="audience" alt={item.title === 'Shop for kids' ? 'Children wearing colourful glasses' : item.title === 'Shop for him' ? 'A man wearing statement eyewear' : 'A woman wearing statement eyewear'} /><span className="home-audience__arrow"><Arrow /></span></div>
-        <div className="home-audience__copy"><span className="home-eyebrow">{item.eyebrow}</span><h3>{item.title}</h3><span className="home-audience__link">Discover the edit</span></div>
+        <div className="home-audience__photo"><Photo name={item.id} kind="audience" alt={item.id === 'for-kids' ? 'Children wearing colourful glasses' : item.id === 'for-him' ? 'A man wearing statement eyewear' : 'A woman wearing statement eyewear'} /><span className="home-audience__arrow"><Arrow /></span></div>
+        <div className="home-audience__copy"><span className="home-eyebrow">{item.eyebrow}</span><h3>{item.title}</h3><span className="home-audience__link">Explore styles</span></div>
       </button>)}</div>
     </section>
 
-    <section className="home-brand" id="icon-edit" aria-label="The Ray-Ban icon edit">
-      <picture><source media="(max-width: 800px)" srcSet={asset('brand-banner', 800)} /><img src={asset('brand-banner', 1512)} width="1512" height="410" alt="Ray-Ban Aviator: iconic by design. A campaign portrait with amber aviator sunglasses." loading="lazy" decoding="async" /></picture>
-      <div className="home-brand__caption"><div><p className="home-eyebrow">THE ICON EDIT</p><p>Some styles never need an introduction.</p></div><a className="home-text-link" href="#top-categories">Find your signature<Arrow /></a></div>
+    <section className="home-brand" id="icon-edit" aria-labelledby="signature-heading">
+      <picture><source media="(max-width: 700px)" srcSet="/assets/hero/considered-details-mobile.webp" /><img src="/assets/hero/considered-details-desktop.webp" width="1400" height="2100" alt="Transparent-frame sunglasses resting on a pale stone surface" loading="lazy" decoding="async" /></picture>
+      <div className="home-brand__caption"><div><p className="home-eyebrow">THE SIGNATURE EDIT</p><h2 id="signature-heading">Timeless frames,<br /> modern attitude.</h2><p>Discover standout styles designed to elevate everyday dressing.</p></div><a className="home-text-link" href="#featured-picks">Explore the edit<Arrow /></a></div>
     </section>
 
     <section className="home-categories home-section" id="top-categories" aria-labelledby="categories-heading">
-      <div className="home-section__intro"><div><p className="home-eyebrow">A GOOD PLACE TO START</p><h2 id="categories-heading">Shop from our top categories</h2></div><span className="home-categories__hint">Different styles. Same you.</span></div>
+      <div className="home-section__intro"><div><p className="home-eyebrow">A GOOD PLACE TO START</p><h2 id="categories-heading">Find your everyday frame.</h2></div><span className="home-categories__hint">Different styles. Same you.</span></div>
       <div className="home-categories__rail" ref={categoryRail}>{categories.map((item, i) => <button type="button" key={item.id} className="home-category" onClick={() => setSelection(item)} aria-label={`Explore ${item.title}`}>
         <div className="home-category__photo"><Photo name={item.id} alt={`${item.title} eyewear collection`} /><span>0{i + 1}</span></div>
         <div className="home-category__title"><h3>{item.title}</h3><Arrow /></div><p>{item.subtitle}</p>
@@ -120,5 +121,6 @@ export default function HomeCollections({ onSelect: setSelection }) {
       <div className="home-rail-controls home-rail-controls--categories"><span>Swipe to find your style</span><div><button type="button" onClick={() => scrollRail(categoryRail, -1)} aria-label="Previous categories"><Arrow direction="left" /></button><button type="button" onClick={() => scrollRail(categoryRail, 1)} aria-label="Next categories"><Arrow /></button></div></div>
     </section>
     <HomeEditorial onPreview={setSelection} />
+    <HomeGuidance onPreview={setSelection} />
   </div>;
 }

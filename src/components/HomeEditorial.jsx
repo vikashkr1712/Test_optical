@@ -4,9 +4,9 @@ import './HomeEditorial.css';
 import { brands } from './brandCollections.js';
 
 const stories = [
-  { image: 'street-user1', title: 'The city after dark', label: 'OFFSCRIPT / CITY EDIT', description: 'Dark frames, a sharp silhouette and a little city energy. An everyday outfit with a stronger point of view.', alt: 'Black-and-white street-style portrait of a man wearing rectangular black eyeglasses' },
-  { image: 'street-user2', title: 'A softer kind of statement', label: 'SOLSTICE / OUT IN THE OPEN', description: 'Soft colour and expressive sunglasses. A playful reminder to make a little room for the unexpected.', alt: 'Woman in tinted aviator sunglasses and a white butterfly-print shirt' },
-  { image: 'street-user3', title: 'Good company. Great frames.', label: 'NORTHLINE / SOCIAL CLUB', description: 'A relaxed look, a favourite pair of sunglasses and nowhere particular to be. Find your own off-duty style.', alt: 'Man wearing dark sunglasses and resting his chin on his arm in warm sunlight' },
+  { image: 'street-user1', title: 'The city after dark', label: '01 / AFTER HOURS', description: 'Dark frames, a sharp silhouette and a little city energy. An everyday outfit with a stronger point of view.', alt: 'Black-and-white street-style portrait of a man wearing rectangular black eyeglasses' },
+  { image: 'street-user2', title: 'A softer kind of statement', label: '02 / IN COLOUR', description: 'Soft colour and expressive sunglasses. A playful reminder to make a little room for the unexpected.', alt: 'Woman in tinted aviator sunglasses and a white butterfly-print shirt' },
+  { image: 'street-user3', title: 'Good company. Great frames.', label: '03 / OFF DUTY', description: 'A relaxed look, a favourite pair of sunglasses and nowhere particular to be. Find your own off-duty style.', alt: 'Man wearing dark sunglasses and resting his chin on his arm in warm sunlight' },
 ];
 
 function Arrow({ left = false }) {
@@ -22,7 +22,7 @@ function mediaFor(item, street = false) {
 export default function HomeEditorial({ onPreview }) {
   const rail = useRef(null);
   const [position, setPosition] = useState({ index: 0, start: true, end: false });
-  const show = (item, street = false) => onPreview({ ...item, id: item.image, eyebrow: street ? 'COMMUNITY / STYLE NOTES' : 'HOUSE OF BRANDS', media: mediaFor(item, street) });
+  const show = (item, street = false) => onPreview({ ...item, id: item.image, eyebrow: street ? 'THE CANDICLIE JOURNAL' : 'THE CANDICLIE INDEX', media: mediaFor(item, street) });
   const scroll = direction => {
     const item = rail.current?.firstElementChild;
     if (!item) return;
@@ -43,7 +43,7 @@ export default function HomeEditorial({ onPreview }) {
 
   return <>
     <section className="home-directory home-section" id="house-of-brands" aria-labelledby="directory-heading">
-      <div className="home-editorial__intro"><div><p className="home-eyebrow">THE DIRECTORY</p><h2 id="directory-heading">House of <em>Brands</em></h2></div><p>Different identities.<br /> A shared eye for style.</p></div>
+      <div className="home-editorial__intro"><div><p className="home-eyebrow">THE CANDICLIE INDEX</p><h2 id="directory-heading">Character, <em>in focus.</em></h2></div><p>Different identities.<br /> A shared eye for style.</p></div>
       <div className="home-directory__rail" ref={rail} onScroll={event => updatePosition(event.currentTarget)} role="region" aria-label="Browse brand collections" tabIndex="0" onKeyDown={event => {
         if (event.target !== event.currentTarget || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
         event.preventDefault();
@@ -62,7 +62,7 @@ export default function HomeEditorial({ onPreview }) {
     </section>
 
     <section className="home-community home-section" id="community" aria-labelledby="community-heading">
-      <div className="home-community__intro"><p className="home-eyebrow">COMMUNITY</p><h2 id="community-heading">Seen <em>on the </em><strong>Streets</strong></h2></div>
+      <div className="home-community__intro"><p className="home-eyebrow">THE CANDICLIE JOURNAL</p><h2 id="community-heading">Life, <em>in </em><strong>frames.</strong></h2></div>
       <div className="home-community__grid">{stories.map(story => <button type="button" key={story.image} className="home-street" aria-label={`Explore ${story.title}`} onClick={() => show(story, true)}>
         <span className="home-street__content">
           <span className="home-street__image"><img {...mediaFor(story, true)} sizes="(max-width: 600px) 260px, 29vw" loading="lazy" decoding="async" /></span>
