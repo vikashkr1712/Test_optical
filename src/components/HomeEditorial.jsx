@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import './HomeEditorial.css';
 
 import { brands } from './brandCollections.js';
@@ -19,10 +19,104 @@ function mediaFor(item, street = false) {
   return { src: path(sizes[0]), srcSet: `${path(sizes[0])} ${sizes[0]}w, ${path(sizes[1])} ${sizes[1]}w`, width: street ? 540 : 960, height: street ? 720 : 960, alt: item.alt };
 }
 
+// Repeated slides provide a buffer on both sides of the three visible stories.
+const storySlides = Array.from({ length: stories.length * 3 }, (_, index) => stories[index % stories.length]);
+
+function CommunityCarousel({ onPreview }) {
+  const [slide, setSlide] = useState({ index: stories.length + 1, moving: false });
+  const track = useRef(null);
+  const moving = useRef(false);
+  const restoreFocus = useRef(false);
+  const gesture = useRef(null);
+  const suppressClick = useRef(false);
+  const current = slide.index % stories.length;
+  const show = story => onPreview({ ...story, id: story.image, eyebrow: 'THE CANDICLIE JOURNAL', media: mediaFor(story, true) });
+  const move = direction => {
+    if (moving.current || !direction) return;
+    moving.current = true;
+    setSlide(previous => ({ index: previous.index + direction, moving: true }));
+  };
+  const finish = useCallback(() => {
+    if (!moving.current) return;
+    moving.current = false;
+    restoreFocus.current = track.current?.contains(document.activeElement);
+    setSlide(previous => ({ index: stories.length + previous.index % stories.length, moving: false }));
+  }, []);
+  useLayoutEffect(() => {
+    if (slide.moving || !restoreFocus.current) return;
+    restoreFocus.current = false;
+    track.current?.querySelector('.home-street--active .home-street__image')?.focus({ preventScroll: true });
+  }, [slide]);
+  useEffect(() => {
+    if (!slide.moving) return;
+    const timer = setTimeout(finish, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 550);
+    return () => clearTimeout(timer);
+  }, [slide, finish]);
+
+  return <div className="home-community__carousel" role="region" aria-roledescription="carousel" aria-label="Life, in frames stories" onKeyDown={event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    if (event.key === 'Home' || event.key === 'End') {
+      const target = event.key === 'Home' ? 0 : stories.length - 1;
+      const delta = (target - current + stories.length) % stories.length;
+      move(delta === stories.length - 1 ? -1 : delta);
+    } else move(event.key === 'ArrowRight' ? 1 : -1);
+  }}>
+    <div className="home-community__viewport" onPointerDown={event => {
+      if (!event.isPrimary) return;
+      suppressClick.current = false;
+      if (event.pointerType === 'mouse') return;
+      gesture.current = { x: event.clientX, y: event.clientY };
+    }} onPointerMove={event => {
+      const start = gesture.current;
+      if (start && Math.abs(event.clientX - start.x) > 10 && Math.abs(event.clientX - start.x) > Math.abs(event.clientY - start.y)) event.currentTarget.setPointerCapture(event.pointerId);
+    }} onPointerUp={event => {
+      const start = gesture.current;
+      gesture.current = null;
+      if (!start) return;
+      const dx = event.clientX - start.x;
+      const dy = event.clientY - start.y;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        suppressClick.current = true;
+        move(dx < 0 ? 1 : -1);
+      } else if (Math.hypot(dx, dy) < 10) {
+        // Handle touch taps on release, including browsers that omit a click after swiping.
+        const button = event.target.closest('.home-street__image, .home-street__explore');
+        if (button) { suppressClick.current = true; button.click(); }
+      }
+    }} onPointerCancel={() => { gesture.current = null; }} onClickCapture={event => {
+      if (suppressClick.current && event.detail > 0) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; }
+    }}>
+      <div className={`home-community__grid${slide.moving ? ' home-community__grid--moving' : ''}`} ref={track}
+        style={{ transform: `translateX(calc((100% - var(--community-card-width)) / 2 - ${slide.index} * (var(--community-card-width) + var(--community-gap))))` }}
+        onTransitionEnd={event => { if (event.target === event.currentTarget && event.propertyName === 'transform') finish(); }}>
+        {storySlides.map((story, index) => {
+          const active = index === slide.index;
+          const visible = Math.abs(index - slide.index) <= 1;
+          return <div key={index} className={`home-street${active ? ' home-street--active' : ''}`} role="group" aria-roledescription="slide" aria-label={`${index % stories.length + 1} of ${stories.length}`} aria-hidden={!visible} inert={!visible}>
+            <div className="home-street__content">
+              <button type="button" className="home-street__image" aria-label={`${active ? 'Explore' : 'Center'} ${story.title}`} aria-current={active ? 'true' : undefined} onClick={() => active ? show(story) : move(index - slide.index)}>
+                <img {...mediaFor(story, true)} sizes="(max-width: 600px) 78vw, 32vw" loading="lazy" decoding="async" draggable="false" />
+              </button>
+              <span className="home-street__label">{story.label}</span>
+              <button type="button" className="home-street__explore" aria-label={`Read ${story.title}`} onClick={() => show(story)}>Explore</button>
+            </div>
+          </div>;
+        })}
+      </div>
+    </div>
+    <div className="home-community__controls">
+      <button type="button" aria-label="Previous story" aria-controls="community" aria-disabled={slide.moving} onClick={() => move(-1)}><Arrow left /></button>
+      <p role="status" aria-live="polite" aria-atomic="true">{String(current + 1).padStart(2, '0')} <span aria-hidden="true">/</span> <span className="home-community__total">{String(stories.length).padStart(2, '0')}</span><span className="home-community__sr-only"> — {stories[current].title}</span></p>
+      <button type="button" aria-label="Next story" aria-controls="community" aria-disabled={slide.moving} onClick={() => move(1)}><Arrow /></button>
+    </div>
+  </div>;
+}
+
 export default function HomeEditorial({ onPreview }) {
   const rail = useRef(null);
   const [position, setPosition] = useState({ index: 0, start: true, end: false });
-  const show = (item, street = false) => onPreview({ ...item, id: item.image, eyebrow: street ? 'THE CANDICLIE JOURNAL' : 'THE CANDICLIE INDEX', media: mediaFor(item, street) });
+  const show = item => onPreview({ ...item, id: item.image, eyebrow: 'THE CANDICLIE INDEX', media: mediaFor(item) });
   const scroll = direction => {
     const item = rail.current?.firstElementChild;
     if (!item) return;
@@ -63,12 +157,7 @@ export default function HomeEditorial({ onPreview }) {
 
     <section className="home-community home-section" id="community" aria-labelledby="community-heading">
       <div className="home-community__intro"><p className="home-eyebrow">THE CANDICLIE JOURNAL</p><h2 id="community-heading">Life, <em>in </em><strong>frames.</strong></h2></div>
-      <div className="home-community__grid">{stories.map(story => <button type="button" key={story.image} className="home-street" aria-label={`Explore ${story.title}`} onClick={() => show(story, true)}>
-        <span className="home-street__content">
-          <span className="home-street__image"><img {...mediaFor(story, true)} sizes="(max-width: 600px) 260px, 29vw" loading="lazy" decoding="async" /></span>
-          <span className="home-street__label">{story.label}</span><span className="home-street__explore">Explore</span>
-        </span>
-      </button>)}</div>
+      <CommunityCarousel onPreview={onPreview} />
     </section>
   </>;
 }

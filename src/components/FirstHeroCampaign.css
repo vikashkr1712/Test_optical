@@ -11,8 +11,8 @@
   height: 100%;
 }
 .home-hero .first-campaign-video { object-fit: cover; object-position: 75% center; }
-/* A steady scrim keeps white copy readable through bright frames and crossfades. */
-.first-campaign-stage::after { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(90deg, rgb(9 16 12 / 80%) 0%, rgb(9 16 12 / 72%) 39%, rgb(9 16 12 / 18%) 64%, transparent 82%); pointer-events: none; }
+/* A light, gradual fade supports the copy while keeping the footage clear. */
+.first-campaign-stage::after { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(90deg, rgb(0 0 0 / 38%) 0%, rgb(0 0 0 / 28%) 26%, rgb(0 0 0 / 10%) 46%, transparent 64%); pointer-events: none; }
 .first-campaign-caption {
   position: absolute;
   z-index: 1;
@@ -22,11 +22,11 @@
   max-width: 900px;
   padding: 0;
   color: #fff;
-  text-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+  text-shadow: 0 1px 3px rgb(0 0 0 / 28%);
   pointer-events: none;
   text-align: left;
 }
-.home-hero [data-campaign="first"] .home-hero__video-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff70; border-radius: 50%; background: rgb(9 16 12 / 75%); }
+.home-hero [data-campaign="first"] .home-hero__video-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff70; border-radius: 50%; background: rgb(0 0 0 / 28%); }
 /* Short landscape screens reserve the lower right corner for playback controls. */
 @media (max-width: 1023px) and (orientation: landscape) {
   .home-hero [data-campaign="first"] .home-hero__video-controls { left: auto; right: 20px; bottom: 20px; gap: 12px; }

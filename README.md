@@ -32,9 +32,11 @@ The eight navbar labels are Glasses, Contact Lenses, Care & Accessories, Designe
 
 The CandiClie index uses an eight-card horizontal rail with editable sample names, including Aurel, Northline, and CandiClie Studio. The three journal cards reuse Lenskart's reference photographs temporarily. These display names are creative placeholders, not claims of brand partnerships. Brand and style previews stay on the homepage.
 
-The CandiClie journal uses numbered captions and a restrained desktop centre-portrait offset. Its existing 450ms hover expansion stays within fixed card space. Heading fonts are served locally, and touch layouts use a horizontal rail. Keyboard focus supports the same expansion, with animations disabled for reduced motion.
+The CandiClie journal opens with an enlarged centre portrait and smaller side images. Clicking either side image brings it into the same centre size; arrows, touch swipes and keyboard navigation support looping through all three stories. Hover adds a gentle zoom within the fixed image area and reveals an Explore arrow. Heading fonts are served locally, and reduced-motion preferences disable animated movement.
 
 Two compact sections follow the journal: Why Choose CandiClie and Lens & Care Guide. The guide's four topics and Learn more button open accessible on-page details using the existing preview dialog. No new routes, dependencies or services are added.
+
+Why Choose CandiClie cards have a small hover lift, a soft shadow, filled icons and an expanding accent line. Hover motion is limited to devices with a precise pointer and is disabled for reduced motion. The utility header strip and footer use black backgrounds with neutral text accents. The campaign video uses a lighter, gradual overlay to support readable captions without heavily darkening the footage.
 
 The footer combines dark styling and grouped navigation inspired by premium eyewear retailers, with in-page shopping/style/privacy help and a keyboard-accessible back-to-top control. Its links target existing sections. It adds no image downloads, third-party scripts, or new dependencies.
 

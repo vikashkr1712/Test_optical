@@ -1,19 +1,19 @@
 .hero-video-stage { position: absolute; inset: 0; }
-.hero-video-stage--captioned::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(9 16 12 / 78%) 0%, rgb(9 16 12 / 60%) 42%, transparent 78%); pointer-events: none; }
-.hero-video-caption { position: absolute; z-index: 1; top: 32%; left: var(--hero-copy-inset); width: 46%; max-width: 900px; color: #fff; text-align: left; text-shadow: 0 2px 10px rgb(0 0 0 / 20%); pointer-events: none; }
+.hero-video-stage--captioned::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(0 0 0 / 38%) 0%, rgb(0 0 0 / 28%) 26%, rgb(0 0 0 / 10%) 46%, transparent 64%); pointer-events: none; }
+.hero-video-caption { position: absolute; z-index: 1; top: 32%; left: var(--hero-copy-inset); width: 46%; max-width: 900px; color: #fff; text-align: left; text-shadow: 0 1px 3px rgb(0 0 0 / 28%); pointer-events: none; }
 .hero-video-caption__text { display: grid; justify-items: start; gap: 12px; animation: campaign-caption-in 240ms ease-out; }
 .hero-video-caption h2, .hero-video-caption p { margin: 0; color: inherit; font-family: 'CandiClie Hero Avenir', sans-serif; white-space: nowrap; }
 .hero-video-caption h2 { font-size: clamp(24px, 3cqw, 60px); font-weight: 700; line-height: 1.15; letter-spacing: -.025em; }
 .hero-video-caption__tagline { font-size: clamp(16px, 1.55cqw, 26px); font-weight: 500; line-height: 1.45; }
 .hero-video-caption__detail { font-size: clamp(13px, 1.1cqw, 19px); font-weight: 400; line-height: 1.5; letter-spacing: .015em; }
-.home-hero .hero-video-stage ~ .home-hero__video-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff70; border-radius: 50%; background: rgb(9 16 12 / 75%); }
+.home-hero .hero-video-stage ~ .home-hero__video-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff70; border-radius: 50%; background: rgb(0 0 0 / 28%); }
 @keyframes campaign-caption-in { from { opacity: 0; } to { opacity: 1; } }
 @media (max-width: 1023px) and (orientation: portrait) {
   .hero-video-caption h2 { font-size: clamp(20px, 5.2cqw, 34px); }
   .hero-video-caption__tagline { font-size: clamp(15px, 2.7cqw, 22px); }
   .hero-video-caption__detail { font-size: clamp(13px, 2.1cqw, 18px); }
   .hero-video-caption__text { gap: 10px; }
-  .hero-video-stage--captioned::after { background: linear-gradient(0deg, rgb(9 16 12 / 85%) 0%, rgb(9 16 12 / 50%) 32%, transparent 62%); }
+  .hero-video-stage--captioned::after { background: linear-gradient(0deg, rgb(0 0 0 / 42%) 0%, rgb(0 0 0 / 22%) 28%, transparent 56%); }
   .hero-video-stage .hero-video-caption { top: auto; bottom: 150px; left: var(--hero-copy-inset); right: var(--hero-copy-inset); width: auto; max-width: none; }
 }
 @media (prefers-reduced-motion: reduce) { .hero-video-caption__text { animation: none; } }

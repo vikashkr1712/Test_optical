@@ -33,18 +33,23 @@
 .home-guide-topic:focus-visible .home-guide-topic__action { text-decoration: underline; text-underline-offset: 4px; }
 .home-guidance .home-guide-link:focus-visible { background: #202c25; color: #fff; border-color: #202c25; }
 @media (hover: hover) and (pointer: fine) {
-  .home-benefit:hover { border-color: var(--guidance-tone); }
+  .home-benefit:hover { border-color: var(--guidance-tone); box-shadow: 0 10px 24px rgb(0 0 0 / 6%); }
+  .home-benefit:hover::before { width: 64px; }
+  .home-benefit:hover .home-guidance__symbol { border-color: var(--guidance-tone); background: var(--guidance-tone); color: #fff; }
   .home-guide-topic:hover { border-color: var(--guidance-tone); background: var(--guidance-tint); }
   .home-guide-topic:hover .home-guidance__symbol { border-color: var(--guidance-tone); background: var(--guidance-tone); color: #fff; }
   .home-guide-topic:hover .home-guide-topic__action { text-decoration: underline; text-underline-offset: 4px; }
   .home-guidance .home-guide-link:hover { background: #202c25; color: #fff; border-color: #202c25; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .home-benefit, .home-guidance__symbol, .home-guide-topic, .home-guide-link { transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms ease; }
+  .home-benefit, .home-guidance__symbol, .home-guide-topic, .home-guide-link { transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms ease, box-shadow 200ms ease; }
+  .home-benefit::before { transition: width 250ms ease; }
   .home-guide-topic__action > span, .home-guide-link > span { transition: transform 200ms ease; }
   .home-guide-topic:focus-visible { transform: translateY(-3px); }
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .home-benefit:hover { transform: translateY(-4px); }
+  .home-benefit:hover .home-guidance__symbol { transform: rotate(-4deg) scale(1.04); }
   .home-guide-topic:hover { transform: translateY(-3px); }
   .home-guide-topic:hover .home-guide-topic__action > span, .home-guide-link:hover > span { transform: translate(2px, -2px); }
 }
