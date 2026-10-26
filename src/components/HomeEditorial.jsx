@@ -14,6 +14,7 @@ function Arrow({ left = false }) {
 }
 
 function mediaFor(item, street = false) {
+  if (item.media) return item.media;
   const sizes = street ? [400, 540] : [480, 960];
   const path = width => `/assets/editorial/${item.image}-${width}.webp`;
   return { src: path(sizes[0]), srcSet: `${path(sizes[0])} ${sizes[0]}w, ${path(sizes[1])} ${sizes[1]}w`, width: street ? 540 : 960, height: street ? 720 : 960, alt: item.alt };
@@ -154,7 +155,7 @@ function CommunityCarousel({ onPreview }) {
 export default function HomeEditorial({ onPreview }) {
   const rail = useRef(null);
   const [position, setPosition] = useState({ index: 0, start: true, end: false });
-  const show = item => onPreview({ ...item, id: item.image, eyebrow: 'THE CANDICLIE INDEX', media: mediaFor(item) });
+  const show = item => onPreview({ ...item, id: item.slug, eyebrow: 'THE CANDICLIE INDEX', media: mediaFor(item) });
   const scroll = direction => {
     const item = rail.current?.firstElementChild;
     if (!item) return;
@@ -182,15 +183,16 @@ export default function HomeEditorial({ onPreview }) {
         if (event.key === 'Home' || event.key === 'End') rail.current.scrollTo({left:event.key === 'Home' ? 0 : rail.current.scrollWidth,behavior:'instant'});
         else scroll(event.key === 'ArrowRight' ? 1 : -1);
       }}>
-        {brands.map((brand, i) => <button type="button" className={`home-label home-label--${brand.style}`} key={brand.image} aria-label={`Explore ${brand.title}`} onClick={() => show(brand)}>
+        {brands.map((brand, i) => <button type="button" className={`home-label home-label--${brand.style}`} key={brand.slug} aria-label={`Explore ${brand.title}`} onClick={() => show(brand)}>
           <img {...mediaFor(brand)} sizes="(max-width: 600px) 82vw, (max-width: 1000px) 66vw, 42vw" loading="lazy" decoding="async" />
           <span className="home-label__shade" aria-hidden="true" />
           <span className="home-label__index">THE COLLECTION / 0{i + 1}</span>
           <span className="home-label__name">{brand.title}</span>
-          <span className="home-label__footer"><span>{brand.line}</span><Arrow /></span>
+          <span className="home-label__footer"><span>{brand.count} {brand.count === 1 ? 'frame' : 'frames'} to explore</span><Arrow /></span>
         </button>)}
       </div>
       <div className="home-directory__controls"><span>CURATED PERSPECTIVES <span aria-hidden="true">/</span> {String(position.index + 1).padStart(2, '0')} — {String(brands.length).padStart(2, '0')}</span><div><button type="button" aria-label="Previous brand" disabled={position.start} onClick={() => scroll(-1)}><Arrow left /></button><button type="button" aria-label="Next brand" disabled={position.end} onClick={() => scroll(1)}><Arrow /></button></div></div>
+      <button type="button" className="home-directory__all" onClick={() => onPreview({ catalogHref: '/designer-brands' })}>Explore all brands<Arrow /></button>
     </section>
 
     <section className="home-community home-section" id="community" aria-labelledby="community-heading">

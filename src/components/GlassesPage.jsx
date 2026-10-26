@@ -4,6 +4,7 @@ import { audienceLabels, shapeOptions, priceOptions, sortOptions, colourValues, 
 import GlassesFeed from './GlassesFeed.jsx';
 import './GlassesPage.css';
 import useSwipe from './useSwipe.js';
+import { designerPath } from './designerBrands.js';
 
 export function Icon({ name, ...props }) {
   const paths = {
@@ -109,13 +110,23 @@ export default function GlassesPage({ route, shopping, onNavigate, onView }) {
   const active = [...params.entries()].filter(([key]) => ['brand', 'shape', 'colour', 'rim', 'price', 'q'].includes(key));
   const heroDescription = descriptions[route.audience] || descriptions[route.type] || (route.isNew ? 'A new mood. A different detail. Meet the frames in our latest curated edit.' : 'Everyday essentials. Unexpected favourites. Explore eyeglasses and sunglasses for every side of you.');
   const collectionCount = products.length;
+  const designer = route.designer;
+  const pathFor = (type = '', audience = '', isNew = false) => designer ? designerPath(designer, type, audience, isNew) : isNew ? `/eyewear/new-in${audience ? `/${audience}` : ''}` : collectionPath(type, audience);
+  const title = designer ? `${designer.title}${route.type ? ` ${route.type.toLowerCase()}` : ''}${route.audience ? ` for ${audienceLabels[route.audience].toLowerCase()}` : ''}${route.isNew ? ' — new in' : ''}` : route.title;
+  const types = [['', designer ? 'All frames' : 'All glasses'], ['Eyeglasses', 'Eyeglasses'], ['Sunglasses', 'Sunglasses'], ['new', 'New in']].filter(([type]) => !designer || !type || (type === 'new' ? designer.products.some(product => product.isNew) : designer.types.includes(type)));
+  const audiences = [['', 'Everyone'], ...Object.entries(audienceLabels)].filter(([audience]) => !designer || !audience || designer.audiences.includes(audience));
+  const designerFilters = designer ? [
+    ['shape', 'Frame shape', shapeOptions.filter(shape => products.some(product => product.shape === shape))],
+    ['colour', 'Frame colour', [...new Set(products.map(productColour))].sort()],
+    ['rim', 'Frame style', [...new Set(products.map(product => product.rim))].sort()],
+  ] : undefined;
 
-  return <div className="glasses-page">
+  return <div className={`glasses-page${designer ? ' designer-collection' : ''}`}>
     <section className="glasses-heading" aria-labelledby="glasses-title">
-      <nav className="glasses-breadcrumbs" aria-label="Breadcrumb"><ol><li><CollectionLink href="/" onNavigate={onNavigate}>Home</CollectionLink></li><li>{route.pathname === '/eyewear' ? <span aria-current="page">Glasses</span> : <CollectionLink href="/eyewear" onNavigate={onNavigate}>Glasses</CollectionLink>}</li>{route.type && <li>{route.audience ? <CollectionLink href={collectionPath(route.type)} onNavigate={onNavigate}>{route.type}</CollectionLink> : <span aria-current="page">{route.type}</span>}</li>}{(route.audience || route.isNew) && <li><span aria-current="page">{route.label}</span></li>}</ol></nav>
-      <div className="glasses-heading__main"><div><p className="glasses-eyebrow">THE CANDICLIE COLLECTION</p><h1 id="glasses-title">{route.title}</h1><p className="glasses-heading__description">{heroDescription}</p></div><span className="glasses-heading__count">{collectionCount} {collectionCount === 1 ? 'frame' : 'frames'} to make your own</span></div>
-      <nav className="glasses-types" aria-label="Glasses collections">{[['', 'All glasses'], ['Eyeglasses', 'Eyeglasses'], ['Sunglasses', 'Sunglasses'], ['new', 'New in']].map(([type, label]) => {
-        const href = type === 'new' ? `/eyewear/new-in${route.audience ? `/${route.audience}` : ''}` : collectionPath(type, route.audience);
+      <nav className="glasses-breadcrumbs" aria-label="Breadcrumb"><ol><li><CollectionLink href="/" onNavigate={onNavigate}>Home</CollectionLink></li>{designer ? <><li><CollectionLink href="/designer-brands" onNavigate={onNavigate}>Designer Brands</CollectionLink></li><li>{route.type || route.audience || route.isNew ? <CollectionLink href={designer.catalogHref} onNavigate={onNavigate}>{designer.title}</CollectionLink> : <span aria-current="page">{designer.title}</span>}</li></> : <li>{route.pathname === '/eyewear' ? <span aria-current="page">Glasses</span> : <CollectionLink href="/eyewear" onNavigate={onNavigate}>Glasses</CollectionLink>}</li>}{route.type && <li>{route.audience ? <CollectionLink href={pathFor(route.type)} onNavigate={onNavigate}>{route.type}</CollectionLink> : <span aria-current="page">{route.type}</span>}</li>}{(route.audience || route.isNew) && <li><span aria-current="page">{route.label}</span></li>}</ol></nav>
+      <div className="glasses-heading__main"><div><p className="glasses-eyebrow">{designer ? 'THE DESIGNER COLLECTION' : 'THE CANDICLIE COLLECTION'}</p><h1 id="glasses-title">{title}</h1><p className="glasses-heading__description">{designer ? designer.description : heroDescription}</p>{designer && <CollectionLink href="/designer-brands" onNavigate={onNavigate} className="designer-collection__directory">Explore all brands<Icon name="arrow" /></CollectionLink>}</div><span className="glasses-heading__count">{collectionCount} {collectionCount === 1 ? 'frame' : 'frames'} to make your own</span></div>
+      <nav className="glasses-types" aria-label="Glasses collections">{types.map(([type, label]) => {
+        const href = pathFor(type === 'new' ? '' : type, route.audience, type === 'new');
         const current = type === 'new' ? route.isNew : !route.isNew && route.type === type;
         return <CollectionLink key={type} href={href} onNavigate={onNavigate} aria-current={current ? 'page' : undefined}>{label}</CollectionLink>;
       })}</nav>
@@ -123,7 +134,7 @@ export default function GlassesPage({ route, shopping, onNavigate, onView }) {
 
     <section className="glasses-collection" aria-label="Browse frames">
       <div className="glasses-toolbar">
-        <nav className="glasses-audiences" aria-label="Shop by audience">{[['', 'Everyone'], ...Object.entries(audienceLabels)].map(([audience, label]) => <CollectionLink key={audience} href={route.isNew ? `/eyewear/new-in${audience ? `/${audience}` : ''}` : collectionPath(route.type, audience)} onNavigate={onNavigate} aria-current={route.audience === audience ? 'page' : undefined}>{label}</CollectionLink>)}</nav>
+        <nav className="glasses-audiences" aria-label="Shop by audience">{audiences.map(([audience, label]) => <CollectionLink key={audience} href={pathFor(route.type, audience, route.isNew)} onNavigate={onNavigate} aria-current={route.audience === audience ? 'page' : undefined}>{label}</CollectionLink>)}</nav>
         <div className="glasses-toolbar__actions"><button type="button" className={`glasses-saved${params.get('saved') === '1' ? ' glasses-saved--active' : ''}`} aria-pressed={params.get('saved') === '1'} onClick={() => update('saved', params.get('saved') === '1' ? '' : '1')}><Icon name="heart" /><span>Saved</span></button><button className="glasses-button glasses-filter-trigger" type="button" onClick={() => setFiltersOpen(true)} aria-haspopup="dialog"><Icon name="filter" />Sort & filter{active.filter(([key]) => key !== 'q').length > 0 && <span className="glasses-filter-count">{active.filter(([key]) => key !== 'q').length}</span>}</button></div>
       </div>
       <div className="glasses-results-toolbar"><p role="status" aria-live="polite">{results.length} {results.length === 1 ? 'frame' : 'frames'}{params.get('saved') === '1' ? ' saved in this collection' : ' in your selection'}</p><form className="glasses-search" role="search" onSubmit={event => { event.preventDefault(); update('q', query.trim()); }}><label className="glasses-sr-only" htmlFor="glasses-search">Search this collection</label><input id="glasses-search" type="search" placeholder="Search this collection" maxLength={80} value={query} onChange={event => { setQuery(event.target.value); if (!event.target.value) update('q', ''); }} /><button type="submit" aria-label="Search collection"><Icon name="search" /></button></form></div>
@@ -131,6 +142,6 @@ export default function GlassesPage({ route, shopping, onNavigate, onView }) {
       {results.length > 0 ? <GlassesFeed key={`${route.pathname}${route.search}:${results.map(product => product.id).join(',')}`} products={results} order={params.get('sort')} repeat={params.get('saved') !== '1'} renderFrame={(product, index) => <FrameCard product={product} shopping={shopping} onView={onView} priority={index < 3} />} /> : <div className="glasses-empty"><Icon name="glasses" width="64" height="64" /><p className="glasses-eyebrow">A DIFFERENT POINT OF VIEW</p><h2>{params.get('saved') === '1' ? 'Your favourites start here.' : 'Let’s find a different frame.'}</h2><p>{params.get('saved') === '1' ? 'Tap the heart on a frame to save it, then find it here.' : 'No frames match this combination. Try fewer filters or explore another collection.'}</p><button type="button" className="glasses-button" onClick={() => onNavigate(route.pathname, { scroll: false })}>{params.get('saved') === '1' ? 'Browse this collection' : 'Clear filters'}<Icon name="arrow" /></button><CollectionLink href="/eyewear" onNavigate={onNavigate}>Explore all glasses</CollectionLink></div>}
     </section>
 
-    <FilterDrawer open={filtersOpen} onClose={() => setFiltersOpen(false)} route={route} products={products} resultsCount={results.length} update={update} reset={reset} />
+    <FilterDrawer open={filtersOpen} onClose={() => setFiltersOpen(false)} route={route} products={products} resultsCount={results.length} update={update} reset={reset} filterOptions={designerFilters} />
   </div>;
 }

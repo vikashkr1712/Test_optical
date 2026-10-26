@@ -34,6 +34,9 @@ MEMORY.md
 # Retired branded banner retained locally after the Signature Edit update.
 /public/assets/home/brand-banner-*.webp
 
+# Retired sample-brand campaign photos remain local for reference.
+/public/assets/editorial/brand-*.webp
+
 # Local credentials and environment settings
 .env
 .env.*

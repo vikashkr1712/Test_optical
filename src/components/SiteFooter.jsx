@@ -2,7 +2,7 @@ import './SiteFooter.css';
 
 const groups = [
   { title: 'Explore', links: [['Featured frames', '#featured-picks'], ['Top categories', '#top-categories'], ['For him, her & kids', '#collection-edits']] },
-  { title: 'Discover', links: [['House of Brands', '#house-of-brands'], ['The icon edit', '#icon-edit'], ['Seen on the Streets', '#community']] },
+  { title: 'Discover', links: [['Our story', '/about-us'], ['Designer brands', '/designer-brands'], ['The icon edit', '#icon-edit'], ['Seen on the Streets', '#community']] },
   { title: 'Here to help', links: [['Shopping & ordering', '#footer-shopping'], ['Finding your style', '#footer-style'], ['Privacy on this page', '#footer-privacy']] },
 ];
 
@@ -35,14 +35,14 @@ export default function SiteFooter({ homePath = '' }) {
 
       <div className="site-footer__directory">
         <div className="site-footer__brand"><a href={homePath || '#main'} aria-label="CandiClie home">CandiClie</a><p>A different look.<br /> The same unmistakable you.</p></div>
-        {groups.map(group => <nav className="site-footer__group" key={group.title} aria-label={`Footer ${group.title}`}><h3>{group.title}</h3><ul>{group.links.map(([label, href]) => <li key={href}><FooterLink href={href.startsWith('#footer-') ? href : `${homePath}${href}`}>{label}</FooterLink></li>)}</ul></nav>)}
+        {groups.map(group => <nav className="site-footer__group" key={group.title} aria-label={`Footer ${group.title}`}><h3>{group.title}</h3><ul>{group.links.map(([label, href]) => <li key={href}><FooterLink href={href.startsWith('#footer-') || href.startsWith('/') ? href : `${homePath}${href}`}>{label}</FooterLink></li>)}</ul></nav>)}
       </div>
 
       <section className="site-footer__help" aria-labelledby="footer-help-heading">
         <h3 id="footer-help-heading">A little help, right here.</h3>
         <div className="site-footer__help-grid">
           <details id="footer-shopping"><summary>Shopping & ordering<span aria-hidden="true">+</span></summary><p>Browse our featured frames, explore the collections, and open any card for a closer look. This is a preview of our selection; online ordering is not open yet. Prices and availability will be confirmed when shopping launches.</p></details>
-          <details id="footer-style"><summary>Finding your style<span aria-hidden="true">+</span></summary><p>Start with <a href={`${homePath}#top-categories`}>our top categories</a> or explore <a href={`${homePath}#house-of-brands`}>House of Brands</a>. Compare shapes, colours, and details in the frame previews. Our <a href={`${homePath}#community`}>street-style edit</a> offers a little inspiration along the way.</p></details>
+          <details id="footer-style"><summary>Finding your style<span aria-hidden="true">+</span></summary><p>Start with <a href={`${homePath}#top-categories`}>our top categories</a> or explore <a href="/designer-brands">our brand directory</a>. Compare shapes, colours, and details in the frame previews. Our <a href={`${homePath}#community`}>street-style edit</a> offers a little inspiration along the way.</p></details>
           <details id="footer-privacy"><summary>Privacy on this page<span aria-hidden="true">+</span></summary><p>Your cart, saved items and recent searches are stored in this browser. The account form is a preview: it does not send or store your name, email address or phone number. Images and fonts are hosted directly, and this site does not embed social media widgets.</p></details>
         </div>
       </section>

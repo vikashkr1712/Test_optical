@@ -1,4 +1,4 @@
-import { brands } from './brandCollections.js';
+import { designerBrands, featuredDesignerBrands } from './designerBrands.js';
 
 const photo = (name, alt, editorial = false) => {
   const small = editorial ? 480 : name.startsWith('for-') ? 480 : 320;
@@ -80,22 +80,30 @@ export const navigation = [
   },
   {
     id: 'brands', label: 'Designer Brands', heading: 'Different identities. Your point of view.',
-    description: 'Explore the eight style identities in our House of Brands.',
-    overview: info('House of Brands', 'THE DIRECTORY', 'Discover eight distinct style identities, from considered classics to expressive everyday frames.', { media: images.fashion, cta: cta('Explore House of Brands', '#house-of-brands') }),
-    groups: [0, 4].map((start, index) => ({ title: index === 0 ? 'Considered classics' : 'Expressive perspectives', items: brands.slice(start, start + 4).map(brand => choice(brand.title, brand.line, info(brand.title, 'HOUSE OF BRANDS', brand.description, { media: photo(brand.image, brand.alt, true), cta: cta('Explore House of Brands', '#house-of-brands') }))) })),
+    description: `Discover ${designerBrands.length} eyewear brands. Find your next signature in eyeglasses, sunglasses and junior frames.`,
+    overview: { catalogHref: '/designer-brands' },
+    groups: [
+      ...[0, 4].map((start, index) => ({ title: index === 0 ? 'Designer favourites' : 'More names to discover', items: featuredDesignerBrands.slice(start, start + 4).map(brand => choice(brand.title, `${brand.count} ${brand.count === 1 ? 'frame' : 'frames'} to explore`, { catalogHref: brand.catalogHref })) })),
+      { title: 'Find your starting point', items: [
+        choice('All brands A–Z', 'Find a name you love', { catalogHref: '/designer-brands' }),
+        choice('Eyeglasses by brand', 'Your everyday signature', { catalogHref: '/designer-brands?type=eyeglasses' }),
+        choice('Sunglasses by brand', 'A brighter point of view', { catalogHref: '/designer-brands?type=sunglasses' }),
+        choice('Kids’ brands', 'Little frames. Big personality.', { catalogHref: '/designer-brands?type=kids' }),
+      ] },
+    ],
   },
   {
     id: 'about', label: 'Our Story', heading: 'A fresh point of view.',
-    description: 'Get to know CandiClie through our frames, style edits and community.',
-    overview: info('About CandiClie', 'SEE LIFE. YOUR WAY.', 'CandiClie brings eyewear discovery, considered style edits and everyday inspiration together in one place.', { details: ['Explore a selection of optical frames and sunglasses.', 'Find different points of view in our brand and community edits.'], cta: cta('Discover our collections', '#collection-edits') }),
+    description: 'Get to know our point of view, the details we look for and the inspiration behind your next frame.',
+    overview: { catalogHref: '/about-us' },
     groups: [
       { title: 'Meet CandiClie', items: [
-        choice('Our story', 'An eye for personal style', info('Our story', 'CANDICLIE', 'We believe a frame is part of your everyday expression. This homepage brings together distinctive shapes, thoughtful details and the inspiration to find a look of your own.', { media: images.women, cta: cta('Discover our edits', '#collection-edits') })),
-        choice('Our approach', 'Considered choices. Your character.', info('Our approach', 'A FRESH POINT OF VIEW', 'Start with what feels like you. Explore shapes, compare colours and take a closer look at the details.', { details: ['Personal expression through different silhouettes.', 'Clear frame previews and easy collection browsing.', 'Style inspiration from everyday looks.'], cta: cta('Explore top categories', '#top-categories') })),
+        choice('Our story', 'An eye for personal style', { catalogHref: '/about-us#our-story' }),
+        choice('Our approach', 'Considered choices. Your character.', { catalogHref: '/about-us#our-approach' }),
       ] },
-      { title: 'Around the homepage', items: [
-        choice('Our community', 'Seen on the Streets', info('Our community', 'SEEN ON THE STREETS', 'Explore three different everyday looks in our street-style edit, then find your own point of view.', { media: images.fashion, cta: cta('See the community edit', '#community') })),
-        choice('Shopping & support', 'A little help, right here', info('Shopping & support', 'HERE TO HELP', 'Open a frame card for a closer look, browse the collections, or visit the homepage help section.', { details: ['Online ordering is not open yet.', 'Prices and availability will be confirmed when shopping launches.'], cta: cta('Read homepage help', '#footer-help-heading') })),
+      { title: 'A shared point of view', items: [
+        choice('Our community', 'Different looks. A shared eye for style.', { catalogHref: '/about-us#our-community' }),
+        choice('Shopping & support', 'A little help, right here', { catalogHref: '/about-us#story-support' }),
       ] },
     ],
   },

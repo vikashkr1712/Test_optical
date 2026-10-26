@@ -41,7 +41,7 @@ export function collectionPath(type = '', audience = '') {
 }
 
 export function collectionProducts(route) {
-  return shopProducts.filter(product => ['Eyeglasses', 'Sunglasses'].includes(product.type) && (!route.type || product.type === route.type) && (!route.audience || product.audiences.includes(route.audience)) && (!route.isNew || product.isNew));
+  return shopProducts.filter(product => ['Eyeglasses', 'Sunglasses'].includes(product.type) && (!route.designer || product.brand === route.designer.brand) && (!route.type || product.type === route.type) && (!route.audience || product.audiences.includes(route.audience)) && (!route.isNew || product.isNew));
 }
 
 export function filterProducts(products, params, saved = []) {
