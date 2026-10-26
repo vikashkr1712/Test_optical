@@ -1,0 +1,6 @@
+.accessories-page .glasses-types { overflow-x: auto; scrollbar-width: none; }
+.accessories-page .glasses-audiences button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 8px 20px; border: 1px solid #d9ddd2; border-radius: 24px; background: #fff; font-size: 14px; }
+.accessories-page .glasses-audiences button[aria-pressed='true'] { background: #e6eadf; border-color: #abb49a; color: #39432d; font-weight: 600; }
+.accessories-page .glasses-audiences button:hover { border-color: #818e70; }
+.accessories-card .glasses-card__description { min-height: 20px; }
+@media (max-width: 600px) { .accessories-page .glasses-audiences button { min-height: 40px; padding: 7px 13px; font-size: 12px; } .accessories-page .glasses-types { gap: 23px; } .accessories-card .glasses-card__title h2 { font-size: 14px; } }

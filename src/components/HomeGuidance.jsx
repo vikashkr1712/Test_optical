@@ -46,13 +46,13 @@ export default function HomeGuidance({ onPreview }) {
         <div><p className="home-eyebrow home-guidance__eyebrow">THE CANDICLIE DIFFERENCE</p><h2 id="benefits-heading">Why Choose <em>CandiClie</em></h2></div>
         <p className="home-guidance__description">A little more thought in every detail.<br /> For frames that feel like you.</p>
       </div>
-      <div className="home-benefits__grid">{benefits.map((item, index) => <article className="home-benefit" data-tone={tones[index]} key={item.title}>
+      <div className="home-benefits__grid" role="region" aria-label="Why choose CandiClie" tabIndex="0">{benefits.map((item, index) => <article className="home-benefit" data-tone={tones[index]} key={item.title}>
         <div className="home-benefit__top"><span className="home-guidance__symbol"><GuidanceIcon name={item.icon} /></span><span className="home-benefit__number" aria-hidden="true">0{index + 1}</span></div><h3>{item.title}</h3><p>{item.text}</p>
       </article>)}</div>
     </section>
     <section className="home-lens-guide home-section" id="lens-care-guide" aria-labelledby="lens-guide-heading">
       <div className="home-lens-guide__intro"><div><p className="home-eyebrow home-guidance__eyebrow">A LITTLE EVERYDAY KNOW-HOW</p><h2 id="lens-guide-heading">Lens &amp; <em>Care</em> Guide</h2><p className="home-guidance__description">Good lenses. Well-loved frames. Start here.</p></div><button type="button" className="home-guide-link" onClick={() => openGuide()} aria-haspopup="dialog">Learn more<span aria-hidden="true">↗</span></button></div>
-      <div className="home-lens-guide__grid">{guide.map((item, index) => <button type="button" className="home-guide-topic" data-tone={tones[index]} key={item.title} onClick={() => openGuide(item)} aria-label={`Read about ${item.title}`} aria-haspopup="dialog">
+      <div className="home-lens-guide__grid" role="region" aria-label="Browse lens and care guides" tabIndex="0">{guide.map((item, index) => <button type="button" className="home-guide-topic" data-tone={tones[index]} key={item.title} onClick={() => openGuide(item)} aria-label={`Read about ${item.title}`} aria-haspopup="dialog">
         <span className="home-guide-topic__top"><span className="home-guidance__symbol"><GuidanceIcon name={item.icon} /></span><span className="home-benefit__number" aria-hidden="true">0{index + 1}</span></span>
         <h3>{item.title}</h3><p>{item.text}</p><span className="home-guide-topic__action" aria-hidden="true">Read guide<span>↗</span></span>
       </button>)}</div>

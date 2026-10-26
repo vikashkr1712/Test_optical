@@ -68,11 +68,18 @@ export default function SiteHeader({ onSelect, onOpenPanel, bagCount = 0 }) {
   }, [menuOpen, activeMenu]);
 
   useEffect(() => {
-    const media = matchMedia('(min-width: 1024px)');
+    const media = matchMedia('(min-width: 1200px)');
     const reset = () => { setMenuOpen(false); setActiveMenu(null); };
     media.addEventListener('change', reset);
     return () => media.removeEventListener('change', reset);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [menuOpen]);
 
   const choose = selection => {
     const returnFocus = menuOpen ? menuToggle.current : desktopTriggers.current[activeMenu];

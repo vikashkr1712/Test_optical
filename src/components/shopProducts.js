@@ -1,4 +1,6 @@
 import { glassesProducts } from './glassesProducts.js';
+import { lensesProducts } from './lensesProducts.js';
+import { accessoriesProducts } from './accessoriesProducts.js';
 
 export const productGroups = {
   best: [
@@ -14,5 +16,6 @@ export const productGroups = {
 };
 
 const shapeNames = { Rounded: 'Round', 'Cat Eyes': 'Cat-eye', 'Club Master': 'Clubmaster', 'Mod. Aviator': 'Aviator', 'Warp Around': 'Wraparound', 'Single Lens': 'Shield' };
-export const shopProducts = [...Object.values(productGroups).flat(), ...glassesProducts.map(product => ({ ...product, shape: shapeNames[product.shape] || product.shape }))];
+export const shopProducts = [...Object.values(productGroups).flat(), ...glassesProducts.map(product => ({ ...product, shape: shapeNames[product.shape] || product.shape })), ...lensesProducts, ...accessoriesProducts];
+export const productSearchText = product => [product.brand, product.model, product.colour, product.type, product.shape, product.manufacturer, product.replacement, product.pack, product.category, product.capacity, product.detailsLabel, ...(product.designs || []), ...product.audiences, product.audiences.includes('kids') ? 'junior' : ''].filter(Boolean).join(' ').toLowerCase();
 export const currency = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });

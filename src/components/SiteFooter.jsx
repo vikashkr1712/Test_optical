@@ -43,7 +43,7 @@ export default function SiteFooter({ homePath = '' }) {
         <div className="site-footer__help-grid">
           <details id="footer-shopping"><summary>Shopping & ordering<span aria-hidden="true">+</span></summary><p>Browse our featured frames, explore the collections, and open any card for a closer look. This is a preview of our selection; online ordering is not open yet. Prices and availability will be confirmed when shopping launches.</p></details>
           <details id="footer-style"><summary>Finding your style<span aria-hidden="true">+</span></summary><p>Start with <a href={`${homePath}#top-categories`}>our top categories</a> or explore <a href={`${homePath}#house-of-brands`}>House of Brands</a>. Compare shapes, colours, and details in the frame previews. Our <a href={`${homePath}#community`}>street-style edit</a> offers a little inspiration along the way.</p></details>
-          <details id="footer-privacy"><summary>Privacy on this page<span aria-hidden="true">+</span></summary><p>Your cart, saved frames and recent searches are stored in this browser. The account form is a preview: it does not send or store your name, email address or phone number. Images and fonts are hosted directly, and this site does not embed social media widgets.</p></details>
+          <details id="footer-privacy"><summary>Privacy on this page<span aria-hidden="true">+</span></summary><p>Your cart, saved items and recent searches are stored in this browser. The account form is a preview: it does not send or store your name, email address or phone number. Images and fonts are hosted directly, and this site does not embed social media widgets.</p></details>
         </div>
       </section>
 

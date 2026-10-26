@@ -215,7 +215,7 @@ export default function HomeHero({ className = '' }) {
         setTransitioning(false);
       }
       preventClick.current = true;
-      const resistance = (index === 0 && dx > 0) || (index === slides.length - 1 && dx < 0);
+      const resistance = index === 0 && dx > 0;
       dragOffset.current = resistance ? Math.sign(dx) * Math.pow(Math.abs(dx), 0.85) : dx;
       if (!dragFrame.current) dragFrame.current = requestAnimationFrame(() => {
         dragFrame.current = 0;
@@ -232,12 +232,12 @@ export default function HomeHero({ className = '' }) {
     cancelAnimationFrame(dragFrame.current);
     dragFrame.current = 0;
     dragOffset.current = 0;
-    const advance = preventClick.current && (duration < 300 || Math.abs(dx) > region.current.clientWidth / 2);
-    const target = advance ? Math.max(0, Math.min(slides.length - 1, index + (dx < 0 ? 1 : -1))) : index;
+    const advance = preventClick.current && (Math.abs(dx) > Math.min(72, region.current.clientWidth * .18) || (Math.abs(dx) > 24 && duration < 350));
+    const target = advance ? Math.max(0, Math.min(slides.length, index + (dx < 0 ? 1 : -1))) : index;
     if (start.dragging) {
       track.current.style.transitionDuration = reducedMotion ? '0ms' : `${TRANSITION_MS}ms`;
       track.current.style.transform = `translate3d(${-target * 100}%, 0, 0)`;
-      goTo(target);
+      goTo(target, target === slides.length);
       setTransitioning(!reducedMotion);
     }
     setDragging(false);

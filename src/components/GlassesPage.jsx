@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { currency } from './shopProducts.js';
-import { audienceLabels, shapeOptions, priceOptions, sortOptions, colourValues, productColour, collectionPath, collectionProducts, filterProducts, followCollectionLink, productImage } from './glassesCatalog.js';
+import { audienceLabels, shapeOptions, priceOptions, sortOptions, colourValues, productColour, collectionPath, collectionProducts, filterProducts, followCollectionLink, productImage, catalogImageSizes } from './glassesCatalog.js';
 import GlassesFeed from './GlassesFeed.jsx';
 import './GlassesPage.css';
+import useSwipe from './useSwipe.js';
 
-function Icon({ name, ...props }) {
+export function Icon({ name, ...props }) {
   const paths = {
     arrow: <path d="M4 12h16m-6-6 6 6-6 6" />,
     filter: <><path d="M4 7h7m5 0h4M4 17h3m5 0h8" /><circle cx="13.5" cy="7" r="2.5" /><circle cx="9.5" cy="17" r="2.5" /></>,
@@ -16,11 +17,11 @@ function Icon({ name, ...props }) {
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>{paths[name]}</svg>;
 }
 
-function CollectionLink({ href, onNavigate, children, ...props }) {
+export function CollectionLink({ href, onNavigate, children, ...props }) {
   return <a href={href} onClick={event => followCollectionLink(event, href, onNavigate)} {...props}>{children}</a>;
 }
 
-function FilterDrawer({ open, onClose, route, products, resultsCount, update, reset }) {
+export function FilterDrawer({ open, onClose, route, products, resultsCount, update, reset, filterOptions, priceRanges = priceOptions, sortChoices = sortOptions, noun = 'frame', priceLabel = 'Frame price' }) {
   const dialog = useRef(null);
   const { params } = route;
   useEffect(() => {
@@ -31,7 +32,7 @@ function FilterDrawer({ open, onClose, route, products, resultsCount, update, re
     document.body.style.overflow = 'hidden';
     return () => { modal.close(); document.body.style.overflow = previousOverflow; };
   }, [open]);
-  const options = [
+  const options = filterOptions || [
     ['brand', 'Brand', [...new Set(products.map(product => product.brand))].sort()],
     ['shape', 'Frame shape', shapeOptions.filter(shape => products.some(product => product.shape === shape))],
     ['colour', 'Frame colour', [...new Set(products.map(productColour))].sort()],
@@ -44,23 +45,25 @@ function FilterDrawer({ open, onClose, route, products, resultsCount, update, re
   }}>
     <header className="glasses-filters__heading"><div><p className="glasses-eyebrow">MAKE IT YOUR OWN</p><h2 id="glasses-filter-heading">Sort & filter</h2></div><button className="glasses-icon-button" type="button" aria-label="Close filters" onClick={onClose}><Icon name="close" /></button></header>
     <div className="glasses-filters__body">
-      <label className="glasses-filters__sort" htmlFor="glasses-sort">Sort by<select id="glasses-sort" value={params.get('sort') || 'recommended'} onChange={event => update('sort', event.target.value)}>{sortOptions.map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
+      <div className="glasses-filters__sort"><label htmlFor="glasses-sort">Sort by</label><select id="glasses-sort" value={params.get('sort') || 'recommended'} onChange={event => update('sort', event.target.value)}>{sortChoices.map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></div>
       {options.map(([key, title, values]) => <details key={key} className="glasses-filter-group" open><summary>{title}<span aria-hidden="true">+</span></summary><div className={key === 'colour' ? 'glasses-filter-options glasses-filter-options--colours' : 'glasses-filter-options'}>{values.map(value => <label className="glasses-filter-option" key={value}><input type="checkbox" checked={params.getAll(key).includes(value)} onChange={() => update(key, value, true)} />{key === 'colour' && <span className="glasses-colour" style={{ background: colourValues[value] }} />}<span>{value}</span></label>)}</div></details>)}
-      <fieldset className="glasses-price-filter"><legend>Frame price</legend>{[{ value: '', label: 'All prices' }, ...priceOptions].map(({ value, label }) => <label className="glasses-filter-option" key={value}><input type="radio" name="frame-price" value={value} checked={(params.get('price') || '') === value} onChange={() => update('price', value)} /><span>{label}</span></label>)}</fieldset>
+      <fieldset className="glasses-price-filter"><legend>{priceLabel}</legend>{[{ value: '', label: 'All prices' }, ...priceRanges].map(({ value, label }) => <label className="glasses-filter-option" key={value}><input type="radio" name={`${noun}-price`} value={value} checked={(params.get('price') || '') === value} onChange={() => update('price', value)} /><span>{label}</span></label>)}</fieldset>
     </div>
-    <footer className="glasses-filters__footer"><button className="glasses-text-button" type="button" onClick={reset}>Clear all</button><button className="glasses-button" type="button" onClick={onClose}>Show {resultsCount} {resultsCount === 1 ? 'frame' : 'frames'}<Icon name="arrow" /></button></footer>
+    <footer className="glasses-filters__footer"><button className="glasses-text-button" type="button" onClick={reset}>Clear all</button><button className="glasses-button" type="button" onClick={onClose}>Show {resultsCount} {resultsCount === 1 ? noun : `${noun}s`}<Icon name="arrow" /></button></footer>
   </dialog>;
 }
 
 function FrameCard({ product, shopping, onView, priority }) {
+  const [alternate, setAlternate] = useState(false);
+  const imageSwipe = useSwipe({ enabled: Boolean(product.imageAlt), onSwipe: () => setAlternate(value => !value) });
   const saved = shopping.saved.includes(product.id);
   const colour = productColour(product);
   return <article className="glasses-card">
     <div className="glasses-card__visual">
       <span className="glasses-card__tag">{product.isNew ? 'THE NEW EDIT' : product.audiences.includes('kids') ? 'JUNIOR EDIT' : product.type}</span>
       <button className="glasses-card__save glasses-icon-button" type="button" aria-pressed={saved} aria-label={`${saved ? 'Unsave' : 'Save'} ${product.brand} ${product.model}`} onClick={() => shopping.toggleSaved(product.id)}><Icon name="heart" fill={saved ? 'currentColor' : 'none'} /></button>
-      <button className="glasses-card__image" type="button" onClick={() => onView(product)} aria-label={`View ${product.brand} ${product.model}`}>
-        <img src={productImage(product)} srcSet={product.imageLarge ? `${product.image} 640w, ${product.imageLarge} 1000w` : undefined} sizes="(max-width: 600px) 46vw, (max-width: 1000px) 44vw, 29vw" width="640" height="400" alt={`${product.brand} ${product.model}, ${product.colour}`} loading={priority ? 'eager' : 'lazy'} decoding="async" />
+      <button className="glasses-card__image" type="button" onClick={() => onView(product)} aria-label={`View ${product.brand} ${product.model}`} data-alternate={alternate} {...imageSwipe}>
+        <img src={productImage(product)} srcSet={product.imageLarge ? `${product.image} 640w, ${product.imageLarge} 1000w` : undefined} sizes={catalogImageSizes} width="640" height="400" alt={`${product.brand} ${product.model}, ${product.colour}`} loading={priority ? 'eager' : 'lazy'} decoding="async" draggable="false" />
         {product.imageAlt && <img className="glasses-card__alternate" src={product.imageAlt} width="640" height="400" alt="" loading="lazy" decoding="async" />}
         <span className="glasses-card__quick-view">Take a closer look<Icon name="arrow" /></span>
       </button>

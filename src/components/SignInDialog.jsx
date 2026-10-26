@@ -38,8 +38,8 @@ export default function SignInDialog({ open, onClose, intent = 'profile' }) {
     const rect = event.currentTarget.getBoundingClientRect();
     if (event.target === event.currentTarget && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) onClose();
   }}>
+    {open && <button type="button" className="account-dialog__close" aria-label="Close sign in" onClick={onClose} autoFocus>×</button>}
     {open && <div className="account-dialog__content">
-      <button type="button" className="account-dialog__close" aria-label="Close sign in" onClick={onClose} autoFocus>×</button>
       <div className="account-dialog__logo"><img src="/assets/candiclie/logo.png" width="200" height="200" alt="CandiClie" /></div>
       <p className="account-dialog__eyebrow">YOUR CANDICLIE</p>
       <h2 id="account-title">{mode === 'create' ? 'A fresh start. A new perspective.' : 'Good to see you again.'}</h2>

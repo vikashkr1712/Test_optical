@@ -17,8 +17,6 @@ const cta = (label = 'Explore featured frames', href = '#featured-picks') => ({ 
 const info = (title, eyebrow, description, options = {}) => ({ title, eyebrow, description, navigation: true, cta: cta(), ...options });
 const choice = (label, description, preview) => ({ label, description, preview });
 const eyewear = (title, description, media = images.eyewear, details = []) => info(title, 'THE EYEWEAR EDIT', description, { media, details, cta: cta('Explore top categories', '#top-categories') });
-const lens = (title, description, details) => info(title, 'CONTACT LENS OPTIONS', description, { details, note: 'Contact lens shopping is not available on this homepage yet. Your lens type and prescription should be confirmed with an eye-care professional.', cta: cta('View shopping information', '#footer-help-heading') });
-const accessory = (title, description, details) => info(title, 'THE FINISHING TOUCH', description, { details, note: 'This is a guide to the accessory categories. Accessory ordering is not open yet.', cta: cta('Browse frame inspiration', '#community') });
 const gifting = (title, description, details) => info(title, 'A LITTLE SOMETHING FOR THEM', description, { details, note: 'Gift cards are not available to buy or redeem yet. Explore frame inspiration below.', cta: cta('Explore gift inspiration', '#collection-edits') });
 
 export const navigation = [
@@ -47,33 +45,36 @@ export const navigation = [
   },
   {
     id: 'contact-lens', label: 'Contact Lenses', heading: 'Explore your lens options.',
-    description: 'A simple introduction to the categories, with a clear place to start.',
-    overview: lens('Contact lenses', 'Explore the lens categories below before discussing the right option with an eye-care professional.', ['Daily lenses', 'Monthly lenses', 'Coloured lenses']),
+    description: 'Find your starting point. Explore lens families, replacement schedules and a little colour.',
+    overview: { catalogHref: '/contact-lenses' },
     groups: [
       { title: 'Browse lens types', items: [
-        choice('Daily lenses', 'Explore the daily category', lens('Daily contact lenses', 'A starting point for exploring the daily lens category.', ['Compare available daily-lens options when shopping launches.', 'Confirm the appropriate lens and prescription with an eye-care professional.'])),
-        choice('Monthly lenses', 'Explore the monthly category', lens('Monthly contact lenses', 'A starting point for exploring the monthly lens category.', ['Review product-specific information when the catalogue is available.', 'Ask an eye-care professional about the right option for you.'])),
-        choice('Coloured lenses', 'Explore a different look', lens('Coloured contact lenses', 'Explore colour as another part of your personal style.', ['Colour options will be shown with the future lens catalogue.', 'Coloured lenses also require suitable professional guidance.'])),
+        choice('Daily lenses', 'Explore the daily collection', { catalogHref: '/contact-lenses/daily' }),
+        choice('Monthly lenses', 'Find your everyday lens', { catalogHref: '/contact-lenses/monthly' }),
+        choice('Fortnightly lenses', 'Explore two-week replacement options', { catalogHref: '/contact-lenses/fortnightly' }),
+        choice('Coloured lenses', 'Explore a different look', { catalogHref: '/contact-lenses/coloured' }),
       ] },
-      { title: 'Before you browse', items: [
-        choice('Prescription information', 'Know what to have ready', lens('Your contact lens prescription', 'Use the contact lens prescription provided by your eye-care professional when a contact lens catalogue becomes available.', ['This homepage does not collect or validate prescriptions.', 'No contact lenses can be ordered here yet.'])),
-        choice('Shopping information', 'How this homepage works', lens('Contact lens shopping', 'The contact lens menu currently offers category information.', ['No lens checkout or prescription upload is open.', 'Browse the frame collections and style inspiration while shopping is being prepared.'])),
+      { title: 'Explore lens designs', items: [
+        choice('Spherical lenses', 'Compare brands and pack sizes', { catalogHref: '/contact-lenses/spherical' }),
+        choice('Toric lenses', 'Explore the toric selection', { catalogHref: '/contact-lenses/toric' }),
+        choice('Multifocal lenses', 'Discover multifocal options', { catalogHref: '/contact-lenses/multifocal' }),
+        choice('Clear lenses', 'A clear point of view', { catalogHref: '/contact-lenses/clear' }),
       ] },
     ],
   },
   {
     id: 'accessories', label: 'Care & Accessories', heading: 'The little things, considered.',
     description: 'Explore the finishing touches that belong alongside your favourite pair.',
-    overview: accessory('Eyewear accessories', 'Discover the categories for storing, carrying and caring for your frames.', ['Cases and pouches', 'Cleaning cloths', 'Everyday care essentials']),
+    overview: { catalogHref: '/accessories' },
     groups: [
       { title: 'The essentials', items: [
-        choice('Cases & pouches', 'A place for your favourite pair', accessory('Cases & pouches', 'Explore storage options for the frames you take with you.', ['Browse case and pouch styles when the accessories catalogue is available.', 'Check dimensions against your frame before choosing.'])),
-        choice('Cleaning cloths', 'Small essentials for your routine', accessory('Cleaning cloths', 'Explore cloths designed for an eyewear care routine.', ['Product information will accompany the accessories catalogue.', 'Follow the care guidance supplied with your own frame and lenses.'])),
-        choice('Care essentials', 'Keep the details in mind', accessory('Eyewear care essentials', 'A place to discover the accessories that complement your everyday pair.', ['Explore storage and care categories.', 'Check the manufacturer’s instructions for your own eyewear.'])),
+        choice('Cases & storage', 'A place for your favourite pairs', { catalogHref: '/accessories/cases' }),
+        choice('Cleaning cloths', 'Explore cloths and cleaning sets', { catalogHref: '/accessories/cleaning-cloths' }),
+        choice('Care essentials', 'A little care for your everyday pair', { catalogHref: '/accessories/care-essentials' }),
       ] },
-      { title: 'Find inspiration', items: [
-        choice('Everyday pairings', 'Frames that fit your style', eyewear('Everyday pairings', 'Start with the frame, then consider the small details that make it feel like your own.', images.fashion)),
-        choice('Style notes', 'See how others wear theirs', info('Style notes', 'SEEN ON THE STREETS', 'Discover everyday outfit ideas and expressive frames in our community edit.', { media: images.fashion, cta: cta('Visit the community edit', '#community') })),
+      { title: 'The finishing touches', items: [
+        choice('Cords & straps', 'Keep your favourites close', { catalogHref: '/accessories/cords' }),
+        choice('All accessories', 'Explore the full essentials collection', { catalogHref: '/accessories' }),
       ] },
     ],
   },

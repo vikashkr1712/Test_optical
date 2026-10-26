@@ -24,18 +24,38 @@ const storySlides = Array.from({ length: stories.length * 3 }, (_, index) => sto
 
 function CommunityCarousel({ onPreview }) {
   const [slide, setSlide] = useState({ index: stories.length + 1, moving: false });
+  const [dragging, setDragging] = useState(false);
+  const [handheld, setHandheld] = useState(() => matchMedia('(max-width: 1199px)').matches);
   const track = useRef(null);
   const moving = useRef(false);
   const restoreFocus = useRef(false);
   const gesture = useRef(null);
   const suppressClick = useRef(false);
+  const dragFrame = useRef(0);
   const current = slide.index % stories.length;
+  useEffect(() => {
+    const media = matchMedia('(max-width: 1199px)');
+    const update = () => setHandheld(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
   const show = story => onPreview({ ...story, id: story.image, eyebrow: 'THE CANDICLIE JOURNAL', media: mediaFor(story, true) });
   const move = direction => {
     if (moving.current || !direction) return;
     moving.current = true;
     setSlide(previous => ({ index: previous.index + direction, moving: true }));
   };
+  const selectStory = index => {
+    const delta = (index - current + stories.length) % stories.length;
+    move(delta === stories.length - 1 ? -1 : delta);
+  };
+  const clearDrag = () => {
+    cancelAnimationFrame(dragFrame.current);
+    dragFrame.current = 0;
+    track.current?.style.removeProperty('--community-drag');
+    setDragging(false);
+  };
+  useEffect(() => () => cancelAnimationFrame(dragFrame.current), []);
   const finish = useCallback(() => {
     if (!moving.current) return;
     moving.current = false;
@@ -62,17 +82,35 @@ function CommunityCarousel({ onPreview }) {
       move(delta === stories.length - 1 ? -1 : delta);
     } else move(event.key === 'ArrowRight' ? 1 : -1);
   }}>
-    <div className="home-community__viewport" onPointerDown={event => {
-      if (!event.isPrimary) return;
+    <div className="home-community__navigation">
+      <p className="home-community__hint" id="journal-swipe-hint">Swipe to explore</p>
+      <div className="home-community__dots" role="group" aria-label="Choose a journal story">{stories.map((story, index) => <button key={story.image} type="button" className="home-community__dot" aria-label={`Show story ${index + 1}: ${story.title}`} aria-current={current === index ? 'true' : undefined} onClick={() => selectStory(index)} />)}</div>
+    </div>
+    <div className="home-community__viewport" aria-describedby="journal-swipe-hint" onPointerDown={event => {
+      if (!event.isPrimary || moving.current) return;
       suppressClick.current = false;
       if (event.pointerType === 'mouse') return;
-      gesture.current = { x: event.clientX, y: event.clientY };
+      gesture.current = { x: event.clientX, y: event.clientY, horizontal: false };
     }} onPointerMove={event => {
       const start = gesture.current;
-      if (start && Math.abs(event.clientX - start.x) > 10 && Math.abs(event.clientX - start.x) > Math.abs(event.clientY - start.y)) event.currentTarget.setPointerCapture(event.pointerId);
+      if (!start) return;
+      const dx = event.clientX - start.x, dy = event.clientY - start.y;
+      if (!start.horizontal && Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) { gesture.current = null; return; }
+      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+        start.horizontal = true;
+        suppressClick.current = true;
+        event.currentTarget.setPointerCapture(event.pointerId);
+        setDragging(true);
+        cancelAnimationFrame(dragFrame.current);
+        dragFrame.current = requestAnimationFrame(() => {
+          dragFrame.current = 0;
+          track.current?.style.setProperty('--community-drag', `${dx}px`);
+        });
+      }
     }} onPointerUp={event => {
       const start = gesture.current;
       gesture.current = null;
+      clearDrag();
       if (!start) return;
       const dx = event.clientX - start.x;
       const dy = event.clientY - start.y;
@@ -84,15 +122,15 @@ function CommunityCarousel({ onPreview }) {
         const button = event.target.closest('.home-street__image, .home-street__explore');
         if (button) { suppressClick.current = true; button.click(); }
       }
-    }} onPointerCancel={() => { gesture.current = null; }} onClickCapture={event => {
+    }} onPointerCancel={() => { gesture.current = null; clearDrag(); }} onClickCapture={event => {
       if (suppressClick.current && event.detail > 0) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; }
     }}>
-      <div className={`home-community__grid${slide.moving ? ' home-community__grid--moving' : ''}`} ref={track}
-        style={{ transform: `translateX(calc((100% - var(--community-card-width)) / 2 - ${slide.index} * (var(--community-card-width) + var(--community-gap))))` }}
+      <div className={`home-community__grid${slide.moving ? ' home-community__grid--moving' : ''}${dragging ? ' home-community__grid--dragging' : ''}`} ref={track}
+        style={{ transform: `translateX(calc((100% - var(--community-card-width)) / 2 - ${slide.index} * (var(--community-card-width) + var(--community-gap)) + var(--community-drag, 0px)))` }}
         onTransitionEnd={event => { if (event.target === event.currentTarget && event.propertyName === 'transform') finish(); }}>
         {storySlides.map((story, index) => {
           const active = index === slide.index;
-          const visible = Math.abs(index - slide.index) <= 1;
+          const visible = handheld ? active : Math.abs(index - slide.index) <= 1;
           return <div key={index} className={`home-street${active ? ' home-street--active' : ''}`} role="group" aria-roledescription="slide" aria-label={`${index % stories.length + 1} of ${stories.length}`} aria-hidden={!visible} inert={!visible}>
             <div className="home-street__content">
               <button type="button" className="home-street__image" aria-label={`${active ? 'Explore' : 'Center'} ${story.title}`} aria-current={active ? 'true' : undefined} onClick={() => active ? show(story) : move(index - slide.index)}>

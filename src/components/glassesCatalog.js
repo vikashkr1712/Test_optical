@@ -1,6 +1,7 @@
 import { shopProducts } from './shopProducts.js';
 
 export const audienceLabels = { men: 'Men', women: 'Women', kids: 'Kids' };
+export const catalogImageSizes = '(max-width: 767px) calc(50vw - 22px), (max-width: 959px) calc(50vw - 42px), (max-width: 1199px) calc(33.333vw - 35px), (min-width: 1900px) 22vw, 29vw';
 export const shapeOptions = ['Round', 'Rectangle', 'Square', 'Cat-eye', 'Aviator', 'Oval', 'Butterfly', 'Pilot', 'Wayfarer', 'Clubmaster', 'Geometric', 'Pillow', 'Phantos', 'Irregular', 'Wraparound', 'Shield'];
 export const priceOptions = [
   { value: 'under-5000', label: 'Under ₹5,000', min: 0, max: 5000 },
@@ -40,7 +41,7 @@ export function collectionPath(type = '', audience = '') {
 }
 
 export function collectionProducts(route) {
-  return shopProducts.filter(product => (!route.type || product.type === route.type) && (!route.audience || product.audiences.includes(route.audience)) && (!route.isNew || product.isNew));
+  return shopProducts.filter(product => ['Eyeglasses', 'Sunglasses'].includes(product.type) && (!route.type || product.type === route.type) && (!route.audience || product.audiences.includes(route.audience)) && (!route.isNew || product.isNew));
 }
 
 export function filterProducts(products, params, saved = []) {

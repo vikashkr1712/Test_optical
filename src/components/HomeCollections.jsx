@@ -4,6 +4,7 @@ import HomeEditorial from './HomeEditorial.jsx';
 import HomeGuidance from './HomeGuidance.jsx';
 import { productGroups as products, currency } from './shopProducts.js';
 import { audienceLabels, productImage } from './glassesCatalog.js';
+import useSwipe from './useSwipe.js';
 
 const asset = (name, size) => `/assets/home/${name}-${size}.webp`;
 
@@ -38,6 +39,7 @@ function Photo({ name, alt, kind = 'category', className = '' }) {
 export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrowse }) {
   const dialog = useRef(null);
   const [angle, setAngle] = useState(false);
+  const imageSwipe = useSwipe({ enabled: Boolean(selection?.imageAlt), onSwipe: () => setAngle(value => !value) });
   useEffect(() => {
     if (!selection) return;
     setAngle(false);
@@ -48,18 +50,34 @@ export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrows
     return () => { modal.close(); document.body.style.overflow = previousOverflow; };
   }, [selection]);
   const product = selection?.brand;
+  const isLens = selection?.type === 'Contact lenses';
+  const isAccessory = selection?.type === 'Accessories';
+  const browsePath = isAccessory ? '/accessories' : isLens ? '/contact-lenses' : '/eyewear';
+  const savedLabel = isAccessory ? 'item' : isLens ? 'lenses' : 'frame';
+  const specifications = !product ? [] : isAccessory
+    ? [['Product type', selection.category], ['Colour', selection.colour], ['Storage capacity', selection.capacity], ['Details', selection.detailsLabel]]
+    : isLens ? [['Replacement', selection.replacement], ['Lens design', selection.designs.join(' / ')], ['Pack size', selection.pack], ['Manufacturer', selection.manufacturer]]
+    : selection.shape ? [['Shape', selection.shape], ['Frame style', selection.rim], ['Collection', selection.audiences.map(audience => audienceLabels[audience]).join(' / ')]] : [];
   const textOnly = selection?.navigation && !selection.media;
   return <dialog ref={dialog} className={`home-preview${textOnly ? ' home-preview--text' : ''}`} aria-labelledby="preview-title" onClose={onClose} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+    {selection && <button type="button" className="home-preview__close" aria-label="Close preview" onClick={onClose} autoFocus>×</button>}
     {selection && <div className={`home-preview__content${textOnly ? ' home-preview__content--text' : ''}`}>
-      <button type="button" className="home-preview__close" aria-label="Close preview" onClick={onClose} autoFocus>×</button>
-      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : product ? <div className="home-preview__product-visual"><img src={angle && selection.imageAlt ? selection.imageAlt : productImage(selection, true)} width="640" height="400" alt={`${selection.brand} ${selection.model}, ${selection.colour}${angle ? ', angled view' : ', front view'}`} />{selection.imageAlt && <div className="home-preview__angles" role="group" aria-label="Product image views"><button type="button" aria-pressed={!angle} onClick={() => setAngle(false)}>Front view</button><button type="button" aria-pressed={angle} onClick={() => setAngle(true)}>Side view</button></div>}</div> : !textOnly && <Photo name={selection.id} kind={selection.id.startsWith('for-') ? 'audience' : 'category'} alt={selection.title} />}
+      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : product ? <div className="home-preview__product-visual" {...imageSwipe}><img src={angle && selection.imageAlt ? selection.imageAlt : productImage(selection, true)} width="640" height="400" alt={`${selection.brand} ${selection.model}${selection.colour ? `, ${selection.colour}` : ''}${angle ? ', alternate view' : ', main view'}`} draggable="false" />{selection.imageAlt && <div className="home-preview__angles" role="group" aria-label="Product image views" data-no-swipe><button type="button" aria-pressed={!angle} onClick={() => setAngle(false)}>{isAccessory ? 'Main view' : 'Front view'}</button><button type="button" aria-pressed={angle} onClick={() => setAngle(true)}>{isAccessory ? 'Alternate view' : 'Side view'}</button></div>}</div> : !textOnly && <Photo name={selection.id} kind={selection.id.startsWith('for-') ? 'audience' : 'category'} alt={selection.title} />}
       <div className="home-preview__copy">
         <p className="home-eyebrow">{product ? selection.type : selection.eyebrow || 'THE CANDICLIE EDIT'}</p>
-        <h2 id="preview-title">{product ? selection.brand : selection.collection || selection.title}</h2>
-        {product ? <><p>{selection.model}</p><p className="home-muted">{selection.colour}</p><p className="home-preview__price">{currency.format(selection.price)}</p>{selection.shape && <dl className="home-preview__specifications"><div><dt>Shape</dt><dd>{selection.shape}</dd></div><div><dt>Frame style</dt><dd>{selection.rim}</dd></div><div><dt>Collection</dt><dd>{selection.audiences.map(audience => audienceLabels[audience]).join(' / ')}</dd></div></dl>}<div className="home-preview__shopping"><button type="button" className="shop-primary" onClick={() => { shopping.addToBag(selection.id); onOpenBag(); }} disabled={shopping.cart.some(item => item.id === selection.id && item.quantity >= 10)}>{shopping.cart.some(item => item.id === selection.id && item.quantity >= 10) ? 'Bag limit reached' : 'Add to bag'}</button><button type="button" className="shop-save-frame" aria-pressed={shopping.saved.includes(selection.id)} onClick={() => shopping.toggleSaved(selection.id)}>{shopping.saved.includes(selection.id) ? '♥ Saved frame' : '♡ Save frame'}</button></div><p className="home-preview__note">Keep your favourites in your bag. Online checkout is coming soon; final prices and availability will be confirmed when shopping launches.</p></> : <p>{selection.description}</p>}
+        <h2 id="preview-title">{product ? isAccessory ? selection.model : selection.brand : selection.collection || selection.title}</h2>
+        {product ? <>
+          <p>{isAccessory ? selection.category : selection.model}</p>
+          {selection.colour && <p className="home-muted">{selection.colour}</p>}
+          <p className="home-preview__price">{currency.format(selection.price)}</p>
+          {specifications.some(([, value]) => value) && <dl className="home-preview__specifications">{specifications.filter(([, value]) => value).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>}
+          <div className="home-preview__shopping"><button type="button" className="shop-primary" onClick={() => { shopping.addToBag(selection.id); onOpenBag(); }} disabled={shopping.cart.some(item => item.id === selection.id && item.quantity >= 10)}>{shopping.cart.some(item => item.id === selection.id && item.quantity >= 10) ? 'Bag limit reached' : 'Add to bag'}</button><button type="button" className="shop-save-frame" aria-pressed={shopping.saved.includes(selection.id)} onClick={() => shopping.toggleSaved(selection.id)}>{shopping.saved.includes(selection.id) ? `♥ Saved ${savedLabel}` : `♡ Save ${savedLabel}`}</button></div>
+          <p className="home-preview__note">{isLens ? 'Use the contact lens prescription and fit provided by your eye-care professional. This bag saves your selection; ordering and prescription entry are not available yet.' : 'Keep your favourites in your bag. Online checkout is coming soon; final prices and availability will be confirmed when shopping launches.'}</p>
+          {isAccessory && selection.category === 'Cleaning & care' && <p className="home-preview__note">Follow the care instructions supplied with the product and your eyewear.</p>}
+        </> : <p>{selection.description}</p>}
         {selection.details?.length > 0 && <ul className="home-preview__details">{selection.details.map(detail => <li key={detail}>{detail}</li>)}</ul>}
         {selection.note && <p className="home-preview__note">{selection.note}</p>}
-        <a className="home-text-link" href={product ? '/eyewear' : `${location.pathname === '/' ? '' : '/'}${selection.cta?.href || (selection.media ? '#top-categories' : '#featured-picks')}`} onClick={event => { if (product && onBrowse && event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) { event.preventDefault(); onBrowse(); } else onClose(); }}>{selection.cta?.label || (product || selection.media ? 'Discover more styles' : 'Explore featured frames')}<Arrow /></a>
+        <a className="home-text-link" href={product ? browsePath : `${location.pathname === '/' ? '' : '/'}${selection.cta?.href || (selection.media ? '#top-categories' : '#featured-picks')}`} onClick={event => { if (product && onBrowse && event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) { event.preventDefault(); onBrowse(); } else onClose(); }}>{selection.cta?.label || (isAccessory ? 'Explore more accessories' : isLens ? 'Explore more lenses' : product || selection.media ? 'Discover more styles' : 'Explore featured frames')}<Arrow /></a>
       </div>
     </div>}
   </dialog>;
@@ -104,8 +122,8 @@ export default function HomeCollections({ onSelect: setSelection }) {
 
     <section className="home-audiences home-section" id="collection-edits" aria-labelledby="audience-heading">
       <div className="home-audiences__intro"><p className="home-eyebrow">GOOD STYLE HAS NO SINGLE LOOK</p><h2 id="audience-heading">Find your kind of frame.</h2></div>
-      <div className="home-audiences__grid">{audiences.map(item => <button type="button" key={item.id} className="home-audience" onClick={() => setSelection(item)}>
-        <div className="home-audience__photo"><Photo name={item.id} kind="audience" alt={item.id === 'for-kids' ? 'Children wearing colourful glasses' : item.id === 'for-him' ? 'A man wearing statement eyewear' : 'A woman wearing statement eyewear'} /><span className="home-audience__arrow"><Arrow /></span></div>
+      <div className="home-audiences__grid" role="region" aria-label="Browse collections for men, women and kids" tabIndex="0">{audiences.map(item => <button type="button" key={item.id} className="home-audience" onClick={() => setSelection(item)}>
+        <div className="home-audience__photo"><Photo name={item.id} kind="audience" alt={item.id === 'for-kids' ? 'Children wearing colourful glasses' : item.id === 'for-him' ? 'A man wearing statement eyewear' : 'A woman wearing statement eyewear'} /></div>
         <div className="home-audience__copy"><span className="home-eyebrow">{item.eyebrow}</span><h3>{item.title}</h3><span className="home-audience__link">Explore styles</span></div>
       </button>)}</div>
     </section>
@@ -117,7 +135,7 @@ export default function HomeCollections({ onSelect: setSelection }) {
 
     <section className="home-categories home-section" id="top-categories" aria-labelledby="categories-heading">
       <div className="home-section__intro"><div><p className="home-eyebrow">A GOOD PLACE TO START</p><h2 id="categories-heading">Find your everyday frame.</h2></div><span className="home-categories__hint">Different styles. Same you.</span></div>
-      <div className="home-categories__rail" ref={categoryRail}>{categories.map((item, i) => <button type="button" key={item.id} className="home-category" onClick={() => setSelection(item)} aria-label={`Explore ${item.title}`}>
+      <div className="home-categories__rail" ref={categoryRail} role="region" aria-label="Browse eyewear categories" tabIndex="0">{categories.map((item, i) => <button type="button" key={item.id} className="home-category" onClick={() => setSelection(item)} aria-label={`Explore ${item.title}`}>
         <div className="home-category__photo"><Photo name={item.id} alt={`${item.title} eyewear collection`} /><span>0{i + 1}</span></div>
         <div className="home-category__title"><h3>{item.title}</h3><Arrow /></div><p>{item.subtitle}</p>
       </button>)}</div>

@@ -1,0 +1,369 @@
+/* Handheld layouts follow the same hierarchy as the desktop site, with touch-sized controls. */
+@media (max-width: 767px) {
+  :root { --handheld-inset: 20px; --handheld-header: 64px; }
+  #main, #icon-edit, .home-section, .site-footer details { scroll-margin-top: calc(var(--handheld-header) + 16px); }
+  .site-header__navigation { height: var(--handheld-header); padding-inline: 12px; }
+  .site-header__logo-frame { width: clamp(100px, 28vw, 122px); }
+  .site-header__mobile-actions, .site-header__actions { gap: 0; }
+  .site-header__mobile-actions button, .site-header__actions .site-header__profile-action, .site-header__actions .site-header__bag { width: 44px; min-height: 44px; }
+  .site-header__mobile-menu { top: var(--handheld-header); max-height: calc(100dvh - var(--handheld-header)); padding-bottom: env(safe-area-inset-bottom); }
+  .site-header__backdrop { top: var(--handheld-header); }
+  .site-header__panel-groups { grid-template-columns: minmax(0, 1fr); padding: 16px 20px 24px; gap: 24px; }
+  .site-header__panel-intro { padding-inline: 20px; }
+  .site-header .site-header__mobile-trigger { padding-inline: 20px; }
+
+  /* Media begins immediately beneath the header instead of floating in a tall blank stage. */
+  .home-hero { --hero-copy-inset: 20px; --handheld-media-height: clamp(248px, 72vw, 340px); height: calc(var(--handheld-media-height) + 240px); }
+  .home-hero .first-campaign-stage { inset: 0 0 auto; height: var(--handheld-media-height); width: 100%; transform: none; }
+  .home-hero .first-campaign-video { object-fit: cover; object-position: 70% center; }
+  .home-hero .first-campaign-stage::after { display: none; }
+  .home-hero .first-campaign-caption, .home-hero .first-campaign-caption[data-scene] { top: calc(100% + 24px); left: var(--hero-copy-inset); right: var(--hero-copy-inset); width: auto; color: #242722; text-shadow: none; }
+  .home-hero .hero-video-caption__text { gap: 8px; }
+  .home-hero .hero-video-caption h2, .home-hero .hero-video-caption p { white-space: normal; }
+  .home-hero .hero-video-caption h2 { font-size: clamp(26px, 7.2vw, 34px); line-height: 1.16; text-wrap: balance; }
+  .home-hero .hero-video-caption__tagline { font-size: 17px; line-height: 1.45; }
+  .home-hero .hero-video-caption__detail { font-size: 14px; line-height: 1.5; }
+  .home-hero__video-controls { bottom: 52px; left: 20px; right: auto; gap: 12px; }
+  .home-hero [data-campaign='first'] .home-hero__video-controls { top: calc(var(--handheld-media-height) - 60px); bottom: auto; left: auto; right: 16px; gap: 8px; }
+  .home-hero [data-campaign='first'] .home-hero__video-controls button { width: 44px; height: 44px; border-color: #c8ccc1; background: #fff; }
+  .home-hero [data-campaign='first'] .home-hero__video-controls svg { filter: brightness(0); opacity: .85; }
+  .home-hero .hero-image-campaign { grid-template-columns: 1fr; grid-template-rows: var(--handheld-media-height) 1fr; }
+  .home-hero .hero-image-campaign .home-hero__image-link { grid-column: 1; grid-row: 1; }
+  .home-hero .hero-image-campaign .home-hero__image-link img { position: absolute; height: 100%; object-fit: cover; }
+  .hero-image-campaign__copy { grid-column: 1; grid-row: 2; align-self: start; padding: 24px 20px 52px; }
+  .hero-image-campaign__eyebrow { margin-bottom: 10px; font-size: 10px; letter-spacing: .13em; }
+  .hero-image-campaign h2 { max-width: 100%; font-size: clamp(30px, 8vw, 36px); line-height: 1.1; }
+  .hero-image-campaign__description { margin-top: 12px; font-size: 15px; line-height: 1.5; }
+  .home-hero .hero-image-campaign .home-hero__cta { min-height: 44px; margin-top: 18px; padding: 10px 18px; font-size: 14px; }
+  .home-hero .home-hero__pagination, .home-hero:has([data-slide='0'][aria-hidden='false']) .home-hero__pagination { left: 50%; bottom: 0; width: 208px; height: 44px; gap: 2px; transform: translateX(-50%); }
+  .home-hero__bullet, .home-hero__bullet--active { flex: 1 1 24px; height: 44px; padding: 8px; }
+  .home-hero__bullet::before, .home-hero__bullet--active::before { width: 6px; height: 6px; border: 0; box-shadow: none; background: #9ca293; }
+  .home-hero__bullet--active::before { width: 7px; height: 7px; background: #242722; }
+
+  .home-section { padding: 40px var(--handheld-inset); }
+  .home-section__intro, .home-featured .home-section__intro { display: block; margin-bottom: 24px; }
+  .home-featured .home-section__intro h1 { font-size: clamp(29px, 8vw, 36px); line-height: 1.17; }
+  .home-featured .home-section__intro h1 span { margin-top: 10px; font-size: .8em; }
+  .home-featured .home-section__description { padding-left: 0; border: 0; margin-top: 16px; font-size: 14px; line-height: 1.6; }
+  .home-section__description br, .home-editorial__intro > p br { display: none; }
+  .home-featured__toolbar { margin-bottom: 20px; padding-bottom: 16px; }
+  .home-featured__explore { display: none; }
+  .home-tabs button { min-height: 44px; padding-inline: 16px; font-size: 14px; }
+  .home-products { grid-auto-columns: 85%; gap: 14px; }
+  .home-product__image { aspect-ratio: 1.25; }
+  .home-product__info { padding: 16px; }
+  .home-product__info h2 { font-size: 18px; }
+  .home-product__type { font-size: 12px; }
+  .home-product__bottom { margin-top: 14px; padding-top: 12px; font-size: 17px; }
+  .home-audiences__intro { text-align: left; margin-bottom: 22px; }
+  .home-audiences__intro h2, .home-categories h2 { font-size: 29px; }
+  .home-audiences__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 100%; gap: 16px; overflow-x: auto; }
+  .home-audience__photo { aspect-ratio: 1.1; }
+  .home-audience__copy { padding-top: 16px; }
+  .home-audience__copy h3 { font-size: 24px; }
+  .home-audience__copy .home-eyebrow { min-height: 0; font-size: 10px; }
+  .home-audience__link { min-height: 40px; margin-top: 8px; font-size: 14px; }
+  .home-brand { grid-template-columns: 1fr; }
+  .home-brand picture { grid-column: 1; grid-row: 1; height: 280px; }
+  .home-brand__caption { grid-column: 1; grid-row: 2; min-height: 0; padding: 28px 20px 36px; gap: 18px; }
+  .home-brand__caption h2 { font-size: 34px; }
+  .home-brand__caption > div > p:last-child { font-size: 15px; margin-top: 16px; }
+  .home-categories__rail { grid-auto-columns: calc((100% - 16px) / 2); gap: 16px; padding: 4px 0; margin: -4px 0; }
+  .home-category__photo { aspect-ratio: .8; }
+  .home-category__title h3 { font-size: 17px; }
+  .home-category > p { font-size: 13px; }
+  .home-editorial__intro { display: block; margin-bottom: 24px; }
+  .home-editorial__intro h2 { font-size: clamp(34px, 9vw, 44px); }
+  .home-editorial__intro > p { margin-top: 12px; font-size: 14px; }
+  .home-directory__rail { grid-auto-columns: 85%; gap: 14px; }
+  .home-label__name { font-size: 36px; }
+  .home-label--wide .home-label__name { font-size: 26px; }
+  .home-label__index { top: 18px; left: 18px; font-size: 10px; }
+  .home-label__footer { left: 18px; right: 18px; bottom: 18px; font-size: 13px; }
+  .home-community.home-section { padding-block: 40px; }
+  .home-community__intro { padding-inline: 20px; }
+  .home-community__intro h2 { font-size: clamp(40px, 10.5vw, 56px); letter-spacing: -.06em; }
+  .home-community__carousel { --community-card-width: min(78vw, 340px); --community-gap: 14px; padding: 24px 20px 0; }
+  .home-street { height: 414px; }
+  .home-street__image { height: 290px; }
+  .home-street--active .home-street__image { height: 340px; }
+  .home-guidance__intro, .home-lens-guide__intro { display: block; }
+  .home-guidance__intro > .home-guidance__description { margin-top: 14px; }
+  .home-guidance .home-guide-link { margin-top: 16px; min-height: 44px; }
+  .home-benefits.home-section, .home-lens-guide.home-section { padding-block: 36px; }
+  .home-benefits__grid, .home-lens-guide__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 85%; gap: 14px; margin-top: 24px; overflow-x: auto; }
+  .home-benefit, .home-guidance .home-guide-topic { min-width: 0; padding: 24px 20px; }
+  .home-guidance .home-benefit h3, .home-guide-topic h3 { font-size: 18px; margin-top: 20px; }
+  .home-guidance .home-benefit p, .home-guidance .home-guide-topic p { font-size: 14px; }
+
+  .glasses-heading { padding: 24px 20px 0; }
+  .glasses-heading__main { padding: 22px 0 24px; }
+  .glasses-heading h1 { font-size: clamp(28px, 7.6vw, 36px); line-height: 1.16; }
+  .glasses-heading__description { font-size: 14px; line-height: 1.6; }
+  .glasses-heading__count { display: none; }
+  .glasses-types { gap: 24px; }
+  .glasses-types a { min-height: 44px; padding: 12px 0 14px; font-size: 13px; }
+  .glasses-collection { padding: 20px 16px 32px; }
+  .glasses-toolbar { flex-wrap: wrap; gap: 16px; }
+  .glasses-audiences { width: 100%; gap: 8px; }
+  .glasses-audiences a, .accessories-page .glasses-audiences button { min-height: 44px; padding: 9px 15px; font-size: 13px; }
+  .glasses-toolbar__actions { width: 100%; justify-content: space-between; }
+  .glasses-saved { order: 1; min-height: 44px; padding: 8px 4px; font-size: 13px !important; }
+  .glasses-saved span { display: inline; }
+  .glasses-filter-trigger { order: 0; min-height: 44px; font-size: 13px !important; }
+  .glasses-results-toolbar { flex-direction: column; align-items: stretch; gap: 12px; padding: 18px 0; }
+  .glasses-results-toolbar > p { max-width: none; font-size: 12px; }
+  .glasses-search { width: 100%; max-width: none; min-height: 44px; padding-left: 12px; border: 1px solid #d7ddcf; border-radius: 8px; background: #fff; }
+  .glasses-search input { width: 100%; padding-block: 10px; font-size: 16px; }
+  .glasses-search button { width: 44px; height: 44px; flex-shrink: 0; }
+  .glasses-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .glasses-card__tag { top: 14px; left: 10px; max-width: calc(100% - 48px); font-size: 9px; }
+  .glasses-card__save { width: 40px; height: 40px; top: 4px; right: 2px; padding: 11px; }
+  .glasses-card__copy { padding: 4px 12px 16px; }
+  .glasses-card__title h2, .accessories-card .glasses-card__title h2 { font-size: 16px; line-height: 1.35; }
+  .glasses-card__title > span { font-size: 12px; }
+  .glasses-card__description { font-size: 11px; line-height: 1.5; }
+  .glasses-card__colour { font-size: 12px; gap: 6px; }
+  .glasses-card__bottom { gap: 8px; }
+  .glasses-card__bottom > strong { font-size: 16px; }
+  .glasses-card__bottom > button { min-height: 40px; font-size: 12px; }
+  .glasses-filters { inset: auto 0 0; width: 100%; max-width: 100%; height: min(92dvh, 820px); max-height: 92dvh; border-radius: 20px 20px 0 0; }
+  .glasses-filters__heading { padding: 20px; }
+  .glasses-filters__body { padding: 20px; }
+  .glasses-filter-option { min-height: 44px; font-size: 14px; }
+  .glasses-filters__footer { padding: 16px 20px max(16px, env(safe-area-inset-bottom)); }
+
+  .home-preview { position: fixed; inset: 0; margin: auto; width: calc(100% - 24px); max-width: 560px; max-height: 92dvh; border-radius: 16px; overflow: hidden; overscroll-behavior: contain; }
+  .home-preview__content { display: block; max-height: 92dvh; overflow-y: auto; overscroll-behavior: contain; }
+  .home-preview__product-visual { padding: 48px 16px 8px; }
+  .home-preview__product-visual > img { max-height: 230px; width: 100%; object-fit: contain; }
+  .home-preview__angles button { min-height: 44px; font-size: 13px; }
+  .home-preview__copy { min-width: 0; padding: 24px 20px 28px; }
+  .home-preview__copy h2 { font-size: 27px; overflow-wrap: anywhere; }
+  .home-preview__specifications { font-size: 14px; }
+  .home-preview__shopping { grid-template-columns: 1fr 1fr; }
+  .home-preview__shopping .shop-save-frame { font-size: 13px; }
+  .shop-panel { width: 100%; max-width: 100%; }
+  .shop-panel__header { padding: 20px; }
+  .shop-panel__body { padding: 20px; }
+  .shop-panel__footer { padding: 14px 20px max(14px, env(safe-area-inset-bottom)); }
+  .shop-panel__header h2 { font-size: 26px; }
+  .shop-result__title { font-size: 16px; }
+  .shop-result__title span { font-size: 13px; }
+  .shop-chips { flex-wrap: nowrap; overflow-x: auto; margin-inline: -20px; padding-inline: 20px; }
+  .shop-chips button { flex: 0 0 auto; min-height: 44px; }
+  .account-dialog { width: calc(100% - 24px); max-width: 500px; max-height: 92dvh; overflow: hidden; }
+  .account-dialog__content { padding: 52px 20px 28px; max-height: 92dvh; overflow-y: auto; overscroll-behavior: contain; }
+  .account-form input { min-height: 54px; }
+
+  .cart-page { padding: 28px 20px 44px; }
+  .cart-page__layout { grid-template-columns: minmax(0, 1fr); margin-top: 28px; gap: 28px; }
+  .cart-item { grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding-block: 24px; }
+  .cart-item__copy { min-width: 0; }
+  .cart-item h2 { font-size: 17px; line-height: 1.4; overflow-wrap: anywhere; }
+  .cart-item__price { grid-column: 2; padding-top: 0; }
+  .cart-item__controls { gap: 12px; margin-top: 12px; }
+  .cart-quantity button { width: 42px; height: 44px; }
+  .cart-item__remove { min-height: 44px; }
+  .cart-summary { padding: 24px 20px; }
+  .site-footer__inner { padding-inline: 20px; }
+  .site-footer__intro { display: block; }
+  .site-footer__intro-copy { margin-top: 24px; }
+  .site-footer__directory { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 20px; }
+  .site-footer__brand, .site-footer__group:last-child { grid-column: 1 / -1; }
+  .site-footer__help-grid { grid-template-columns: 1fr; gap: 0; }
+}
+
+@media (min-width: 540px) and (max-width: 767px) {
+  .home-products, .home-benefits__grid, .home-lens-guide__grid { grid-auto-columns: 44%; }
+  .home-directory__rail { grid-auto-columns: 56%; }
+}
+
+/* Tablet layouts keep generous cards and a compact navigation drawer in either orientation. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  :root { --handheld-inset: 32px; --handheld-header: 72px; }
+  #main, #icon-edit, .home-section, .site-footer details { scroll-margin-top: 88px; }
+  .site-header__navigation { padding-inline: 24px; gap: 0; }
+  .site-header__logo-frame { width: 132px; }
+  .site-header__mobile-actions, .site-header__actions { gap: 8px; padding-left: 0; }
+  .site-header__mobile-actions button, .site-header__actions .site-header__profile-action, .site-header__actions .site-header__bag { width: 44px; min-height: 44px; }
+  .site-header__panel-intro { padding: 24px 32px; }
+  .site-header__panel-intro h2 { font-size: 30px; }
+  .site-header__panel-intro > p:last-of-type { max-width: 620px; margin-top: 12px; }
+  .site-header .site-header__panel-explore { margin-top: 16px; }
+  .site-header__panel-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 20px 32px 32px; gap: 28px; }
+  .site-header .site-header__mobile-trigger { min-height: 60px; padding: 16px 32px; font-size: 19px; }
+  .site-header__mobile-trigger > span { font-size: 24px; }
+  .site-header__mobile-appointment { min-height: 60px; padding: 16px 32px; border-top: 1px solid #e5e7de; }
+  .home-hero { --hero-copy-inset: 32px; height: min(680px, calc(100svh - 72px)); }
+  .home-hero .hero-video-caption h2 { white-space: normal; font-size: clamp(30px, 4vw, 42px); }
+  .home-hero .hero-video-caption p { white-space: normal; }
+  .home-hero .hero-video-caption__tagline { font-size: 20px; }
+  .home-hero .hero-video-caption__detail { font-size: 16px; }
+  .home-hero__pagination { width: 272px; bottom: 12px; gap: 8px; }
+  .home-hero__bullet, .home-hero__bullet--active { flex-basis: 26px; padding: 10px; }
+  .home-hero__bullet::before, .home-hero__bullet--active::before { width: 7px; height: 7px; border: 0; box-shadow: none; }
+  .home-hero__video-controls { left: 32px; bottom: 28px; gap: 12px; }
+  .hero-image-campaign__copy { padding: 28px 32px 72px; }
+  .hero-image-campaign__eyebrow { font-size: 11px; margin-bottom: 16px; }
+  .hero-image-campaign h2 { font-size: clamp(34px, 4vw, 46px); }
+  .hero-image-campaign__description { font-size: 17px; margin-top: 16px; }
+  .home-hero .hero-image-campaign .home-hero__cta { margin-top: 22px; min-height: 46px; padding: 10px 18px; font-size: 15px; }
+  .home-section { padding: 52px 32px; }
+  .home-featured .home-section__intro h1 { font-size: 38px; }
+  .home-featured .home-section__description { font-size: 15px; }
+  .home-products { grid-auto-columns: 44%; gap: 20px; }
+  .home-product__image { aspect-ratio: 1.2; }
+  .home-audiences__intro { text-align: left; margin-bottom: 28px; }
+  .home-audiences__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc((100% - 20px) / 2); gap: 20px; overflow-x: auto; }
+  .home-audience__photo { aspect-ratio: 1.1; }
+  .home-audience__copy h3 { font-size: 26px; }
+  .home-audience__copy .home-eyebrow { min-height: 0; font-size: 10px; }
+  .home-categories__rail { grid-auto-columns: calc((100% - 20px) / 2); gap: 20px; padding: 4px 0; margin: -4px 0; }
+  .home-categories__hint { display: none; }
+  .home-directory__rail { grid-auto-columns: 44%; gap: 20px; }
+  .home-editorial__intro h2 { font-size: clamp(42px, 5.5vw, 60px); }
+  .home-label__name { font-size: 40px; }
+  .home-label--wide .home-label__name { font-size: 30px; }
+  .home-label__footer { font-size: 14px; left: 24px; right: 24px; bottom: 22px; }
+  .home-brand { grid-template-columns: 46% 54%; }
+  .home-brand__caption { min-height: 390px; padding: 32px; gap: 20px; }
+  .home-brand__caption h2 { font-size: 36px; }
+  .home-brand__caption > div > p:last-child { font-size: 15px; }
+  .home-community.home-section { padding: 52px 0 56px; }
+  .home-community__intro { padding-inline: 32px; }
+  .home-community__intro h2 { font-size: clamp(54px, 7vw, 78px); letter-spacing: -.055em; }
+  .home-community__carousel { --community-card-width: min(54vw, 440px); --community-gap: 20px; padding: 32px 32px 0; }
+  .home-street { height: 540px; }
+  .home-street__image { height: 360px; }
+  .home-street--active .home-street__image { height: 450px; }
+  .home-benefits__grid, .home-lens-guide__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 44%; overflow-x: auto; gap: 20px; }
+  .home-guidance__intro { gap: 24px; }
+  .home-guidance__intro > .home-guidance__description { max-width: 290px; }
+  .home-guidance h2 { font-size: 36px; }
+  .home-benefit, .home-guidance .home-guide-topic { min-width: 0; }
+
+  .glasses-heading { padding: 28px 32px 0; }
+  .glasses-heading__main { padding: 28px 0; }
+  .glasses-heading h1 { font-size: 42px; }
+  .glasses-heading__description { max-width: 620px; font-size: 15px; }
+  .glasses-heading__count { display: none; }
+  .glasses-types a { min-height: 48px; font-size: 14px; }
+  .glasses-collection { padding: 24px 32px 40px; }
+  .glasses-toolbar { flex-wrap: wrap; gap: 16px; }
+  .glasses-audiences { flex: 1 1 340px; min-width: 0; max-width: 100%; }
+  .glasses-audiences a, .accessories-page .glasses-audiences button { min-height: 44px; padding: 9px 15px; font-size: 14px; }
+  .glasses-toolbar__actions { flex: 0 0 auto; margin-left: auto; }
+  .glasses-saved span { display: inline; }
+  .glasses-filter-trigger { min-height: 44px; }
+  .glasses-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .glasses-card__copy { padding: 8px 22px 22px; }
+  .glasses-card__description, .glasses-card__colour { font-size: 13px; }
+  .glasses-card__bottom > button { min-height: 40px; font-size: 13px; }
+  .glasses-card__save { width: 44px; height: 44px; }
+  .glasses-filters { width: min(460px, 100%); }
+  .glasses-filter-option { min-height: 44px; font-size: 14px; }
+  .home-preview { position: fixed; inset: 0; margin: auto; width: min(860px, calc(100% - 48px)); max-height: calc(100dvh - 48px); border-radius: 16px; overflow: hidden; }
+  .home-preview__content { max-height: calc(100dvh - 48px); overflow-y: auto; overscroll-behavior: contain; }
+  .home-preview__copy { min-width: 0; padding: 64px 28px 32px; }
+  .home-preview__copy h2 { overflow-wrap: anywhere; }
+  .home-preview__product-visual { padding-inline: 16px; }
+  .home-preview__angles button { min-height: 44px; font-size: 13px; }
+  .shop-panel { width: min(860px, 94vw); }
+  .shop-panel__header, .shop-panel__body { padding-inline: 28px; }
+  .shop-chips button { min-height: 44px; }
+  .account-dialog { overflow: hidden; }
+  .account-dialog__content { max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; }
+  .cart-page { padding: 36px 32px 56px; }
+  .cart-page__layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .cart-item { grid-template-columns: 160px minmax(0, 1fr) auto; }
+  .cart-item__price { grid-column: auto; padding-top: 24px; }
+  .cart-quantity button { width: 44px; height: 44px; }
+  .cart-item__remove { min-height: 44px; }
+  .site-footer__inner { padding-inline: 32px; }
+  .site-footer__directory { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .site-footer__brand { grid-column: 1 / -1; }
+  .site-footer__help-grid { grid-template-columns: 1fr; gap: 0; }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
+  .home-hero { --handheld-media-height: clamp(360px, 52vw, 460px); height: calc(var(--handheld-media-height) + 260px); }
+  .home-hero .first-campaign-stage { inset: 0 0 auto; width: 100%; height: var(--handheld-media-height); transform: none; }
+  .home-hero .first-campaign-video { object-fit: cover; object-position: 70% center; }
+  .home-hero .first-campaign-stage::after { display: none; }
+  .home-hero .first-campaign-caption, .home-hero .first-campaign-caption[data-scene] { top: calc(100% + 28px); left: 32px; right: 32px; width: auto; max-width: none; color: #242722; text-shadow: none; }
+  .home-hero .hero-video-caption__text { gap: 10px; }
+  .home-hero [data-campaign='first'] .home-hero__video-controls { top: calc(var(--handheld-media-height) - 64px); bottom: auto; right: 24px; left: auto; gap: 10px; }
+  .home-hero [data-campaign='first'] .home-hero__video-controls button { border-color: #c8ccc1; background: #fff; }
+  .home-hero [data-campaign='first'] .home-hero__video-controls svg { filter: brightness(0); }
+  .home-hero .hero-image-campaign { grid-template-columns: 1fr; grid-template-rows: var(--handheld-media-height) 1fr; }
+  .home-hero .hero-image-campaign .home-hero__image-link { grid-column: 1; grid-row: 1; }
+  .home-hero [data-slide='1'] .hero-image-campaign .home-hero__image-link img { object-position: center 60% !important; }
+  .hero-image-campaign__copy { grid-column: 1; grid-row: 2; align-self: start; padding: 24px 32px 56px; }
+  .hero-image-campaign h2 { max-width: none; }
+  .hero-image-campaign__description { max-width: none; margin-top: 12px; }
+  .home-hero .hero-image-campaign .home-hero__cta { margin-top: 16px; }
+  .home-hero .home-hero__pagination { left: 50%; bottom: 10px; width: 272px; transform: translateX(-50%); }
+  .home-hero:has([data-slide='0'][aria-hidden='false']) .home-hero__bullet::before { background: #9ca293; }
+  .home-hero:has([data-slide='0'][aria-hidden='false']) .home-hero__bullet--active::before { background: #242722; }
+}
+
+@media (min-width: 960px) and (max-width: 1199px) {
+  .glasses-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cart-page__layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 28px; }
+  .cart-item { grid-template-columns: 120px minmax(0, 1fr); gap: 16px; }
+  .cart-item__price { grid-column: 2; padding: 0; }
+}
+
+@media (max-width: 1199px) {
+  .site-header__utility, .site-header__desktop-links, .site-header__actions .site-header__desktop-action, .site-header__actions .site-header__mobile-eye { display: none; }
+  .site-header__navigation { height: var(--handheld-header, 64px); }
+  .site-header__brand { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .site-header__mobile-actions { display: flex; align-items: center; }
+  .site-header__actions { padding-left: 0; }
+  .site-header__mobile-menu { position: absolute; top: var(--handheld-header, 64px); left: 0; right: 0; display: grid; max-height: calc(100dvh - var(--handheld-header, 64px)); overflow: auto; overscroll-behavior: contain; background: #fff; box-shadow: 0 8px 24px #0002; }
+  .site-header__backdrop { top: var(--handheld-header, 64px); }
+  .site-header__panel { display: none; }
+  .site-header__panel--mobile { position: static; display: block; max-height: none; margin: 0; border: 0; box-shadow: none; overflow: visible; }
+  .site-header .site-header__mobile-trigger { display: flex; justify-content: space-between; width: 100%; border-top: 1px solid #e5e7de; text-align: left; }
+  .home-products, .home-audiences__grid, .home-categories__rail, .home-directory__rail, .home-benefits__grid, .home-lens-guide__grid, .glasses-types, .glasses-audiences, .shop-chips, .home-preview__angles { scrollbar-width: none; -ms-overflow-style: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  :is(.home-products, .home-audiences__grid, .home-categories__rail, .home-directory__rail, .home-benefits__grid, .home-lens-guide__grid, .glasses-types, .glasses-audiences, .shop-chips, .home-preview__angles)::-webkit-scrollbar { display: none; }
+  .home-audiences__grid, .home-benefits__grid, .home-lens-guide__grid { scroll-snap-type: x mandatory; padding-bottom: 4px; }
+  .home-audiences__grid > *, .home-benefits__grid > *, .home-lens-guide__grid > * { scroll-snap-align: start; }
+  .home-rail-controls, .home-rail-controls--categories, .home-directory__controls { display: none; }
+  .home-community__controls button { display: none; }
+  .home-community__controls { height: 0; margin: 0; }
+  .home-community__controls > p { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .home-community__navigation { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: min(100%, 480px); margin: 0 auto 16px; }
+  .home-community__hint { color: #606656; font: 400 13px/1.5 'CandiClie Hero Avenir', Arial, sans-serif; }
+  .home-community__dots { display: flex; align-items: center; }
+  .home-collections .home-community__dot { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; }
+  .home-community__dot::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #d0d4ca; }
+  .home-community__dot[aria-current='true']::before { width: 9px; height: 9px; background: #303b2c; }
+  .home-community__carousel { --community-card-width: 100%; }
+  .home-community__viewport { max-width: 480px; margin: 0 auto; padding: 0; }
+  .home-community__grid { align-items: flex-start; }
+  .home-community__carousel .home-street { height: auto; align-items: flex-start; }
+  .home-community__carousel .home-street__content { width: 100%; max-width: none; gap: 12px; }
+  .home-community__carousel .home-street__image { height: min(120vw, 58svh, 560px); }
+  .home-community__carousel .home-street__explore { min-height: 44px; }
+  .home-category:focus-visible { outline-offset: -3px; }
+  .glasses-types { overflow-x: auto; scroll-snap-type: x proximity; }
+  .glasses-types > a { flex: 0 0 auto; scroll-snap-align: start; }
+  .glasses-audiences { flex-wrap: nowrap; overflow-x: auto; }
+  .glasses-audiences > * { flex: 0 0 auto; }
+  .home-preview__angles { max-width: 100%; overflow-x: auto; }
+  .home-preview__angles button { flex: 0 0 auto; }
+  .home-preview__close, .account-dialog__close { z-index: 5; }
+  .glasses-search input, .shop-search input, .account-form input { font-size: 16px; }
+}
+
+.glasses-card__image:has(.glasses-card__alternate), .home-preview__product-visual:has(.home-preview__angles) { touch-action: pan-y; }
+.glasses-card__image[data-alternate='true'] > img:first-child { opacity: 0; }
+.glasses-card__image[data-alternate='true'] > .glasses-card__alternate { opacity: 1; }
+
+@media (max-width: 360px) {
+  .home-preview__shopping { grid-template-columns: 1fr; }
+  .hero-image-campaign__copy { padding-top: 20px; }
+  .hero-image-campaign__description { font-size: 14px; }
+}

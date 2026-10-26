@@ -35,6 +35,8 @@
 .home-community__viewport { overflow: hidden; padding: 6px; margin: -6px; touch-action: pan-y; }
 .home-community__grid { display: flex; align-items: center; gap: var(--community-gap); width: 100%; }
 .home-community__grid--moving { transition: transform 450ms cubic-bezier(.4, 0, .2, 1); }
+.home-community__grid--dragging { transition: none; }
+.home-community__navigation { display: none; }
 .home-street { position: relative; display: flex; flex: 0 0 var(--community-card-width); align-items: center; justify-content: center; height: clamp(480px, calc(66px + 41.09vw), 776px); min-width: 0; color: inherit; text-align: left; }
 .home-street__content { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; width: 81.4815%; max-width: 440px; }
 .home-street__image { position: relative; display: block; width: 100%; height: clamp(300px, 33.91vw, 586px); padding: 0; border: 0; overflow: hidden; background: #efeeeb; }

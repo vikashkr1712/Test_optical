@@ -34,12 +34,13 @@ function prepareImage(product) {
     const image = new Image();
     image.onload = () => resolve();
     image.onerror = () => reject(new Error('Image unavailable'));
-    const columns = innerWidth < 850 ? 2 : innerWidth >= 1900 ? 4 : 3;
-    image.src = productImage(product, (innerWidth * .9 / columns) * devicePixelRatio > 640);
+    const columns = innerWidth < 960 ? 2 : innerWidth >= 1900 ? 4 : 3;
+    const displayedWidth = document.querySelector('.glasses-card__image')?.clientWidth || innerWidth * .9 / columns;
+    image.src = productImage(product, displayedWidth * devicePixelRatio > 640);
   });
 }
 
-export default function GlassesFeed({ products, order, repeat, renderFrame }) {
+export default function GlassesFeed({ products, order, repeat, renderFrame, loadingLabel = 'Loading more frames' }) {
   const source = useRef(products);
   const [frames, setFrames] = useState(() => products.slice(0, batchSize));
   const [loading, setLoading] = useState(false);
@@ -113,7 +114,7 @@ export default function GlassesFeed({ products, order, repeat, renderFrame }) {
   return <>
     <div className="glasses-grid" aria-busy={loading}>{frames.map((product, index) => <div className="glasses-feed__frame" key={`${product.id}-${index}`} data-frame-id={product.id}>{renderFrame(product, index)}</div>)}</div>
     <div className={`glasses-feed__loader${loading ? ' glasses-feed__loader--active' : ''}`} ref={sentinel}>
-      {loading && <div className="glasses-feed__status" role="status" aria-live="polite" aria-label="Loading more frames"><span className="glasses-feed__spinner" aria-hidden="true">{Array.from({ length: 12 }, (_, index) => <span key={index} style={{ '--spoke': index }} />)}</span><span>Loading…</span></div>}
+      {loading && <div className="glasses-feed__status" role="status" aria-live="polite" aria-label={loadingLabel}><span className="glasses-feed__spinner" aria-hidden="true">{Array.from({ length: 12 }, (_, index) => <span key={index} style={{ '--spoke': index }} />)}</span><span>Loading…</span></div>}
     </div>
   </>;
 }
