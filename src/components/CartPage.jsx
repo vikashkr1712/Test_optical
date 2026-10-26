@@ -1,4 +1,5 @@
 import { currency, shopProducts } from './shopProducts.js';
+import { productImage } from './glassesCatalog.js';
 import './CartPage.css';
 
 export default function CartPage({ shopping, onContinueShopping, onCheckOrders }) {
@@ -13,7 +14,7 @@ export default function CartPage({ shopping, onContinueShopping, onCheckOrders }
       <div className="cart-page__actions"><button type="button" className="cart-button cart-button--primary" onClick={onContinueShopping}>Continue shopping</button><button type="button" className="cart-button" onClick={onCheckOrders}>Check my orders</button></div>
     </div> : <div className="cart-page__layout">
       <div className="cart-page__items">{items.map(({ product, quantity }) => <article className="cart-item" key={product.id}>
-        <img src={`/assets/home/${product.id}-400.webp`} width="400" height="256" alt={`${product.brand} ${product.model}, ${product.colour}`} />
+        <img src={productImage(product)} width="400" height="256" alt={`${product.brand} ${product.model}, ${product.colour}`} />
         <div className="cart-item__copy"><p className="cart-item__type">{product.type}</p><h2>{product.brand}</h2><p>{product.model}</p><p className="cart-item__colour">{product.colour}</p>
           <div className="cart-item__controls"><div className="cart-quantity" role="group" aria-label={`Quantity for ${product.brand} ${product.model}`}><button type="button" disabled={quantity === 1} aria-label={`Decrease ${product.model} quantity`} onClick={() => shopping.setQuantity(product.id, quantity - 1)}>−</button><span aria-live="polite">{quantity}</span><button type="button" disabled={quantity >= 10} aria-label={`Increase ${product.model} quantity`} onClick={() => shopping.setQuantity(product.id, quantity + 1)}>+</button></div><button type="button" className="cart-item__remove" aria-label={`Remove ${product.brand} ${product.model}`} onClick={() => shopping.setQuantity(product.id, 0)}>Remove</button></div>
         </div><strong className="cart-item__price">{currency.format(product.price * quantity)}</strong>

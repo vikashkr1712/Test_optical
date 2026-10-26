@@ -82,6 +82,15 @@
 .home-audiences, .home-brand, .home-categories { content-visibility: auto; contain-intrinsic-size: auto 580px; }
 .home-preview { --home-muted: #5d6457; width: min(860px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; background: #fff; color: #242722; font: 16px/1.6 'CandiClie Hero Avenir', Arial, sans-serif; }
 .home-preview::backdrop { background: #141b19a6; }
+.home-preview__product-visual { display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff; min-width: 0; padding: 42px 12px 24px; }
+.home-preview__product-visual > img { display: block; width: 100%; height: auto; object-fit: contain; }
+.home-preview__angles { display: flex; justify-content: center; gap: 8px; padding: 18px 4px 0; }
+.home-preview__angles button { min-height: 36px; padding: 6px 12px; border: 1px solid #d2d8c8; border-radius: 3px; background: #fff; font-size: 12px; }
+.home-preview__angles button[aria-pressed='true'] { background: #e8ece2; border-color: #9da98b; }
+.home-preview__specifications { margin: 20px 0; padding: 14px 0; border-block: 1px solid #e0e4d9; font-size: 13px; }
+.home-preview__specifications > div { display: flex; justify-content: space-between; gap: 18px; padding: 4px 0; }
+.home-preview__specifications dt { color: #69705f; }
+.home-preview__specifications dd { margin: 0; text-align: right; }
 .home-preview__content { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
 .home-preview--text { max-width: 680px; }
 .home-preview__content--text { grid-template-columns: 1fr; }

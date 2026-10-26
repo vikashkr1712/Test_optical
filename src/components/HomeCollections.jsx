@@ -3,6 +3,7 @@ import './HomeCollections.css';
 import HomeEditorial from './HomeEditorial.jsx';
 import HomeGuidance from './HomeGuidance.jsx';
 import { productGroups as products, currency } from './shopProducts.js';
+import { audienceLabels, productImage } from './glassesCatalog.js';
 
 const asset = (name, size) => `/assets/home/${name}-${size}.webp`;
 
@@ -34,10 +35,12 @@ function Photo({ name, alt, kind = 'category', className = '' }) {
     alt={alt} loading="lazy" decoding="async" />;
 }
 
-export function PreviewDialog({ selection, onClose, shopping, onOpenBag }) {
+export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrowse }) {
   const dialog = useRef(null);
+  const [angle, setAngle] = useState(false);
   useEffect(() => {
     if (!selection) return;
+    setAngle(false);
     const modal = dialog.current;
     const previousOverflow = document.body.style.overflow;
     modal.showModal();
@@ -49,14 +52,14 @@ export function PreviewDialog({ selection, onClose, shopping, onOpenBag }) {
   return <dialog ref={dialog} className={`home-preview${textOnly ? ' home-preview--text' : ''}`} aria-labelledby="preview-title" onClose={onClose} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
     {selection && <div className={`home-preview__content${textOnly ? ' home-preview__content--text' : ''}`}>
       <button type="button" className="home-preview__close" aria-label="Close preview" onClick={onClose} autoFocus>×</button>
-      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : !textOnly && <Photo name={selection.id} kind={product ? 'product' : selection.id.startsWith('for-') ? 'audience' : 'category'} alt={product ? `${selection.brand} ${selection.model}` : selection.title} />}
+      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : product ? <div className="home-preview__product-visual"><img src={angle && selection.imageAlt ? selection.imageAlt : productImage(selection, true)} width="640" height="400" alt={`${selection.brand} ${selection.model}, ${selection.colour}${angle ? ', angled view' : ', front view'}`} />{selection.imageAlt && <div className="home-preview__angles" role="group" aria-label="Product image views"><button type="button" aria-pressed={!angle} onClick={() => setAngle(false)}>Front view</button><button type="button" aria-pressed={angle} onClick={() => setAngle(true)}>Side view</button></div>}</div> : !textOnly && <Photo name={selection.id} kind={selection.id.startsWith('for-') ? 'audience' : 'category'} alt={selection.title} />}
       <div className="home-preview__copy">
         <p className="home-eyebrow">{product ? selection.type : selection.eyebrow || 'THE CANDICLIE EDIT'}</p>
         <h2 id="preview-title">{product ? selection.brand : selection.collection || selection.title}</h2>
-        {product ? <><p>{selection.model}</p><p className="home-muted">{selection.colour}</p><p className="home-preview__price">{currency.format(selection.price)}</p><div className="home-preview__shopping"><button type="button" className="shop-primary" onClick={() => { shopping.addToBag(selection.id); onOpenBag(); }} disabled={shopping.cart.some(item => item.id === selection.id && item.quantity >= 10)}>{shopping.cart.some(item => item.id === selection.id && item.quantity >= 10) ? 'Bag limit reached' : 'Add to bag'}</button><button type="button" className="shop-save-frame" aria-pressed={shopping.saved.includes(selection.id)} onClick={() => shopping.toggleSaved(selection.id)}>{shopping.saved.includes(selection.id) ? '♥ Saved frame' : '♡ Save frame'}</button></div><p className="home-preview__note">Keep your favourites in your bag. Online checkout is coming soon; final prices and availability will be confirmed when shopping launches.</p></> : <p>{selection.description}</p>}
+        {product ? <><p>{selection.model}</p><p className="home-muted">{selection.colour}</p><p className="home-preview__price">{currency.format(selection.price)}</p>{selection.shape && <dl className="home-preview__specifications"><div><dt>Shape</dt><dd>{selection.shape}</dd></div><div><dt>Frame style</dt><dd>{selection.rim}</dd></div><div><dt>Collection</dt><dd>{selection.audiences.map(audience => audienceLabels[audience]).join(' / ')}</dd></div></dl>}<div className="home-preview__shopping"><button type="button" className="shop-primary" onClick={() => { shopping.addToBag(selection.id); onOpenBag(); }} disabled={shopping.cart.some(item => item.id === selection.id && item.quantity >= 10)}>{shopping.cart.some(item => item.id === selection.id && item.quantity >= 10) ? 'Bag limit reached' : 'Add to bag'}</button><button type="button" className="shop-save-frame" aria-pressed={shopping.saved.includes(selection.id)} onClick={() => shopping.toggleSaved(selection.id)}>{shopping.saved.includes(selection.id) ? '♥ Saved frame' : '♡ Save frame'}</button></div><p className="home-preview__note">Keep your favourites in your bag. Online checkout is coming soon; final prices and availability will be confirmed when shopping launches.</p></> : <p>{selection.description}</p>}
         {selection.details?.length > 0 && <ul className="home-preview__details">{selection.details.map(detail => <li key={detail}>{detail}</li>)}</ul>}
         {selection.note && <p className="home-preview__note">{selection.note}</p>}
-        <a className="home-text-link" href={selection.cta?.href || (product || selection.media ? '#top-categories' : '#featured-picks')} onClick={onClose}>{selection.cta?.label || (product || selection.media ? 'Discover more styles' : 'Explore featured frames')}<Arrow /></a>
+        <a className="home-text-link" href={product ? '/eyewear' : `${location.pathname === '/' ? '' : '/'}${selection.cta?.href || (selection.media ? '#top-categories' : '#featured-picks')}`} onClick={event => { if (product && onBrowse && event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) { event.preventDefault(); onBrowse(); } else onClose(); }}>{selection.cta?.label || (product || selection.media ? 'Discover more styles' : 'Explore featured frames')}<Arrow /></a>
       </div>
     </div>}
   </dialog>;

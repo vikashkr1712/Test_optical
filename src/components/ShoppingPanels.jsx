@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { currency, shopProducts } from './shopProducts.js';
+import { productImage } from './glassesCatalog.js';
 import './ShoppingPanels.css';
 
 function FrameImage({ product }) {
-  return <img src={`/assets/home/${product.id}-400.webp`} width="400" height="256" alt={`${product.brand} ${product.model}, ${product.colour}`} />;
+  return <img src={productImage(product)} width="400" height="256" alt={`${product.brand} ${product.model}, ${product.colour}`} />;
 }
 
 function FrameResult({ product, shopping, onView }) {
@@ -21,12 +22,12 @@ function SearchPanel({ shopping, onView }) {
   const [type, setType] = useState('All');
   const search = useRef(null);
   const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const results = shopProducts.filter(product => (type === 'All' || product.type === type) && terms.every(term => `${product.brand} ${product.model} ${product.colour} ${product.type}`.toLowerCase().includes(term)));
+  const results = shopProducts.filter(product => (type === 'All' || product.type === type) && terms.every(term => `${product.brand} ${product.model} ${product.colour} ${product.type} ${product.shape} ${product.audiences.join(' ')} ${product.audiences.includes('kids') ? 'junior' : ''}`.toLowerCase().includes(term)));
   useEffect(() => { search.current?.focus(); }, []);
   const selectQuery = value => { setQuery(value); shopping.rememberSearch(value); search.current?.focus(); };
   const view = product => { shopping.rememberSearch(query); onView(product); };
   return <>
-    <p className="shop-intro">A new point of view starts here. Search our featured frames.</p>
+    <p className="shop-intro">A new point of view starts here. Search our glasses collection.</p>
     <form className="shop-search" role="search" onSubmit={event => { event.preventDefault(); shopping.rememberSearch(query); }}>
       <label className="shop-sr-only" htmlFor="frame-search">Search by brand, model, colour or type</label>
       <input ref={search} id="frame-search" type="search" value={query} maxLength={80} onChange={event => setQuery(event.target.value)} placeholder="Try Burberry, black or sunglasses" autoComplete="off" />
