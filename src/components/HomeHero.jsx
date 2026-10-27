@@ -87,8 +87,16 @@ const HeroSlide = memo(function HeroSlide({ slide, number, mobile, selected, act
     role={clone ? 'presentation' : 'group'} aria-roledescription={clone ? undefined : 'slide'}
     aria-label={clone ? undefined : `${number + 1} of ${slides.length}: ${slide.name}`} aria-hidden={clone || !selected}>
     {slide.type === 'video' ? <>
-      {slide.campaign ? <FirstHeroCampaign src={mobile ? slide.mobile : slide.desktop} selected={selected} active={active} warm={warm} restartKey={restartKey} reducedMotion={reducedMotion} clone={clone}
-        PauseIcon={PauseIcon} SoundIcon={SoundIcon} onComplete={() => onVideoComplete(number)} audioPreference={campaignAudio} /> :
+      {slide.campaign ? <>
+        <FirstHeroCampaign src={mobile ? slide.mobile : slide.desktop} selected={selected} active={active} warm={warm} restartKey={restartKey} reducedMotion={reducedMotion} clone={clone}
+          PauseIcon={PauseIcon} SoundIcon={SoundIcon} onComplete={() => onVideoComplete(number)} audioPreference={campaignAudio} />
+        {mobile && <div className="mobile-campaign-copy">
+          <p className="mobile-campaign-copy__eyebrow">Premium eyewear</p>
+          <h2>Your Next Look<br />Starts with <em>CandiClie.</em></h2>
+          <p className="mobile-campaign-copy__description">Timeless frames. Modern style.<br />Everyday value for a brighter you.</p>
+          <a href="#featured-picks" className="mobile-campaign-copy__cta" tabIndex={active && !clone ? 0 : -1}>Explore collection <span aria-hidden="true">→</span></a>
+        </div>}
+      </> :
         <VideoSlide src={mobile ? slide.mobile : slide.desktop} label={slide.name} caption={slide.caption} selected={selected} active={active} warm={warm} restartKey={restartKey} onComplete={() => onVideoComplete(number)} reducedMotion={reducedMotion} clone={clone} />}
       <a className="home-hero__media-link" href={slide.href} tabIndex={active && !clone ? 0 : -1} aria-label={`Explore ${slide.name}`} draggable="false" />
     </> : <div className={slide.editorial ? 'hero-image-campaign' : undefined}>

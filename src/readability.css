@@ -1,0 +1,299 @@
+/* Shared typography: small copy receives a modest lift; display headings keep their scale. */
+.site-header__utility { font-size: 15px; }
+.site-header__panel-eyebrow, .site-header__panel-group h3 { font-size: 14px; }
+
+.home-featured .home-featured__eyebrow,
+.home-brand__caption .home-eyebrow,
+.home-guidance .home-guidance__eyebrow,
+.glasses-eyebrow,
+.story-eyebrow,
+.offers-eyebrow,
+.seasonal-eyebrow { font-size: 14px; }
+.home-product__number, .home-audience__copy .home-eyebrow,
+.home-category__photo > span, .home-label__index,
+.home-benefit__number { font-size: 14px; }
+.home-category > p, .home-guidance .home-benefit p,
+.home-guidance .home-guide-topic p { font-size: 16px; }
+.home-label__index { color: #fff; text-shadow: 0 1px 6px #000; }
+.home-benefit__number { color: #76563a; }
+.home-guidance [data-tone='sand'] { --guidance-tone: #76563a; }
+.home-community__total { color: #666; }
+
+.glasses-breadcrumbs ol, .story-breadcrumbs,
+.offers-breadcrumb, .seasonal-breadcrumb { font-size: 15px; }
+.glasses-results-toolbar > p, .glasses-heading__count,
+.glasses-card__description, .glasses-card__colour,
+.glasses-card__title > span { font-size: 15px; }
+.glasses-card__tag { font-size: 13px; color: #3d4837; }
+.glasses-card__bottom > button, .glasses-card__quick-view,
+.glasses-feed__status { font-size: 15px; }
+.glasses-card__quick-view { color: #34452c; }
+.glasses-heading .glasses-eyebrow { font-size: 14px; }
+
+.designers-intro__numbers, .designers-portrait__caption,
+.designers-featured-card__copy > span, .designers-featured-card > p,
+.designers-results, .designers-brand > p, .designers-brand > span,
+.designers-swipe-hint, .designer-collection__directory { font-size: 15px; }
+.designers-brand > p, .designers-featured-card > p { color: #505d4e; }
+
+.offers-hero__note, .offers-product__copy > span,
+.offers-product__copy > p, .offers-product__copy button,
+.seasonal-product__copy > span, .seasonal-product__copy > p,
+.seasonal-product__copy button, .seasonal-gifting small { font-size: 15px; }
+.offers-product__copy h3, .seasonal-product__copy h3 { font-size: 17px; }
+.offers-product__copy strong, .seasonal-product__copy strong { font-size: 17px; }
+.seasonal-moment > span:first-child { font-size: 14px; }
+.seasonal-page { --seasonal-muted: #586257; }
+.seasonal-breadcrumb, .seasonal-moment p { color: #586257; }
+.seasonal-moment > span:first-child { color: #4d5d45; }
+.seasonal-gifting small { color: #dce4d4; }
+.offers-hero__note { color: #4f5b4d; }
+.gift-eyebrow { color: #526647; }
+.gift-card__top > span:last-child { font-size: 13px; }
+
+@media (max-width: 1199px) {
+  .site-header__panel-eyebrow, .site-header__panel-group h3 { font-size: 15px; }
+  .home-community__hint, .designers-swipe-hint,
+  .home-featured__swipe-guide { font-size: 15px; }
+  .glasses-eyebrow, .story-eyebrow { font-size: 14px; }
+  .hero-image-campaign__eyebrow { font-size: 14px; }
+}
+@media (max-width: 767px) {
+  .mobile-campaign-copy__eyebrow { font-size: 14px; letter-spacing: .17em; }
+  .mobile-campaign-copy__cta { font-size: 15px; letter-spacing: .08em; }
+  .home-mobile-shortcuts a { font-size: clamp(12px, 3.1vw, 14px); }
+  .home-featured__view-all { font-size: 15px; }
+  .home-featured .home-tabs button { font-size: 15px; }
+  .home-featured .home-product__brand { font-size: 13px; }
+  .home-featured .home-product__info h2 { font-size: 16px; line-height: 1.35; }
+  .home-featured .home-product__info .home-muted { font-size: 14px; }
+  .home-featured .home-product__bottom { font-size: 17px; }
+  .home-product__info { min-height: 108px; }
+  .home-audience__copy .home-eyebrow,
+  .home-label__index { font-size: 13px; }
+  .home-category > p { font-size: 15px; }
+  .glasses-breadcrumbs ol, .story-breadcrumbs { font-size: 14px; }
+  .glasses-card__tag { font-size: 13px; }
+  .glasses-card__title > span, .glasses-card__description,
+  .glasses-card__colour, .glasses-card__bottom > button { font-size: 14px; }
+  .glasses-results-toolbar > p { font-size: 15px; }
+  .lenses-page .glasses-audiences a { font-size: 14px; }
+  .designers-intro__numbers, .designers-brand > p,
+  .designers-brand > span, .designers-portrait__caption { font-size: 13px; }
+  .offers-product__copy h3, .seasonal-product__copy h3 { font-size: 16px; }
+  .offers-product__copy strong, .seasonal-product__copy strong { font-size: 16px; }
+  .offers-product__copy > p, .seasonal-product__copy > p { font-size: 14px; }
+  .offers-product__copy button, .seasonal-product__copy button { font-size: 14px; }
+  .offers-hero__note, .seasonal-gifting small { font-size: 14px; }
+}
+
+/* Keep descriptions comfortable to read and let longer labels wrap naturally. */
+.glasses-heading__description,
+.designers-intro__copy > p:not(.glasses-eyebrow),
+.offers-section-heading > p, .offers-edit__text p,
+.seasonal-heading--split > p, .seasonal-moment p,
+.gift-guide__grid p { font-size: 17px; line-height: 1.7; }
+.glasses-card__description, .glasses-card__colour { color: #535e4d; line-height: 1.6; }
+.glasses-card__tag { font-size: 14px; line-height: 1.5; letter-spacing: .045em; }
+.glasses-types a { font-size: 16px; }
+.glasses-search input { font-size: 17px; }
+.glasses-filter-count { min-width: 24px; height: 24px; font-size: 14px; line-height: 1.5; }
+.site-header__bag-count { min-width: 22px; height: 22px; font-size: 14px; line-height: 22px; }
+.glasses-card__colour { flex-wrap: wrap; row-gap: 5px; }
+.glasses-card__copy { gap: 0; }
+.glasses-card__bottom { margin-top: auto; }
+.glasses-card__colour { margin-bottom: 18px; }
+.glasses-card__bottom > button { min-height: 44px; }
+
+/* Product information can grow without moving prices out of alignment. */
+.home-product__open { display: flex; flex-direction: column; height: 100%; }
+.home-product__image { flex-shrink: 0; width: 100%; }
+.home-product__info { display: flex; flex: 1; flex-direction: column; width: 100%; box-sizing: border-box; }
+.home-product__info .home-muted { margin-bottom: 18px; }
+.home-product__bottom { margin-top: auto; }
+.offers-product, .seasonal-product { display: flex; flex-direction: column; }
+.offers-product__copy, .seasonal-product__copy { display: flex; flex: 1; flex-direction: column; }
+.offers-product__copy > p, .seasonal-product__copy > p { margin-bottom: 18px; overflow-wrap: anywhere; line-height: 1.6; }
+.offers-product__copy > div, .seasonal-product__copy > div { margin-top: auto; }
+.offers-product__copy h3, .seasonal-product__copy h3 { overflow-wrap: anywhere; line-height: 1.45; }
+.offers-product__copy button, .seasonal-product__copy button { min-height: 44px; }
+.offers-hero__cta, .seasonal-button, .seasonal-moment__link,
+.offers-tabs button, .seasonal-tabs button,
+.offers-all-link, .seasonal-text-link { font-size: 16px; }
+.designers-intro__cta, .designers-brand > span { font-size: 16px; }
+.designers-brand h3 { overflow-wrap: normal; word-break: normal; hyphens: auto; }
+.designers-portrait__caption { line-height: 1.5; letter-spacing: .05em; }
+.home-directory__controls > span { font-size: 15px; }
+.home-directory__controls > span > span { color: #626e58; }
+.home-guidance .home-benefit p, .home-guidance .home-guide-topic p { font-size: 17px; line-height: 1.7; }
+.gift-guide__grid h3, .seasonal-moment h3 { margin-top: 28px; }
+.gift-guide__grid p, .seasonal-moment p { margin-bottom: 24px; }
+.gift-guide__grid strong, .seasonal-moment__link { margin-top: auto; }
+.gift-card__top > span:last-child { font-size: 14px; }
+.cart-item .cart-item__type, .shop-eyebrow, .account-dialog__eyebrow { font-size: 14px; }
+.cart-summary > p, .cart-summary__notice, .cart-page__storage,
+.shop-panel__footer, .account-form__availability, .account-dialog__footnote { font-size: 15px; color: #52604c; line-height: 1.7; }
+.account-dialog__intro { color: #596251; font-size: 17px; line-height: 1.7; }
+.account-form label, .account-form__message { font-size: 15px; }
+.account-form input::placeholder { color: #67705f; }
+.shop-results, .home-preview__copy, .glasses-toolbar > *,
+.gift-hero__copy, .gift-checkout > *, .seasonal-hero__layout > * { min-width: 0; }
+.home-preview__specifications { font-size: 16px; }
+.home-preview__specifications dd { overflow-wrap: anywhere; }
+
+@media (min-width: 1200px) {
+  .home-hero [data-campaign='first'] .hero-video-caption h2 { font-size: clamp(36px, 3.4cqw, 72px); line-height: 1.2; white-space: normal; }
+  .home-hero [data-campaign='first'] .hero-video-caption__tagline { font-size: clamp(20px, 1.8cqw, 30px); line-height: 1.6; white-space: normal; }
+  .home-hero [data-campaign='first'] .hero-video-caption__detail { font-size: clamp(18px, 1.4cqw, 24px); line-height: 1.6; white-space: normal; }
+}
+
+@media (max-width: 767px) {
+  .home-mobile-shortcuts a { font-size: 14px; line-height: 1.4; }
+  .home-featured .home-product__brand { font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+  .home-featured .home-product__info { padding: 12px; }
+  .home-audience__copy .home-eyebrow, .home-label__index { font-size: 14px; }
+  .home-featured .home-section__intro { padding-bottom: 48px; }
+  .home-featured .home-section__intro h1 { max-width: 100%; }
+  .home-featured__view-all { left: 0; right: auto; bottom: 0; }
+  .glasses-card__visual { padding-top: 32px; }
+  .glasses-card__tag { top: 10px; letter-spacing: 0; overflow-wrap: anywhere; }
+  .glasses-card__colour { margin-bottom: 14px; }
+  .glasses-card__description, .glasses-card__colour,
+  .glasses-card__title > span { font-size: 15px; }
+  .glasses-types a, .lenses-page .glasses-audiences a { font-size: 15px; }
+  .designers-intro__numbers, .designers-portrait__caption,
+  .designers-brand > p { font-size: 15px; }
+  .designers-brand h3 { font-size: 18px; }
+  .designers-brand > span { font-size: 15px; }
+  .designers-portrait__name { font-size: clamp(22px, 5.8vw, 30px); }
+  .offers-product__copy > p, .seasonal-product__copy > p,
+  .offers-product__copy button, .seasonal-product__copy button { font-size: 15px; }
+  .offers-product__copy > p, .seasonal-product__copy > p { margin-bottom: 12px; }
+  .seasonal-hero__copy > p:not(.seasonal-eyebrow),
+  .offers-hero__copy > p:not(.offers-eyebrow, .offers-hero__note),
+  .seasonal-gifting p:not(.seasonal-eyebrow), .offers-information > div:last-child p { font-size: 17px; line-height: 1.7; }
+}
+
+/* Supporting copy across every page, including shared menus and shopping dialogs. */
+.home-collections, .glasses-page, .offers-page, .seasonal-page,
+.gift-page, .cart-page, .home-preview, .shop-panel,
+.account-dialog, .site-footer { font-size: 17px; }
+.home-eyebrow, .gift-eyebrow, .site-footer__eyebrow,
+.hero-image-campaign__eyebrow { font-size: 14px; }
+.home-featured .home-section__description, .home-section__description,
+.home-brand__caption > div > p:last-child, .home-editorial__intro > p,
+.home-guidance .home-guidance__description { font-size: 17px; line-height: 1.7; }
+.home-product__brand, .home-product__info .home-muted { font-size: 15px; line-height: 1.6; }
+.home-product__info h2 { font-size: 20px; overflow-wrap: anywhere; }
+.home-product__bottom { font-size: 19px; }
+.home-product__view, .home-product__type, .home-audience__link,
+.home-category > p, .home-text-link, .home-featured__explore,
+.home-collections .home-directory__all { font-size: 16px; }
+.home-category__title h3 { font-size: 20px; }
+.home-category__title svg { flex-shrink: 0; }
+.home-label__footer { font-size: 16px; }
+.home-street__label { font-size: 17px; line-height: 1.5; }
+.home-collections .home-street__explore { font-size: 16px; line-height: 1.5; }
+.home-community__intro .home-eyebrow, .home-community__controls p,
+.home-guide-topic__action, .home-guidance .home-guide-link { font-size: 15px; }
+.home-guidance .home-benefit h3, .home-guide-topic h3 { font-size: 19px; line-height: 1.45; }
+
+.glasses-card__title h2 { font-size: 20px; }
+.glasses-card__bottom > strong { font-size: 18px; }
+.glasses-audiences a, .accessories-page .glasses-audiences button,
+.glasses-filter-group summary, .glasses-filters__sort,
+.glasses-filters select, .glasses-price-filter legend { font-size: 15px; }
+.glasses-filter-option { font-size: 14px; line-height: 1.6; }
+.glasses-saved, .glasses-button { font-size: 15px !important; }
+.glasses-active-filters > button:not(.glasses-text-button) { font-size: 14px; }
+.glasses-text-button { font-size: 14px !important; }
+.glasses-empty > p:not(.glasses-eyebrow) { font-size: 16px; }
+.designers-featured-card__copy h3 { font-size: 20px; }
+.designers-type-tabs button, .designers-alphabet button { font-size: 15px; }
+
+.story-page { font-size: 18px; }
+.story-hero__visual figcaption, .story-look__copy .story-eyebrow { font-size: 14px; }
+.story-approach__visual figcaption { font-size: 15px; }
+.story-hero__signature, .story-chapters a { font-size: 16px; }
+.story-text-link, .story-button, .story-look .story-text-link,
+.story-approach li p, .story-look__copy > p,
+.story-questions details > p { font-size: 17px; }
+.story-section-heading > p, .story-questions summary { font-size: 18px; }
+.story-inspiration__navigation { font-size: 15px; }
+
+.offers-hero__copy > p:not(.offers-eyebrow, .offers-hero__note),
+.seasonal-hero__copy > p:not(.seasonal-eyebrow) { font-size: clamp(17px, 1.35vw, 20px); }
+.offers-information > div:last-child p,
+.seasonal-gifting p:not(.seasonal-eyebrow) { font-size: 17px; line-height: 1.7; }
+.offers-edit__text h3 { font-size: 19px; }
+.offers-information a, .seasonal-gifting__links a { font-size: 15px; }
+.gift-breadcrumb, .gift-hero__status, .gift-button,
+.gift-preview__controls fieldset > p, .gift-preview__field-note,
+.gift-preview__notice { font-size: 15px; }
+.gift-questions__list details p { font-size: 16px; }
+.gift-hero__card > span:last-child, .gift-preview__message > span,
+.gift-guide__grid a > span { font-size: 14px; }
+.gift-section-heading > p:last-child, .gift-checkout__intro > p:last-child,
+.gift-questions > div:first-child > p:last-child,
+.gift-preview__controls legend, .gift-preview__controls > label,
+.gift-preview__controls input, .gift-preview__controls textarea,
+.gift-questions__list summary { font-size: 17px; }
+.gift-design, .gift-amounts button, .gift-guide__grid strong,
+.gift-checkout__continue, .gift-checkout__complete,
+.gift-checkout__edit, .gift-checkout__summary dl > div { font-size: 16px; }
+.gift-card__bottom { font-size: clamp(16px, 1.8vw, 22px); }
+.gift-checkout__summary .gift-checkout__total { font-size: 20px; }
+
+.cart-page__heading > span, .cart-item p, .cart-quantity span { font-size: 15px; }
+.cart-item__price { font-size: 18px; }
+.cart-page__empty > p { font-size: 18px; line-height: 1.7; }
+.cart-item__remove, .cart-page__continue { font-size: 14px !important; }
+.cart-page .cart-button { font-size: 17px; }
+.cart-summary .cart-button { font-size: 15px; }
+.shop-result__title { font-size: 17px; }
+.shop-result__title span, .shop-muted, .shop-chips button,
+.shop-section-label > span { font-size: 14px; }
+.shop-result__copy > strong { font-size: 16px; }
+.shop-panel .shop-primary, .home-preview__shopping .shop-primary,
+.home-preview__shopping .shop-save-frame { font-size: 15px; }
+.shop-link { font-size: 14px !important; }
+.account-dialog__switch { font-size: 15px; }
+.account-form input, .shop-search input { font-size: 17px; }
+.home-preview__angles button { font-size: 14px; }
+.home-preview__note { font-size: 15px; }
+.site-footer__brand > p, .site-footer__group h3,
+.site-footer__group a, .site-footer summary { font-size: 17px; }
+.site-footer details > p { font-size: 16px; }
+.site-footer__bottom, .site-footer__bottom button { font-size: 15px; }
+.site-footer__cta { font-size: 17px; }
+
+@media (min-width: 1200px) {
+  .site-header__desktop-links .site-header__nav-trigger { font-size: clamp(14px, 1.13vw, 19px); padding-inline: clamp(4px, .5vw, 9px); }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hero-image-campaign__description { font-size: 18px; }
+  .home-hero .hero-video-caption__detail { font-size: 17px; }
+}
+@media (max-width: 767px) {
+  .home-featured .home-product__info h2 { font-size: 16px; }
+  .home-category__title h3 { font-size: 18px; }
+  .home-category > p, .home-audience__link, .home-label__footer { font-size: 15px; }
+  .glasses-card__title h2, .accessories-card .glasses-card__title h2 { font-size: 17px; }
+  .glasses-card__bottom > strong { font-size: 17px; }
+  .glasses-saved, .glasses-filter-trigger { font-size: 14px !important; }
+  .glasses-filter-option { font-size: 15px; }
+  .story-page { font-size: 17px; }
+  .story-chapters a, .story-hero__visual figcaption { font-size: 15px; }
+  .story-section-heading > p, .story-questions summary { font-size: 17px; }
+  .hero-image-campaign__description { font-size: 16px; }
+  .home-hero .hero-image-campaign .home-hero__cta { font-size: 15px; }
+  .cart-page__empty > p { font-size: 16px; }
+  .cart-item h2 { font-size: 18px; }
+  .gift-hero__copy > p:not(.gift-eyebrow, .gift-hero__status) { font-size: 17px; }
+  .gift-checkout__summary dl > div { font-size: 15px; }
+  .site-footer__group a { font-size: 16px; }
+}
+@media (max-width: 360px) {
+  .offers-product__copy > span, .seasonal-product__copy > span { font-size: 14px; }
+  .glasses-card__tag { font-size: 13px; }
+}

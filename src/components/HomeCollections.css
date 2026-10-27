@@ -19,6 +19,8 @@
 .home-featured .home-featured__eyebrow { display: flex; align-items: center; gap: 12px; color: #5d6457; font-size: 11px; font-weight: 500; letter-spacing: .17em; }
 .home-featured__eyebrow::before { content: ''; width: 28px; height: 1px; background: #929c7e; }
 .home-featured .home-section__intro h1 { margin-top: 18px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(32px, 2.8vw, 48px); font-weight: 400; line-height: 1.16; letter-spacing: -.025em; }
+.home-featured .home-section__intro h1 em { font-style: normal; }
+.home-mobile-shortcuts, .home-featured__view-all { display: none; }
 .home-featured .home-section__intro h1 span { display: block; margin-top: 8px; font-size: .76em; font-style: italic; font-weight: 400; letter-spacing: -.015em; }
 .home-featured .home-section__description { max-width: 370px; padding: 0 0 0 22px; border-left: 1px solid #c6cdb9; font-size: 16px; line-height: 1.7; }
 .home-featured__toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid #d9dcd2; margin-bottom: 28px; }
@@ -30,7 +32,9 @@
 .home-featured__explore svg { width: 32px; height: 32px; padding: 6px; border: 1px solid #c6cdb9; border-radius: 50%; }
 .home-products { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 40px) / 3); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 6px; margin: -6px; }
 .home-products::-webkit-scrollbar, .home-categories__rail::-webkit-scrollbar { display: none; }
-.home-product { min-width: 0; scroll-snap-align: start; background: #fff; }
+.home-product { position: relative; min-width: 0; scroll-snap-align: start; background: #fff; }
+.home-product__save { display: none; }
+.home-featured__swipe-guide { display: none; }
 .home-product__open { display: block; width: 100%; text-align: left; padding: 0; border: 0; background: transparent; }
 .home-product__image { position: relative; overflow: hidden; aspect-ratio: 1.13; background: #fff; }
 .home-product__image img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform 260ms ease; }

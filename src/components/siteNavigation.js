@@ -17,7 +17,6 @@ const cta = (label = 'Explore featured frames', href = '#featured-picks') => ({ 
 const info = (title, eyebrow, description, options = {}) => ({ title, eyebrow, description, navigation: true, cta: cta(), ...options });
 const choice = (label, description, preview) => ({ label, description, preview });
 const eyewear = (title, description, media = images.eyewear, details = []) => info(title, 'THE EYEWEAR EDIT', description, { media, details, cta: cta('Explore top categories', '#top-categories') });
-const gifting = (title, description, details) => info(title, 'A LITTLE SOMETHING FOR THEM', description, { details, note: 'Gift cards are not available to buy or redeem yet. Explore frame inspiration below.', cta: cta('Explore gift inspiration', '#collection-edits') });
 
 export const navigation = [
   {
@@ -93,62 +92,64 @@ export const navigation = [
     ],
   },
   {
-    id: 'about', label: 'Our Story', heading: 'A fresh point of view.',
-    description: 'Get to know our point of view, the details we look for and the inspiration behind your next frame.',
+    id: 'about', label: 'Our Story', heading: 'Eyewear is personal.',
+    description: 'Get to know CandiClie, our approach to eyewear and the details behind your next pair.',
     overview: { catalogHref: '/about-us' },
     groups: [
       { title: 'Meet CandiClie', items: [
-        choice('Our story', 'An eye for personal style', { catalogHref: '/about-us#our-story' }),
-        choice('Our approach', 'Considered choices. Your character.', { catalogHref: '/about-us#our-approach' }),
+        choice('Our story', 'Our perspective on everyday eyewear', { catalogHref: '/about-us#our-story' }),
+        choice('Our approach', 'Shape, colour and the details', { catalogHref: '/about-us#our-approach' }),
       ] },
-      { title: 'A shared point of view', items: [
-        choice('Our community', 'Different looks. A shared eye for style.', { catalogHref: '/about-us#our-community' }),
+      { title: 'Style & support', items: [
+        choice('The style edit', 'Different ways to wear a frame', { catalogHref: '/about-us#our-community' }),
         choice('Shopping & support', 'A little help, right here', { catalogHref: '/about-us#story-support' }),
       ] },
     ],
   },
   {
     id: 'offers', label: 'Special Offers', heading: 'Find your next favourite.',
-    description: 'Explore the featured edits and learn how offers will be shown when shopping opens.',
-    overview: info('Offers & featured edits', 'THE CANDICLIE EDIT', 'Browse the featured selection for frame inspiration. No discount or promotional code is active on this preview homepage.', { media: images.eyewear, cta: cta('Browse featured frames') }),
+    description: 'Thoughtfully priced frames and everyday essentials from the current collection.',
+    overview: { catalogHref: '/special-offers' },
     groups: [
       { title: 'Explore the edits', items: [
-        choice('Featured frames', 'Start with the current selection', eyewear('Featured frames', 'Explore our Signature Picks and New In edits for different points of view.')),
-        choice('Sunglasses edit', 'A little more character', eyewear('The sunglasses edit', 'Discover expressive sunglasses among our featured frames and fashion categories.', images.fashion)),
+        choice('The value edits', 'Find a good place to start', { catalogHref: '/special-offers#offers-edits' }),
+        choice('Featured finds', 'Browse current favourites', { catalogHref: '/special-offers#offers-finds' }),
       ] },
       { title: 'Before you shop', items: [
-        choice('Offer information', 'Clear details before checkout', info('Offer information', 'SHOPPING INFORMATION', 'There are no live discounts, coupon codes or checkout offers on this homepage.', { details: ['Browse the current featured frames and style edits.', 'Visit homepage help for shopping information.'], cta: cta('Read homepage help', '#footer-help-heading') })),
-        choice('Explore all categories', 'Find a different point of view', eyewear('Explore all categories', 'Browse eyeglasses, men’s, women’s, kids’ and fashion edits to find your starting point.', images.fashion)),
+        choice('Offer information', 'Clear details before checkout', { catalogHref: '/special-offers#offer-information' }),
+        choice('Frames under ₹5,000', 'Browse the price edit', { catalogHref: '/eyewear?price=under-5000' }),
       ] },
     ],
   },
   {
     id: 'festive-sale', label: 'Seasonal Edit', heading: 'A little celebration. A lot of style.',
     description: 'Discover frames and gift inspiration for your next special occasion.',
-    overview: info('The festive edit', 'STYLE FOR EVERY CELEBRATION', 'Explore expressive frames and considered gift inspiration. This edit does not currently include a live sale discount.', { media: images.fashion, cta: cta('Explore the featured selection') }),
+    overview: { catalogHref: '/seasonal-edit' },
     groups: [
       { title: 'For the occasion', items: [
-        choice('Celebration styles', 'Find your standout pair', eyewear('Celebration styles', 'Explore bold shapes, expressive colours and a fresh frame for your next special occasion.', images.fashion)),
-        choice('Everyday classics', 'A favourite beyond the occasion', eyewear('Everyday classics', 'Start with clean optical frames and familiar shapes you can make your own.')),
+        choice('Celebration styles', 'Find your standout pair', { catalogHref: '/seasonal-edit#seasonal-favourites' }),
+        choice('Everyday classics', 'A favourite beyond the occasion', { catalogHref: '/eyewear/eyeglasses' }),
       ] },
       { title: 'Gift inspiration', items: [
-        choice('For him', 'A considered starting point', eyewear('Gift inspiration for him', 'Explore the men’s edit for distinctive frame shapes and a fresh perspective.', images.men)),
-        choice('For her', 'A little personal character', eyewear('Gift inspiration for her', 'Explore the women’s edit for expressive curves, colour and standout details.', images.women)),
+        choice('For him', 'A considered starting point', { catalogHref: '/eyewear/eyeglasses/men' }),
+        choice('For her', 'A little personal character', { catalogHref: '/eyewear/eyeglasses/women' }),
+        choice('Gift ideas', 'A thoughtful touch', { catalogHref: '/seasonal-edit#seasonal-gifting' }),
       ] },
     ],
   },
   {
     id: 'gift-card', label: 'Gift Cards', heading: 'Let them find their own look.',
-    description: 'Explore gifting information and frame inspiration before gift card shopping opens.',
-    overview: gifting('Gift cards', 'A gift card could give someone room to choose a frame that feels like them. Gift card shopping is not open on this homepage.', ['Explore frame inspiration for the people you have in mind.', 'Purchasing and redemption details will be provided if gift cards launch.']),
+    description: 'Try the gift card purchase demo and browse thoughtful gifting ideas. Payment will be connected later.',
+    overview: { catalogHref: '/gift-card' },
     groups: [
-      { title: 'Gifting information', items: [
-        choice('Gift card overview', 'How gifting will be introduced', gifting('Gift card overview', 'This menu is an introduction to gifting; it does not issue or sell a gift card.', ['No gift card balance is created on this page.', 'Purchase and redemption terms are not available yet.'])),
-        choice('Choosing an amount', 'Plan a thoughtful gift', gifting('Choosing a gift amount', 'Browse the frame previews for inspiration while planning a gift.', ['No denominations or gift card prices are currently offered.', 'Reference frame prices do not set a gift card value.'])),
+      { title: 'Explore gift cards', items: [
+        choice('Buy a gift card · Demo', 'Choose a design, amount and message', { catalogHref: '/gift-card#gift-preview' }),
+        choice('Questions & details', 'What is available today', { catalogHref: '/gift-card#gift-questions' }),
       ] },
-      { title: 'Find their kind of frame', items: [
-        choice('Frames for him', 'Explore the men’s edit', eyewear('Frames for him', 'Discover the men’s collection as a starting point for thoughtful frame inspiration.', images.men)),
-        choice('Frames for her', 'Explore the women’s edit', eyewear('Frames for her', 'Explore the women’s collection and find a shape that reflects her personal style.', images.women)),
+      { title: 'Find their kind of gift', items: [
+        choice('Gift inspiration', 'Frames, extras and occasion edits', { catalogHref: '/gift-card#gift-guide' }),
+        choice('Explore frames', 'Find a look that feels like them', { catalogHref: '/eyewear' }),
+        choice('Explore accessories', 'The thoughtful little details', { catalogHref: '/accessories' }),
       ] },
     ],
   },

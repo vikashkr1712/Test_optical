@@ -5,7 +5,7 @@
 .hero-video-caption h2, .hero-video-caption p { margin: 0; color: inherit; font-family: 'CandiClie Hero Avenir', sans-serif; white-space: nowrap; }
 .hero-video-caption h2 { font-size: clamp(24px, 3cqw, 60px); font-weight: 700; line-height: 1.15; letter-spacing: -.025em; }
 .hero-video-caption__tagline { font-size: clamp(16px, 1.55cqw, 26px); font-weight: 500; line-height: 1.45; }
-.hero-video-caption__detail { font-size: clamp(13px, 1.1cqw, 19px); font-weight: 400; line-height: 1.5; letter-spacing: .015em; }
+.hero-video-caption__detail { font-size: clamp(16px, 1.2cqw, 20px); font-weight: 400; line-height: 1.5; letter-spacing: .015em; }
 .home-hero .hero-video-stage ~ .home-hero__video-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff70; border-radius: 50%; background: rgb(0 0 0 / 28%); }
 @keyframes campaign-caption-in { from { opacity: 0; } to { opacity: 1; } }
 @media (max-width: 1023px) and (orientation: portrait) {

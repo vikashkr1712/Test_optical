@@ -3,6 +3,20 @@ import './HomeEditorial.css';
 
 import { brands } from './brandCollections.js';
 
+// Editorial portraits from Pexels (photo IDs 31291792, 10228191, 31617420,
+// 24389634, 33527944, 35036629, 1431124 and 31685106), used under
+// https://www.pexels.com/license/. These are style imagery, not product photos.
+const characterMedia = {
+  'tom-ford': { src: '/assets/editorial/character-warm-sunset.jpg', alt: 'Editorial portrait of a woman wearing optical glasses in warm sunset light', position: 'center 35%' },
+  prada: { src: '/assets/editorial/character-studio-couple.jpg', alt: 'Editorial portrait of two people wearing sunglasses in a studio', position: 'center 32%' },
+  'miu-miu': { src: '/assets/editorial/character-golden-glasses.jpg', alt: 'Editorial portrait of a woman wearing pale optical glasses in golden light', position: 'center 36%' },
+  burberry: { src: '/assets/seasonal/couple-indoor.jpg', alt: 'Editorial portrait of two people wearing sunglasses indoors', position: 'center 32%' },
+  'dolce-and-gabbana': { src: '/assets/seasonal/couple-outdoor.jpg', alt: 'Editorial portrait of two people wearing sunglasses outdoors', position: 'center 35%' },
+  'emporio-armani': { src: '/assets/editorial/character-two-men.jpg', alt: 'Editorial portrait of two men wearing sunglasses', position: 'center 36%' },
+  silhouette: { src: '/assets/editorial/character-greenery-glasses.jpg', alt: 'Editorial portrait of a woman wearing optical glasses outdoors', position: 'center 35%' },
+  'ray-ban-junior': { src: '/assets/editorial/character-child-glasses.jpg', alt: 'Editorial portrait of a child wearing round optical glasses', position: 'center 35%' },
+};
+
 const stories = [
   { image: 'street-user1', title: 'The city after dark', label: '01 / AFTER HOURS', description: 'Dark frames, a sharp silhouette and a little city energy. An everyday outfit with a stronger point of view.', alt: 'Black-and-white street-style portrait of a man wearing rectangular black eyeglasses' },
   { image: 'street-user2', title: 'A softer kind of statement', label: '02 / IN COLOUR', description: 'Soft colour and expressive sunglasses. A playful reminder to make a little room for the unexpected.', alt: 'Woman in tinted aviator sunglasses and a white butterfly-print shirt' },
@@ -14,6 +28,10 @@ function Arrow({ left = false }) {
 }
 
 function mediaFor(item, street = false) {
+  if (item.slug && characterMedia[item.slug]) {
+    const { src, alt } = characterMedia[item.slug];
+    return { src, alt, width: 1200, height: 1800 };
+  }
   if (item.media) return item.media;
   const sizes = street ? [400, 540] : [480, 960];
   const path = width => `/assets/editorial/${item.image}-${width}.webp`;
@@ -183,8 +201,8 @@ export default function HomeEditorial({ onPreview }) {
         if (event.key === 'Home' || event.key === 'End') rail.current.scrollTo({left:event.key === 'Home' ? 0 : rail.current.scrollWidth,behavior:'instant'});
         else scroll(event.key === 'ArrowRight' ? 1 : -1);
       }}>
-        {brands.map((brand, i) => <button type="button" className={`home-label home-label--${brand.style}`} key={brand.slug} aria-label={`Explore ${brand.title}`} onClick={() => show(brand)}>
-          <img {...mediaFor(brand)} sizes="(max-width: 600px) 82vw, (max-width: 1000px) 66vw, 42vw" loading="lazy" decoding="async" />
+        {brands.map((brand, i) => <button type="button" className={`home-label home-label--${brand.style} home-label--portrait`} key={brand.slug} aria-label={`Explore ${brand.title}`} onClick={() => show(brand)}>
+          <img {...mediaFor(brand)} style={{ objectPosition: characterMedia[brand.slug]?.position }} sizes="(max-width: 600px) 82vw, (max-width: 1000px) 66vw, 42vw" loading="lazy" decoding="async" />
           <span className="home-label__shade" aria-hidden="true" />
           <span className="home-label__index">THE COLLECTION / 0{i + 1}</span>
           <span className="home-label__name">{brand.title}</span>

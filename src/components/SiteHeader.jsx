@@ -4,7 +4,7 @@ import { navigation } from './siteNavigation.js';
 
 const announcements = [
   ['Discover CandiClie · Our story', '/about-us'],
-  ['Purchase a candiclie gift card for your loved ones', '/gift-card'],
+  ['Try the CandiClie gift card purchase demo', '/gift-card'],
 ];
 
 function Icon({ name }) {

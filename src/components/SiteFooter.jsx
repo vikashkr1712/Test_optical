@@ -2,7 +2,7 @@ import './SiteFooter.css';
 
 const groups = [
   { title: 'Explore', links: [['Featured frames', '#featured-picks'], ['Top categories', '#top-categories'], ['For him, her & kids', '#collection-edits']] },
-  { title: 'Discover', links: [['Our story', '/about-us'], ['Designer brands', '/designer-brands'], ['The icon edit', '#icon-edit'], ['Seen on the Streets', '#community']] },
+  { title: 'Discover', links: [['Our story', '/about-us'], ['Designer brands', '/designer-brands'], ['Special offers', '/special-offers'], ['Gift cards', '/gift-card'], ['The icon edit', '#icon-edit'], ['Seen on the Streets', '#community']] },
   { title: 'Here to help', links: [['Shopping & ordering', '#footer-shopping'], ['Finding your style', '#footer-style'], ['Privacy on this page', '#footer-privacy']] },
 ];
 

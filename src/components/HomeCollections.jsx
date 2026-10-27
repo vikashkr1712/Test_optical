@@ -83,12 +83,19 @@ export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrows
   </dialog>;
 }
 
-export default function HomeCollections({ onSelect: setSelection }) {
+export default function HomeCollections({ onSelect: setSelection, shopping }) {
   const [tab, setTab] = useState('best');
+  const [featuredPosition, setFeaturedPosition] = useState(0);
   const productRail = useRef(null);
   const categoryRail = useRef(null);
   const scrollRail = (ref, direction) => ref.current?.scrollBy({ left: direction * ref.current.clientWidth * .8, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-  const selectTab = (value) => { setTab(value); if (productRail.current) productRail.current.scrollLeft = 0; };
+  const selectTab = (value) => { setTab(value); setFeaturedPosition(0); if (productRail.current) productRail.current.scrollLeft = 0; };
+  const showFeaturedPosition = position => {
+    const rail = productRail.current;
+    if (!rail) return;
+    rail.scrollTo({ left: position ? rail.scrollWidth - rail.clientWidth : 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    setFeaturedPosition(position);
+  };
   const moveTab = event => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
@@ -98,10 +105,17 @@ export default function HomeCollections({ onSelect: setSelection }) {
   };
 
   return <div className="home-collections">
+    <nav className="home-mobile-shortcuts" aria-label="Shop popular categories">
+      <a href="/eyewear/sunglasses"><span className="home-mobile-shortcuts__image"><img src="/assets/home/product-2-400.webp" alt="" loading="lazy" /></span><span>Sunglasses</span></a>
+      <a href="/eyewear/eyeglasses"><span className="home-mobile-shortcuts__image"><img src="/assets/home/product-3-400.webp" alt="" loading="lazy" /></span><span>Eyeglasses</span></a>
+      <a href="/contact-lenses"><span className="home-mobile-shortcuts__image home-mobile-shortcuts__lenses" aria-hidden="true"><i /><i /></span><span>Contact Lenses</span></a>
+      <a href="/accessories"><span className="home-mobile-shortcuts__image"><img src="/assets/accessories/accessory-case-two-black-640.webp" alt="" loading="lazy" /></span><span>Accessories</span></a>
+    </nav>
     <section className="home-featured home-section" id="featured-picks" aria-labelledby="featured-heading">
       <div className="home-section__intro">
-        <div><p className="home-eyebrow home-featured__eyebrow">THE CANDICLIE EDIT</p><h1 id="featured-heading">Frames for every side of you.<span>Made to fit your everyday style.</span></h1></div>
+        <div><p className="home-eyebrow home-featured__eyebrow">THE CANDICLIE EDIT</p><h1 id="featured-heading">Frames for every side of <em>you.</em><span>Made to fit your everyday style.</span></h1></div>
         <p className="home-section__description">Thoughtfully chosen styles with clean lines,<br /> comfortable fits, and a look you’ll reach for daily.</p>
+        <a href="/eyewear" className="home-featured__view-all">View all <Arrow /></a>
       </div>
       <div className="home-featured__toolbar">
         <div className="home-tabs" role="tablist" aria-label="Featured frame selections" onKeyDown={moveTab}>
@@ -109,14 +123,16 @@ export default function HomeCollections({ onSelect: setSelection }) {
         </div>
         <a className="home-text-link home-featured__explore" href="#top-categories">Explore styles<Arrow /></a>
       </div>
-      <div id="featured-products" role="tabpanel" aria-labelledby={`tab-${tab}`} tabIndex="0" className="home-products" ref={productRail}>
+      <div id="featured-products" role="tabpanel" aria-labelledby={`tab-${tab}`} tabIndex="0" className="home-products" ref={productRail} onScroll={event => { const rail = event.currentTarget; if (matchMedia('(max-width: 767px)').matches) setFeaturedPosition(rail.scrollLeft > (rail.scrollWidth - rail.clientWidth) / 2 ? 1 : 0); }}>
         {products[tab].map((product, index) => <article className="home-product" key={product.id}>
           <button className="home-product__open" type="button" onClick={() => setSelection(product)} aria-label={`View ${product.brand} ${product.model}`}>
             <div className="home-product__image"><span className="home-product__type">{product.type}</span><Photo name={product.id} kind="product" alt={`${product.brand} ${product.model} in ${product.colour.toLowerCase()}`} /><span className="home-product__number">0{index + 1}</span></div>
             <div className="home-product__info"><p className="home-product__brand">{product.brand}</p><h2>{product.model}</h2><p className="home-muted">{product.colour}</p><div className="home-product__bottom"><span>{currency.format(product.price)}</span><span className="home-product__view">View frame<Arrow /></span></div></div>
           </button>
+          <button type="button" className="home-product__save" aria-label={shopping.saved.includes(product.id) ? `Remove ${product.model} from saved items` : `Save ${product.model}`} aria-pressed={shopping.saved.includes(product.id)} onClick={() => shopping.toggleSaved(product.id)}>{shopping.saved.includes(product.id) ? '♥' : '♡'}</button>
         </article>)}
       </div>
+      <div className="home-featured__swipe-guide"><span>Swipe to see more</span><div role="group" aria-label="Featured frame pages">{[0, 1].map(position => <button key={position} type="button" aria-label={`Show featured frames ${position + 1} and ${position + 2}`} aria-current={featuredPosition === position ? 'true' : undefined} onClick={() => showFeaturedPosition(position)} />)}</div></div>
       <div className="home-rail-controls"><span>Find a fresh point of view</span><div><button type="button" onClick={() => scrollRail(productRail, -1)} aria-label="Previous featured frames"><Arrow direction="left" /></button><button type="button" onClick={() => scrollRail(productRail, 1)} aria-label="Next featured frames"><Arrow /></button></div></div>
     </section>
 

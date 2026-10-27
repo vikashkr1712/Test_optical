@@ -11,8 +11,8 @@
   height: 100%;
 }
 .home-hero .first-campaign-video { object-fit: cover; object-position: 75% center; }
-/* A light, gradual fade supports the copy while keeping the footage clear. */
-.first-campaign-stage::after { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(90deg, rgb(0 0 0 / 38%) 0%, rgb(0 0 0 / 28%) 26%, rgb(0 0 0 / 10%) 46%, transparent 64%); pointer-events: none; }
+/* Keep white captions legible as the campaign moves through brighter scenes. */
+.first-campaign-stage::after { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(90deg, rgb(0 0 0 / 68%) 0%, rgb(0 0 0 / 64%) 30%, rgb(0 0 0 / 55%) 48%, transparent 75%); pointer-events: none; }
 .first-campaign-caption {
   position: absolute;
   z-index: 1;
@@ -22,7 +22,7 @@
   max-width: 900px;
   padding: 0;
   color: #fff;
-  text-shadow: 0 1px 3px rgb(0 0 0 / 28%);
+  text-shadow: 0 2px 8px rgb(0 0 0 / 48%);
   pointer-events: none;
   text-align: left;
 }
