@@ -4,15 +4,15 @@ import './GiftCardPage.css';
 
 const amounts = [1000, 2500, 5000, 10000];
 const designs = [
-  { id: 'olive', label: 'Olive' },
-  { id: 'sand', label: 'Sand' },
-  { id: 'clay', label: 'Clay' },
+  { id: 'black', label: 'Black' },
+  { id: 'cream', label: 'Cream' },
+  { id: 'graphite', label: 'Graphite' },
 ];
 const formatAmount = amount => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
 
 export default function GiftCardPage({ onNavigate }) {
   const [amount, setAmount] = useState(2500);
-  const [design, setDesign] = useState('olive');
+  const [design, setDesign] = useState('black');
   const [recipient, setRecipient] = useState('Someone special');
   const [message, setMessage] = useState('For every new way you see the world.');
   const [recipientEmail, setRecipientEmail] = useState('');
@@ -32,7 +32,7 @@ export default function GiftCardPage({ onNavigate }) {
     requestAnimationFrame(() => document.getElementById('gift-checkout')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   };
   const startAnotherDemo = () => {
-    setAmount(2500); setDesign('olive'); setRecipient('Someone special'); setRecipientEmail('');
+    setAmount(2500); setDesign('black'); setRecipient('Someone special'); setRecipientEmail('');
     setMessage('For every new way you see the world.'); setCheckout('edit');
     document.getElementById('gift-preview')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };

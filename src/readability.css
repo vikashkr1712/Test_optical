@@ -15,8 +15,8 @@
 .home-category > p, .home-guidance .home-benefit p,
 .home-guidance .home-guide-topic p { font-size: 16px; }
 .home-label__index { color: #fff; text-shadow: 0 1px 6px #000; }
-.home-benefit__number { color: #76563a; }
-.home-guidance [data-tone='sand'] { --guidance-tone: #76563a; }
+.home-benefit__number { color: #000000; }
+.home-guidance [data-tone='sand'] { --guidance-tone: #000000; }
 .home-community__total { color: #666; }
 
 .glasses-breadcrumbs ol, .story-breadcrumbs,
@@ -24,17 +24,17 @@
 .glasses-results-toolbar > p, .glasses-heading__count,
 .glasses-card__description, .glasses-card__colour,
 .glasses-card__title > span { font-size: 15px; }
-.glasses-card__tag { font-size: 13px; color: #3d4837; }
+.glasses-card__tag { font-size: 13px; color: #000000; }
 .glasses-card__bottom > button, .glasses-card__quick-view,
 .glasses-feed__status { font-size: 15px; }
-.glasses-card__quick-view { color: #34452c; }
+.glasses-card__quick-view { color: #000000; }
 .glasses-heading .glasses-eyebrow { font-size: 14px; }
 
 .designers-intro__numbers, .designers-portrait__caption,
 .designers-featured-card__copy > span, .designers-featured-card > p,
 .designers-results, .designers-brand > p, .designers-brand > span,
 .designers-swipe-hint, .designer-collection__directory { font-size: 15px; }
-.designers-brand > p, .designers-featured-card > p { color: #505d4e; }
+.designers-brand > p, .designers-featured-card > p { color: #000000; }
 
 .offers-hero__note, .offers-product__copy > span,
 .offers-product__copy > p, .offers-product__copy button,
@@ -43,12 +43,12 @@
 .offers-product__copy h3, .seasonal-product__copy h3 { font-size: 17px; }
 .offers-product__copy strong, .seasonal-product__copy strong { font-size: 17px; }
 .seasonal-moment > span:first-child { font-size: 14px; }
-.seasonal-page { --seasonal-muted: #586257; }
-.seasonal-breadcrumb, .seasonal-moment p { color: #586257; }
-.seasonal-moment > span:first-child { color: #4d5d45; }
-.seasonal-gifting small { color: #dce4d4; }
-.offers-hero__note { color: #4f5b4d; }
-.gift-eyebrow { color: #526647; }
+.seasonal-page { --seasonal-muted: #5b5b5b; }
+.seasonal-breadcrumb, .seasonal-moment p { color: #000000; }
+.seasonal-moment > span:first-child { color: #000000; }
+.seasonal-gifting small { color: #dddddd; }
+.offers-hero__note { color: #000000; }
+.gift-eyebrow { color: #000000; }
 .gift-card__top > span:last-child { font-size: 13px; }
 
 @media (max-width: 1199px) {
@@ -93,7 +93,7 @@
 .offers-section-heading > p, .offers-edit__text p,
 .seasonal-heading--split > p, .seasonal-moment p,
 .gift-guide__grid p { font-size: 17px; line-height: 1.7; }
-.glasses-card__description, .glasses-card__colour { color: #535e4d; line-height: 1.6; }
+.glasses-card__description, .glasses-card__colour { color: #000000; line-height: 1.6; }
 .glasses-card__tag { font-size: 14px; line-height: 1.5; letter-spacing: .045em; }
 .glasses-types a { font-size: 16px; }
 .glasses-search input { font-size: 17px; }
@@ -124,7 +124,7 @@
 .designers-brand h3 { overflow-wrap: normal; word-break: normal; hyphens: auto; }
 .designers-portrait__caption { line-height: 1.5; letter-spacing: .05em; }
 .home-directory__controls > span { font-size: 15px; }
-.home-directory__controls > span > span { color: #626e58; }
+.home-directory__controls > span > span { color: #000000; }
 .home-guidance .home-benefit p, .home-guidance .home-guide-topic p { font-size: 17px; line-height: 1.7; }
 .gift-guide__grid h3, .seasonal-moment h3 { margin-top: 28px; }
 .gift-guide__grid p, .seasonal-moment p { margin-bottom: 24px; }
@@ -132,10 +132,10 @@
 .gift-card__top > span:last-child { font-size: 14px; }
 .cart-item .cart-item__type, .shop-eyebrow, .account-dialog__eyebrow { font-size: 14px; }
 .cart-summary > p, .cart-summary__notice, .cart-page__storage,
-.shop-panel__footer, .account-form__availability, .account-dialog__footnote { font-size: 15px; color: #52604c; line-height: 1.7; }
-.account-dialog__intro { color: #596251; font-size: 17px; line-height: 1.7; }
+.shop-panel__footer, .account-form__availability, .account-dialog__footnote { font-size: 15px; color: #000000; line-height: 1.7; }
+.account-dialog__intro { color: #000000; font-size: 17px; line-height: 1.7; }
 .account-form label, .account-form__message { font-size: 15px; }
-.account-form input::placeholder { color: #67705f; }
+.account-form input::placeholder { color: #000000; }
 .shop-results, .home-preview__copy, .glasses-toolbar > *,
 .gift-hero__copy, .gift-checkout > *, .seasonal-hero__layout > * { min-width: 0; }
 .home-preview__specifications { font-size: 16px; }

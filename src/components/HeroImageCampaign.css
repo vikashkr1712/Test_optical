@@ -1,6 +1,6 @@
 .hero-image-campaign {
   --campaign-paper: #fff;
-  --campaign-ink: #171c18;
+  --campaign-ink: #000000;
   position: absolute;
   inset: 0;
   display: grid;
@@ -8,7 +8,7 @@
   background: var(--campaign-paper);
   color: var(--campaign-ink);
 }
-[data-theme="dark"] .hero-image-campaign { --campaign-paper: #171c18; --campaign-ink: #fff; }
+[data-theme="dark"] .hero-image-campaign { --campaign-paper: #000000; --campaign-ink: #fff; }
 .home-hero .hero-image-campaign .home-hero__image-link { position: relative; inset: auto; grid-column: 2; grid-row: 1; min-height: 0; }
 .home-hero .hero-image-campaign .home-hero__image-link img { position: absolute; height: 100%; object-fit: cover; }
 .hero-image-campaign__copy { grid-column: 1; grid-row: 1; align-self: center; min-width: 0; padding: 36px var(--hero-copy-inset) 80px; text-align: left; }
@@ -20,8 +20,8 @@
 .home-hero .hero-image-campaign .home-hero__cta span { font-size: 23px; }
 .home-hero:has([data-editorial="true"][data-theme="dark"][aria-hidden="false"]) .home-hero__bullet::before { border: 0; background: #ffffff70; }
 .home-hero:has([data-editorial="true"][data-theme="dark"][aria-hidden="false"]) .home-hero__bullet--active::before { background: #fff; box-shadow: none; }
-.home-hero:has([data-editorial="true"][data-theme="light"][aria-hidden="false"]) .home-hero__bullet::before { border: 0; background: #8c918c; }
-.home-hero:has([data-editorial="true"][data-theme="light"][aria-hidden="false"]) .home-hero__bullet--active::before { background: #171c18; box-shadow: none; }
+.home-hero:has([data-editorial="true"][data-theme="light"][aria-hidden="false"]) .home-hero__bullet::before { border: 0; background: #666666; }
+.home-hero:has([data-editorial="true"][data-theme="light"][aria-hidden="false"]) .home-hero__bullet--active::before { background: #000000; box-shadow: none; }
 @media (max-width: 1023px) and (orientation: portrait) {
   .hero-image-campaign { grid-template-columns: 1fr; grid-template-rows: minmax(170px, 1fr) auto; }
   .home-hero .hero-image-campaign .home-hero__image-link { grid-column: 1; grid-row: 1; }

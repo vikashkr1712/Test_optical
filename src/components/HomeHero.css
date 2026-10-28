@@ -6,6 +6,7 @@
   font-display: swap;
 }
 
+.home-hero__media-link, .home-hero__image-link { color: inherit; }
 .home-hero {
   --hero-copy-inset: clamp(24px, 5vw, 90px);
   position: relative;
