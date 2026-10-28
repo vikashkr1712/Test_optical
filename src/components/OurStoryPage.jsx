@@ -1,8 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { CollectionLink, Icon } from './GlassesPage.jsx';
+import { shopProducts } from './shopProducts.js';
+import { designerBrands } from './designerBrands.js';
 import './OurStoryPage.css';
 
 const chapters = [['our-story', 'Our perspective'], ['our-approach', 'Our approach'], ['our-community', 'The style edit'], ['story-support', 'Shopping & support']];
+const frameCount = shopProducts.filter(product => ['Eyeglasses', 'Sunglasses'].includes(product.type)).length;
+const lensCount = shopProducts.filter(product => product.type === 'Contact lenses').length;
+const collectionFacts = [[frameCount, 'frames to find yourself in'], [designerBrands.length, 'designer names to discover'], [lensCount, 'contact lens options to explore']];
+const newPhotographs = new Set(['eyewear-display', 'frame-details', 'everyday-perspective']);
 const principles = [
   ['Shape & proportion', 'A fine round frame, a defined rectangle or a more expressive cat-eye. We bring different silhouettes together so you can compare what catches your eye.'],
   ['Colour & finish', 'Clear acetate, warm tortoiseshell, subtle metal and deeper colours. The small details give each pair its character.'],
@@ -15,6 +21,10 @@ const looks = [
 ];
 
 function StoryPhoto({ name, alt, priority = false, className = '' }) {
+  if (newPhotographs.has(name)) return <picture className={`story-photo ${className}`}>
+    {name === 'eyewear-display' && <source media="(max-width: 767px)" srcSet="/assets/our-story/eyewear-display-mobile.webp" />}
+    <img src={`/assets/our-story/${name}-1200.webp`} srcSet={`/assets/our-story/${name}-640.webp 640w, /assets/our-story/${name}-1200.webp 1200w${name === 'eyewear-display' ? ', /assets/our-story/eyewear-display-1920.webp 1920w' : ''}`} sizes={name === 'eyewear-display' ? '100vw' : '(max-width: 767px) 100vw, 50vw'} alt={alt} width={name === 'everyday-perspective' ? 1800 : 1200} height={name === 'everyday-perspective' ? 1013 : name === 'eyewear-display' ? 804 : 800} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" />
+  </picture>;
   return <picture className={`story-photo ${className}`}><source media="(max-width: 767px)" srcSet={`/assets/hero/${name}-mobile.webp`} /><img src={`/assets/hero/${name}-desktop.webp`} alt={alt} width="1400" height="2100" loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" /></picture>;
 }
 
@@ -52,6 +62,17 @@ function InspirationRail({ onNavigate }) {
 }
 
 export default function OurStoryPage({ onNavigate }) {
+  const [activeChapter, setActiveChapter] = useState('our-story');
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length) setActiveChapter(visible[0].target.id);
+      else if (document.getElementById('our-story').getBoundingClientRect().top > innerHeight * .45) setActiveChapter('our-story');
+    }, { rootMargin: '-15% 0px -55% 0px', threshold: 0 });
+    chapters.forEach(([id]) => observer.observe(document.getElementById(id)));
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     // A directly opened chapter URL must wait until React has mounted its target.
     const frame = requestAnimationFrame(() => {
@@ -63,31 +84,43 @@ export default function OurStoryPage({ onNavigate }) {
   }, []);
 
   return <div className="story-page">
-    <nav className="story-breadcrumbs" aria-label="Breadcrumb"><ol><li><CollectionLink href="/" onNavigate={onNavigate}>Home</CollectionLink></li><li><span aria-current="page">Our Story</span></li></ol></nav>
     <section className="story-hero" aria-labelledby="story-title">
+      <figure className="story-hero__visual"><StoryPhoto name="eyewear-display" alt="A selection of optical frames arranged on glass display shelves" priority /></figure>
+      <nav className="story-breadcrumbs" aria-label="Breadcrumb"><ol><li><CollectionLink href="/" onNavigate={onNavigate}>Home</CollectionLink></li><li><span aria-current="page">Our Story</span></li></ol></nav>
       <div className="story-hero__copy">
-        <p className="story-eyebrow">ABOUT CANDICLIE</p>
-        <h1 id="story-title">Eyewear is<br />personal.</h1>
-        <p>The pair you wear every day should feel like it belongs to you. That’s the idea behind CandiClie.</p>
-        <CollectionLink href="/eyewear" className="story-text-link" onNavigate={onNavigate}>Explore our eyewear<Icon name="arrow" /></CollectionLink>
-        <span className="story-hero__signature">A fresh point of view.</span>
+        <p className="story-eyebrow">THE CANDICLIE PERSPECTIVE</p>
+        <h1 id="story-title">Our story.<br /><em>Your point of view.</em></h1>
+        <p>A world of frames. A little self-expression.<br className="story-desktop-break" /> A pair that feels like you.</p>
+        <CollectionLink href="/about-us#our-story" className="story-hero__discover" onNavigate={onNavigate}>Discover our story<span><Icon name="arrow" /></span></CollectionLink>
       </div>
-      <figure className="story-hero__visual"><StoryPhoto name="outside-perspective" alt="Man wearing round black eyeglasses and a light jacket outdoors" priority /><figcaption>CANDICLIE / EVERYDAY PERSPECTIVES</figcaption></figure>
+      <span className="story-hero__note" aria-hidden="true">A FRESH POINT OF VIEW, EVERY DAY.</span>
     </section>
 
-    <nav className="story-chapters" aria-label="Explore our story">{chapters.map(([id, label]) => <CollectionLink href={`/about-us#${id}`} key={id} onNavigate={onNavigate}>{label}<Icon name="arrow" /></CollectionLink>)}</nav>
+    <nav className="story-chapters" aria-label="Explore our story">{chapters.map(([id, label]) => <CollectionLink href={`/about-us#${id}`} key={id} onNavigate={onNavigate} aria-current={activeChapter === id ? 'location' : undefined}>{label}<Icon name="arrow" /></CollectionLink>)}</nav>
 
     <section id="our-story" className="story-manifesto story-section" aria-labelledby="story-idea-title" tabIndex="-1">
-      <div className="story-manifesto__label"><p className="story-eyebrow">OUR PERSPECTIVE</p><span className="story-wordmark">CandiClie</span></div>
-      <div><h2 id="story-idea-title">Part of your day.<br />Part of who you are.</h2><div className="story-manifesto__body"><p>Glasses are one of the few things you put on in the morning and keep with you all day. They deserve the same thought as anything else you choose to wear.</p><p>We approach eyewear through that everyday connection. Our collection brings together optical frames, sunglasses and designer labels, alongside contact lenses and the essentials that help you look after your pair.</p><p>Start with a shape you know or try something different. Our role is to give you a clear view of the choices, and room to decide what feels right.</p></div></div>
+      <div className="story-manifesto__heading"><p className="story-eyebrow">WHY WE SEE THINGS DIFFERENTLY</p><h2 id="story-idea-title">More than a frame.<br /><em>A part of you.</em></h2></div>
+      <div className="story-manifesto__body"><span className="story-wordmark">CandiClie</span><p>Your glasses go where you go. Into the everyday, the unexpected, the moments that become your story. We believe choosing them should feel personal.</p><p>So we bring different shapes, designer perspectives and everyday essentials together, giving you the space to discover what feels like your own.</p><p className="story-manifesto__signoff">See life. Your way.</p></div>
+    </section>
+
+    <section className="story-collection story-section" aria-labelledby="story-collection-title">
+      <p className="story-eyebrow">A WORLD TO EXPLORE</p><h2 id="story-collection-title">Different expressions.<br /><em>One place to find yours.</em></h2>
+      <p className="story-collection__intro">From your everyday opticals to a statement in the sun, discover the possibilities in the CandiClie collection.</p>
+      <dl className="story-facts">{collectionFacts.map(([count, label]) => <div key={label}><dt>{label}</dt><dd>{count}</dd></div>)}</dl>
+      <CollectionLink href="/designer-brands" className="story-text-link" onNavigate={onNavigate}>Meet the designers<Icon name="arrow" /></CollectionLink>
     </section>
 
     <section id="our-approach" className="story-approach story-section" aria-labelledby="story-approach-title" tabIndex="-1">
-      <figure className="story-approach__visual"><StoryPhoto name="considered-details" alt="Transparent sunglasses resting on a stone surface with soft greenery behind them" /><figcaption>A closer look at shape, colour and finish.</figcaption></figure>
-      <div className="story-approach__copy"><p className="story-eyebrow">OUR APPROACH</p><h2 id="story-approach-title">The details<br />make the pair.</h2><ul>{principles.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}</ul><CollectionLink href="/designer-brands" className="story-text-link" onNavigate={onNavigate}>Explore the brand directory<Icon name="arrow" /></CollectionLink></div>
+      <figure className="story-approach__visual"><StoryPhoto name="frame-details" alt="Colourful optical frames displayed in rows on a softly lit wall" /><figcaption>A closer look at shape, colour and character.</figcaption></figure>
+      <div className="story-approach__copy"><p className="story-eyebrow">OUR APPROACH</p><h2 id="story-approach-title">Good style.<br /><em>Thoughtful details.</em></h2><ul>{principles.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}</ul><CollectionLink href="/eyewear" className="story-text-link" onNavigate={onNavigate}>Find your kind of frame<Icon name="arrow" /></CollectionLink></div>
     </section>
 
-    <section id="our-community" className="story-inspiration story-section" aria-labelledby="story-inspiration-title" tabIndex="-1"><div className="story-section-heading"><div><p className="story-eyebrow">STYLE NOTES</p><h2 id="story-inspiration-title">The CandiClie edit.</h2></div><p>Different ways to wear a frame. A few starting points for a look of your own.</p></div><InspirationRail onNavigate={onNavigate} /></section>
+    <section className="story-everyday story-section" aria-labelledby="story-everyday-title">
+      <div className="story-everyday__copy"><p className="story-eyebrow">IN GOOD COMPANY, EVERY DAY</p><h2 id="story-everyday-title">For the big plans.<br /><em>And the little moments.</em></h2><p>A quiet chapter. A busy morning. An afternoon with nowhere in particular to be. The best pair is the one that feels at home in your life.</p><p>Explore optical frames and sunglasses, compare the details, and save the pairs you want to come back to. Take your time. This is your point of view.</p><CollectionLink href="/eyewear/eyeglasses" className="story-text-link" onNavigate={onNavigate}>Explore everyday eyeglasses<Icon name="arrow" /></CollectionLink></div>
+      <figure className="story-everyday__visual"><StoryPhoto name="everyday-perspective" alt="Clear optical frames resting on a stack of notebooks in soft daylight" /><figcaption>Small details. Everyday companions.</figcaption></figure>
+    </section>
+
+    <section id="our-community" className="story-inspiration story-section" aria-labelledby="story-inspiration-title" tabIndex="-1"><div className="story-section-heading"><div><p className="story-eyebrow">LIFE, IN FRAMES</p><h2 id="story-inspiration-title">The CandiClie <em>edit.</em></h2></div><p>Three different expressions. A little inspiration for a look that’s entirely your own.</p></div><InspirationRail onNavigate={onNavigate} /></section>
 
     <section id="story-support" className="story-support story-section" aria-labelledby="story-support-title" tabIndex="-1"><div><p className="story-eyebrow">SHOPPING WITH CANDICLIE</p><h2 id="story-support-title">A few useful<br />details.</h2><p>How to explore the collection, save a shortlist and see what’s available today.</p><CollectionLink href="/accessories" className="story-text-link" onNavigate={onNavigate}>Care & accessories<Icon name="arrow" /></CollectionLink></div><div className="story-questions">
       <details><summary>Where should I start?<span aria-hidden="true">+</span></summary><p>Browse <CollectionLink href="/eyewear/eyeglasses" onNavigate={onNavigate}>eyeglasses</CollectionLink> and <CollectionLink href="/eyewear/sunglasses" onNavigate={onNavigate}>sunglasses</CollectionLink>, or explore the <CollectionLink href="/designer-brands" onNavigate={onNavigate}>brand directory</CollectionLink>. Search within a collection and use its filters to narrow down shape, colour and price.</p></details>
@@ -97,6 +130,6 @@ export default function OurStoryPage({ onNavigate }) {
       <details><summary>What about the finishing touches?<span aria-hidden="true">+</span></summary><p>Explore <CollectionLink href="/accessories/cases" onNavigate={onNavigate}>cases and organisers</CollectionLink>, <CollectionLink href="/accessories/cleaning" onNavigate={onNavigate}>cleaning essentials</CollectionLink> and <CollectionLink href="/accessories/cords" onNavigate={onNavigate}>eyewear cords</CollectionLink> in Care & Accessories.</p></details>
     </div></section>
 
-    <section className="story-next" aria-labelledby="story-next-title"><div><p className="story-eyebrow">EXPLORE THE COLLECTION</p><h2 id="story-next-title">Find your next pair.</h2></div><CollectionLink href="/eyewear" className="story-button" onNavigate={onNavigate}>Explore glasses<Icon name="arrow" /></CollectionLink></section>
+    <section className="story-next" aria-labelledby="story-next-title"><div><p className="story-eyebrow">YOUR NEXT CHAPTER STARTS HERE</p><h2 id="story-next-title">See life. <em>Your way.</em></h2></div><CollectionLink href="/eyewear" className="story-button" onNavigate={onNavigate}>Find your next pair<Icon name="arrow" /></CollectionLink></section>
   </div>;
 }
