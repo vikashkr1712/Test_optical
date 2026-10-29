@@ -87,6 +87,11 @@ export default function SiteHeader({ onSelect, onOpenPanel, bagCount = 0 }) {
     closeMenus();
     onSelect(selection);
   };
+  const followBooking = event => {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    choose({ catalogHref: event.currentTarget.getAttribute('href') });
+  };
   const toggleMenu = (id, mobile = false) => {
     const opening = activeMenu !== id;
     setActiveMenu(opening ? id : null);
@@ -108,13 +113,13 @@ export default function SiteHeader({ onSelect, onOpenPanel, bagCount = 0 }) {
     if (!menuOpen && event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setActiveMenu(null);
   }}>
     <div className="site-header__utility">
-      <a className="site-header__store" href="/store-locator"><Icon name="location" />Locate a store near you</a>
+      <a className="site-header__store" href="/book-eye-test#book-eye-test" onClick={followBooking}><Icon name="location" />Plan your in-store visit</a>
       <div className="site-header__announcement">
         <button type="button" aria-label="Previous announcement" onClick={() => setAnnouncement(value => (value + 1) % announcements.length)}><Icon name="left" /></button>
         <a href={announcements[announcement][1]}>{announcements[announcement][0]}</a>
         <button type="button" aria-label="Next announcement" onClick={() => setAnnouncement(value => (value + 1) % announcements.length)}><Icon name="right" /></button>
       </div>
-      <a className="site-header__eye-link" href="/store-locator?appointment=true">Book an Eye Test<Icon name="arrow" /></a>
+      <a className="site-header__eye-link" href="/book-eye-test" onClick={followBooking}>Book an Eye Test<Icon name="arrow" /></a>
     </div>
     <div className="site-header__navigation">
       <div className="site-header__mobile-actions">
@@ -130,7 +135,7 @@ export default function SiteHeader({ onSelect, onOpenPanel, bagCount = 0 }) {
       <div className="site-header__actions">
         <button type="button" className="site-header__desktop-action" aria-label="Search" aria-haspopup="dialog" aria-controls="shopping-panel" onClick={() => openShopping('search')}><Icon name="search" /></button>
         <button type="button" className="site-header__profile-action" aria-label="Profile" aria-haspopup="dialog" aria-controls="account-dialog" onClick={() => openShopping('profile')}><Icon name="account" /></button>
-        <a className="site-header__mobile-eye" href="/store-locator?appointment=true" aria-label="Book an eye test"><img src="/assets/header/eye-test.png" alt="" width="50" height="50" /></a>
+        <a className="site-header__mobile-eye" href="/book-eye-test" onClick={followBooking} aria-label="Book an eye test"><img src="/assets/header/eye-test.png" alt="" width="50" height="50" /></a>
         <a className="site-header__bag" href="/cart" aria-label={`Shopping cart, ${bagCount} ${bagCount === 1 ? 'item' : 'items'}`} onClick={event => { if (event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) { event.preventDefault(); openShopping('bag'); } }}><Icon name="bag" />{bagCount > 0 && <span className="site-header__bag-count" aria-hidden="true">{bagCount}</span>}</a>
       </div>
     </div>
@@ -140,7 +145,7 @@ export default function SiteHeader({ onSelect, onOpenPanel, bagCount = 0 }) {
         <button type="button" id={`nav-trigger-mobile-${item.id}`} ref={element => { mobileTriggers.current[item.id] = element; }} className="site-header__mobile-trigger" aria-expanded={activeMenu === item.id} aria-controls={`nav-panel-mobile-${item.id}`} onClick={() => toggleMenu(item.id, true)} onKeyDown={event => triggerKey(event, item.id, true)}>{item.label}<span aria-hidden="true">{activeMenu === item.id ? '−' : '+'}</span></button>
         {activeMenu === item.id && <NavigationPanel menu={item} mobile onSelect={choose} />}
       </div>)}
-      <a className="site-header__mobile-appointment" href="/store-locator?appointment=true"><Icon name="location" />Book an eye test</a>
+      <a className="site-header__mobile-appointment" href="/book-eye-test" onClick={followBooking}><Icon name="location" />Book an eye test</a>
     </nav>}
   </header>
   {(activeMenu || menuOpen) && <div className="site-header__backdrop" aria-hidden="true" />}

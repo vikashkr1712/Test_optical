@@ -1,6 +1,7 @@
 html { background: #fff; color: #0b0b0b; }
 body { margin: 0; font-family: 'CandiClie Hero Avenir', Arial, sans-serif; line-height: 1.5; }
 #main:focus { outline: none; }
+.page-loading { padding: 64px 24px; text-align: center; color: #555; min-height: 240px; }
 #main, #icon-edit { scroll-margin-top: 112px; }
 @media (max-width: 1023px) { #main, #icon-edit { scroll-margin-top: 56px; } }
 button, a, input { -webkit-tap-highlight-color: transparent; }
