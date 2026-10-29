@@ -5,7 +5,7 @@
   --story-inset: max(40px, calc((100vw - 1320px) / 2));
   color: var(--story-ink);
   background: #fff;
-  font: 400 17px/1.75 'CandiClie Hero Avenir', Arial, sans-serif;
+  font: 400 17px/1.75 var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 .story-page *, .story-page *::before, .story-page *::after { box-sizing: border-box; }
@@ -16,7 +16,7 @@
 .story-page :is(a, button, summary, [tabindex='0']):focus-visible { outline: 2px solid #666666; outline-offset: 5px; }
 .story-page section:focus { outline: none; }
 .story-page svg { flex-shrink: 0; width: 22px; height: 22px; }
-.story-page h2 { font: 400 clamp(38px, 4.3vw, 64px)/1.15 Georgia, serif; letter-spacing: -.04em; text-wrap: pretty; }
+.story-page h2 { font: 400 clamp(38px, 4.3vw, 64px)/1.15 var(--font-serif); letter-spacing: -.04em; text-wrap: pretty; }
 .story-page h2 em, .story-hero h1 em { font-weight: 400; }
 .story-eyebrow { font-size: 13px; font-weight: 600; line-height: 1.6; letter-spacing: .14em; }
 .story-photo { display: block; width: 100%; height: 100%; min-width: 0; overflow: hidden; }
@@ -35,7 +35,7 @@
 .story-breadcrumbs a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .story-hero__copy { max-width: 940px; }
 .story-hero__copy > .story-eyebrow { color: #dddddd; }
-.story-hero h1 { margin: 24px 0 27px; font: 400 clamp(58px, 6.9vw, 104px)/1.06 Georgia, serif; letter-spacing: -.05em; text-wrap: pretty; }
+.story-hero h1 { margin: 24px 0 27px; font: 400 clamp(58px, 6.9vw, 104px)/1.06 var(--font-serif); letter-spacing: -.05em; text-wrap: pretty; }
 .story-hero h1 em { color: #dddddd; }
 .story-hero__copy > p:not(.story-eyebrow) { font-size: 20px; line-height: 1.7; color: #f5f5f5; }
 .story-hero__discover { display: inline-flex; gap: 28px; align-items: center; margin-top: 32px; min-height: 52px; font-size: 16px; }
@@ -65,7 +65,7 @@
 .story-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 54px 0 28px !important; }
 .story-facts > div { display: flex; flex-direction: column-reverse; gap: 12px; padding: 12px 28px; border-right: 1px solid var(--story-line); }
 .story-facts > div:last-child { border: 0; }
-.story-facts dd { font: 400 clamp(58px, 6vw, 88px)/1 Georgia, serif; letter-spacing: -.055em; color: #000000; }
+.story-facts dd { font: 400 clamp(58px, 6vw, 88px)/1 var(--font-serif); letter-spacing: -.055em; color: #000000; }
 .story-facts dt { font-size: 16px; line-height: 1.5; color: #000000; }
 
 .story-approach, .story-everyday { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 7vw, 104px); align-items: center; background: #000000; color: #f5f5f5; }
@@ -99,7 +99,7 @@
 .story-look img { object-position: center 28%; }
 .story-look__copy { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding-top: 25px; }
 .story-look__copy .story-eyebrow { font-size: 13px; color: #000000; }
-.story-look h3 { margin-top: 12px; font: 400 31px/1.2 Georgia, serif; letter-spacing: -.035em; }
+.story-look h3 { margin-top: 12px; font: 400 31px/1.2 var(--font-serif); letter-spacing: -.035em; }
 .story-look__copy > p { margin-top: 14px; color: var(--story-muted); font-size: 16px; }
 .story-look .story-text-link { margin-top: auto; padding-top: 23px; font-size: 16px; }
 

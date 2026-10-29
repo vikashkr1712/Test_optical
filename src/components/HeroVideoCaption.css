@@ -2,16 +2,16 @@
 .hero-video-stage--captioned::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(0 0 0 / 38%) 0%, rgb(0 0 0 / 28%) 26%, rgb(0 0 0 / 10%) 46%, transparent 64%); pointer-events: none; }
 .hero-video-caption { position: absolute; z-index: 1; top: 32%; left: var(--hero-copy-inset); width: 46%; max-width: 900px; color: #fff; text-align: left; text-shadow: 0 1px 3px rgb(0 0 0 / 28%); pointer-events: none; }
 .hero-video-caption__text { display: grid; justify-items: start; gap: 12px; animation: campaign-caption-in 240ms ease-out; }
-.hero-video-caption h2, .hero-video-caption p { margin: 0; color: inherit; font-family: 'CandiClie Hero Avenir', sans-serif; white-space: nowrap; }
-.hero-video-caption h2 { font-size: clamp(24px, 3cqw, 60px); font-weight: 700; line-height: 1.15; letter-spacing: -.025em; }
-.hero-video-caption__tagline { font-size: clamp(16px, 1.55cqw, 26px); font-weight: 500; line-height: 1.45; }
-.hero-video-caption__detail { font-size: clamp(16px, 1.2cqw, 20px); font-weight: 400; line-height: 1.5; letter-spacing: .015em; }
+.hero-video-caption h2, .hero-video-caption p { margin: 0; color: inherit; font-family: var(--font-sans); white-space: nowrap; }
+.hero-video-caption h2 { font-size: clamp(40.8px, 5.1cqw, 102px); font-weight: 700; line-height: 1.15; letter-spacing: -.025em; }
+.hero-video-caption__tagline { font-size: clamp(27.2px, 2.635cqw, 44.2px); font-weight: 500; line-height: 1.45; }
+.hero-video-caption__detail { font-size: clamp(27.2px, 2.04cqw, 34px); font-weight: 400; line-height: 1.5; letter-spacing: .015em; }
 .home-hero .hero-video-stage ~ .home-hero__video-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff70; border-radius: 50%; background: rgb(0 0 0 / 28%); }
 @keyframes campaign-caption-in { from { opacity: 0; } to { opacity: 1; } }
 @media (max-width: 1023px) and (orientation: portrait) {
-  .hero-video-caption h2 { font-size: clamp(20px, 5.2cqw, 34px); }
-  .hero-video-caption__tagline { font-size: clamp(15px, 2.7cqw, 22px); }
-  .hero-video-caption__detail { font-size: clamp(13px, 2.1cqw, 18px); }
+  .hero-video-caption h2 { font-size: clamp(34px, 8.84cqw, 57.8px); }
+  .hero-video-caption__tagline { font-size: clamp(25.5px, 4.59cqw, 37.4px); }
+  .hero-video-caption__detail { font-size: clamp(22.1px, 3.57cqw, 30.6px); }
   .hero-video-caption__text { gap: 10px; }
   .hero-video-stage--captioned::after { background: linear-gradient(0deg, rgb(0 0 0 / 42%) 0%, rgb(0 0 0 / 22%) 28%, transparent 56%); }
   .hero-video-stage .hero-video-caption { top: auto; bottom: 150px; left: var(--hero-copy-inset); right: var(--hero-copy-inset); width: auto; max-width: none; }

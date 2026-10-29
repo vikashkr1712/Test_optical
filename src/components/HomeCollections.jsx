@@ -4,7 +4,8 @@ import HomeEditorial from './HomeEditorial.jsx';
 import HomeGuidance from './HomeGuidance.jsx';
 import { productGroups as products, currency } from './shopProducts.js';
 import { audienceLabels, productImage } from './glassesCatalog.js';
-import useSwipe from './useSwipe.js';
+import ProductGallery from './ProductGallery.jsx';
+import { homeCollectionPhotos } from './homeCollectionPhotos.js';
 
 const asset = (name, size) => `/assets/home/${name}-${size}.webp`;
 
@@ -30,19 +31,18 @@ function Arrow({ direction = 'right' }) {
 
 function Photo({ name, alt, kind = 'category', className = '' }) {
   const sizes = kind === 'product' ? [400, 720] : kind === 'audience' ? [480, 900] : [320, 560];
-  return <img className={className} src={asset(name, sizes[0])} srcSet={`${asset(name, sizes[0])} ${sizes[0]}w, ${asset(name, sizes[1])} ${sizes[1]}w`}
+  const replacement = homeCollectionPhotos[name];
+  const photoName = replacement?.name || name;
+  return <img className={className} src={asset(photoName, sizes[0])} srcSet={`${asset(photoName, sizes[0])} ${sizes[0]}w, ${asset(photoName, sizes[1])} ${sizes[1]}w`}
     sizes={kind === 'product' ? '(max-width: 600px) 76vw, (max-width: 900px) 42vw, 30vw' : kind === 'audience' ? '(max-width: 600px) 85vw, 33vw' : '(max-width: 600px) 44vw, (max-width: 1100px) 24vw, 19vw'}
     width={kind === 'product' ? 720 : kind === 'audience' ? 900 : 560} height={kind === 'product' ? 460 : kind === 'audience' ? 601 : 839}
-    alt={alt} loading="lazy" decoding="async" />;
+    alt={replacement?.alt || alt} loading="lazy" decoding="async" />;
 }
 
 export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrowse }) {
   const dialog = useRef(null);
-  const [angle, setAngle] = useState(false);
-  const imageSwipe = useSwipe({ enabled: Boolean(selection?.imageAlt), onSwipe: () => setAngle(value => !value) });
   useEffect(() => {
     if (!selection) return;
-    setAngle(false);
     const modal = dialog.current;
     const previousOverflow = document.body.style.overflow;
     modal.showModal();
@@ -59,20 +59,20 @@ export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrows
     : isLens ? [['Replacement', selection.replacement], ['Lens design', selection.designs.join(' / ')], ['Pack size', selection.pack], ['Manufacturer', selection.manufacturer]]
     : selection.shape ? [['Shape', selection.shape], ['Frame style', selection.rim], ['Collection', selection.audiences.map(audience => audienceLabels[audience]).join(' / ')]] : [];
   const textOnly = selection?.navigation && !selection.media;
-  return <dialog ref={dialog} className={`home-preview${textOnly ? ' home-preview--text' : ''}`} aria-labelledby="preview-title" onClose={onClose} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+  return <dialog ref={dialog} className={`home-preview${textOnly ? ' home-preview--text' : ''}${product ? ' home-preview--product' : ''}`} aria-labelledby="preview-title" onClose={event => { if (event.target === event.currentTarget) onClose(); }} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
     {selection && <button type="button" className="home-preview__close" aria-label="Close preview" onClick={onClose} autoFocus>×</button>}
     {selection && <div className={`home-preview__content${textOnly ? ' home-preview__content--text' : ''}`}>
-      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : product ? <div className="home-preview__product-visual" {...imageSwipe}><img src={angle && selection.imageAlt ? selection.imageAlt : productImage(selection, true)} width="640" height="400" alt={`${selection.brand} ${selection.model}${selection.colour ? `, ${selection.colour}` : ''}${angle ? ', alternate view' : ', main view'}`} draggable="false" />{selection.imageAlt && <div className="home-preview__angles" role="group" aria-label="Product image views" data-no-swipe><button type="button" aria-pressed={!angle} onClick={() => setAngle(false)}>{isAccessory ? 'Main view' : 'Front view'}</button><button type="button" aria-pressed={angle} onClick={() => setAngle(true)}>{isAccessory ? 'Alternate view' : 'Side view'}</button></div>}</div> : !textOnly && <Photo name={selection.id} kind={selection.id.startsWith('for-') ? 'audience' : 'category'} alt={selection.title} />}
+      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : product ? <ProductGallery key={selection.id} product={selection} /> : !textOnly && <Photo name={selection.id} kind={selection.id.startsWith('for-') ? 'audience' : 'category'} alt={selection.title} />}
       <div className="home-preview__copy">
         <p className="home-eyebrow">{product ? selection.type : selection.eyebrow || 'THE CANDICLIE EDIT'}</p>
         <h2 id="preview-title">{product ? isAccessory ? selection.model : selection.brand : selection.collection || selection.title}</h2>
         {product ? <>
-          <p>{isAccessory ? selection.category : selection.model}</p>
+          <p className="home-preview__model">{isAccessory ? selection.category : selection.model}</p>
           {selection.colour && <p className="home-muted">{selection.colour}</p>}
           <p className="home-preview__price">{currency.format(selection.price)}</p>
-          {specifications.some(([, value]) => value) && <dl className="home-preview__specifications">{specifications.filter(([, value]) => value).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>}
+          {specifications.some(([, value]) => value) && <><h3 className="home-preview__section-title">The details</h3><dl className="home-preview__specifications">{specifications.filter(([, value]) => value).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></>}
           <div className="home-preview__shopping"><button type="button" className="shop-primary" onClick={() => { shopping.addToBag(selection.id); onOpenBag(); }} disabled={shopping.cart.some(item => item.id === selection.id && item.quantity >= 10)}>{shopping.cart.some(item => item.id === selection.id && item.quantity >= 10) ? 'Bag limit reached' : 'Add to bag'}</button><button type="button" className="shop-save-frame" aria-pressed={shopping.saved.includes(selection.id)} onClick={() => shopping.toggleSaved(selection.id)}>{shopping.saved.includes(selection.id) ? `♥ Saved ${savedLabel}` : `♡ Save ${savedLabel}`}</button></div>
-          <p className="home-preview__note">{isLens ? 'Use the contact lens prescription and fit provided by your eye-care professional. This bag saves your selection; ordering and prescription entry are not available yet.' : 'Keep your favourites in your bag. Online checkout is coming soon; final prices and availability will be confirmed when shopping launches.'}</p>
+          <p className="home-preview__note">{isLens ? 'Use the contact lens prescription and fit provided by your eye-care professional. This bag saves your selection; ordering and prescription entry are not available yet.' : 'Online checkout is coming soon. Prices and availability will be confirmed at launch.'}</p>
           {isAccessory && selection.category === 'Cleaning & care' && <p className="home-preview__note">Follow the care instructions supplied with the product and your eyewear.</p>}
         </> : <p>{selection.description}</p>}
         {selection.details?.length > 0 && <ul className="home-preview__details">{selection.details.map(detail => <li key={detail}>{detail}</li>)}</ul>}

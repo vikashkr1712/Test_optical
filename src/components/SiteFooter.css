@@ -1,4 +1,4 @@
-.site-footer { background: #000; color: #f7f7f7; font: 400 16px/1.6 'CandiClie Hero Avenir', Arial, sans-serif; }
+.site-footer { background: #000; color: #f7f7f7; font: 400 16px/1.6 var(--font-sans); }
 .site-footer *, .site-footer *::before, .site-footer *::after { box-sizing: border-box; }
 .site-footer__inner { max-width: 1920px; margin: 0 auto; padding: 72px clamp(24px, 5.55vw, 100px) 24px; }
 .site-footer :is(h2, h3, p, ul) { margin: 0; }
@@ -31,7 +31,7 @@
 .site-footer details > p a { text-decoration: underline; text-underline-offset: 3px; }
 .site-footer__bottom { display: flex; align-items: center; gap: 28px; padding-top: 24px; border-top: 1px solid #333; color: #c2c2c2; font-size: 14px; }
 .site-footer__bottom > p { margin-right: auto; }
-.site-footer__bottom button { display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 44px; padding: 0; border: 0; background: transparent; color: #f7f7f7; font: 600 14px/1.5 'CandiClie Hero Avenir', Arial, sans-serif; cursor: pointer; }
+.site-footer__bottom button { display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 44px; padding: 0; border: 0; background: transparent; color: #f7f7f7; font: 600 14px/1.5 var(--font-sans); cursor: pointer; }
 .site-footer__bottom button span { font-size: 24px; }
 @media (max-width: 1000px) {
   .site-footer__directory { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }

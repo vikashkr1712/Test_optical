@@ -1,7 +1,7 @@
 .designers-page { background: #fff; }
 .designers-intro { padding: 32px clamp(24px, 5.55vw, 100px) 48px; background: #f5f5f5; }
 .designers-intro__layout { display: grid; grid-template-columns: 1fr 1.08fr; align-items: center; gap: 6%; margin-top: 40px; }
-.designers-intro__copy h1 { font: 400 clamp(42px, 4.7vw, 74px)/1.06 Georgia, serif; letter-spacing: -.045em; margin: 16px 0 24px; }
+.designers-intro__copy h1 { font: 400 clamp(42px, 4.7vw, 74px)/1.06 var(--font-serif); letter-spacing: -.045em; margin: 16px 0 24px; }
 .designers-intro__copy h1 em { font-weight: 400; }
 .designers-intro__copy > p:not(.glasses-eyebrow) { max-width: 425px; color: #000000; font-size: 16px; }
 .designers-intro__cta { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 48px; margin-top: 24px; border-bottom: 1px solid #000000; font-size: 14px; }
@@ -10,13 +10,13 @@
 .designers-intro__portraits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; padding-bottom: 36px; }
 .designers-portrait { display: flex; flex-direction: column; width: 100%; min-width: 0; min-height: 320px; aspect-ratio: .72; padding: 24px 18px; background: #fff; }
 .designers-portrait--2 { margin-top: 58px; background: #f5f5f5; }
-.designers-portrait__name { font: 400 clamp(22px, 2.6vw, 38px)/1.1 Georgia, serif; text-align: center; }
+.designers-portrait__name { font: 400 clamp(22px, 2.6vw, 38px)/1.1 var(--font-serif); text-align: center; }
 .designers-portrait img { width: 100%; height: 0; min-height: 0; flex: 1 1 auto; object-fit: contain; mix-blend-mode: multiply; }
 .designers-portrait__caption { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 9px; letter-spacing: .1em; }
 .designers-featured, .designers-directory { padding: 52px clamp(24px, 5.55vw, 100px); }
 .designers-directory { background: #f5f5f5; scroll-margin-top: 125px; }
 .designers-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
-.designers-section-heading h2 { font: 400 clamp(30px, 3vw, 44px)/1.15 Georgia, serif; margin: 10px 0 0; letter-spacing: -.035em; }
+.designers-section-heading h2 { font: 400 clamp(30px, 3vw, 44px)/1.15 var(--font-serif); margin: 10px 0 0; letter-spacing: -.035em; }
 .designers-featured__rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
 .designers-featured-card { min-width: 0; }
 .designers-featured-card__image { background: #f5f5f5; overflow: hidden; }

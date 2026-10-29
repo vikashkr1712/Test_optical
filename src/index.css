@@ -1,5 +1,17 @@
+@font-face {
+  font-family: 'Avenir';
+  src: url('/assets/hero/avenir-regular.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --font-sans: 'Avenir', Arial, sans-serif;
+  --font-ui: Arial, sans-serif;
+  --font-serif: 'Times New Roman', serif;
+}
 html { background: #fff; color: #0b0b0b; }
-body { margin: 0; font-family: 'CandiClie Hero Avenir', Arial, sans-serif; line-height: 1.5; }
+body { margin: 0; font-family: var(--font-sans); line-height: 1.5; }
 #main:focus { outline: none; }
 .page-loading { padding: 64px 24px; text-align: center; color: #555; min-height: 240px; }
 #main, #icon-edit { scroll-margin-top: 112px; }

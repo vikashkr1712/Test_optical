@@ -21,14 +21,6 @@ export default [
     "position": "50% 100%", "alt": "Woman wearing oversized sunglasses against a pale wall"
   },
   {
-    "name": "Inspira",
-    "type": "video",
-    "href": "#house-of-brands",
-    "cta": null,
-    "desktop": "/assets/hero/slide-03-desktop.mp4",
-    "mobile": "/assets/hero/slide-03-mobile.mp4"
-  },
-  {
     "name": "Modern frames",
     "type": "image",
     "editorial": true, "theme": "dark",

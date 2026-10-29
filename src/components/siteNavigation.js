@@ -1,10 +1,13 @@
 import { designerBrands, featuredDesignerBrands } from './designerBrands.js';
+import { homeCollectionPhotos } from './homeCollectionPhotos.js';
 
 const photo = (name, alt, editorial = false) => {
   const small = editorial ? 480 : name.startsWith('for-') ? 480 : 320;
   const large = editorial ? 960 : name.startsWith('for-') ? 900 : 560;
   const folder = editorial ? 'editorial' : 'home';
-  return { src: `/assets/${folder}/${name}-${small}.webp`, srcSet: `/assets/${folder}/${name}-${small}.webp ${small}w, /assets/${folder}/${name}-${large}.webp ${large}w`, width: large, height: editorial ? 960 : name.startsWith('for-') ? 601 : 839, alt };
+  const replacement = editorial ? null : homeCollectionPhotos[name];
+  const photoName = replacement?.name || name;
+  return { src: `/assets/${folder}/${photoName}-${small}.webp`, srcSet: `/assets/${folder}/${photoName}-${small}.webp ${small}w, /assets/${folder}/${photoName}-${large}.webp ${large}w`, width: large, height: editorial ? 960 : name.startsWith('for-') ? 601 : 839, alt: replacement?.alt || alt };
 };
 const images = {
   eyewear: photo('category-eyeglasses', 'Everyday optical frames'),

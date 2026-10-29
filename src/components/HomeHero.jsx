@@ -158,7 +158,7 @@ export default function HomeHero({ className = '' }) {
 
   const finishTransition = useCallback(() => {
     if (currentPosition.current === slides.length) {
-      // Reset behind the identical first-slide buffer, without sweeping through seven slides.
+      // Reset behind the identical first-slide buffer without sweeping backward through the carousel.
       track.current.style.transitionDuration = '0ms';
       currentPosition.current = 0;
       setPosition(0);

@@ -1,11 +1,11 @@
-.account-dialog { box-sizing: border-box; position: fixed; inset: 0; width: min(800px, calc(100% - 40px)); max-width: calc(100% - 40px); max-height: calc(100dvh - 40px); margin: auto; padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid #dddddd; border-radius: 16px; background: #fff; color: #000000; font: 16px/1.5 'CandiClie Hero Avenir', Arial, sans-serif; box-shadow: 0 24px 90px #0003; }
+.account-dialog { box-sizing: border-box; position: fixed; inset: 0; width: min(800px, calc(100% - 40px)); max-width: calc(100% - 40px); max-height: calc(100dvh - 40px); margin: auto; padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid #dddddd; border-radius: 16px; background: #fff; color: #000000; font: 16px/1.5 var(--font-sans); box-shadow: 0 24px 90px #0003; }
 .account-dialog::backdrop { background: #00000080; }
 .account-dialog * { box-sizing: border-box; }
 .account-dialog :is(button, input) { font: inherit; }
 .account-dialog button { cursor: pointer; }
 .account-dialog :is(button, input):focus-visible { outline: 2px solid #000000; outline-offset: 5px; }
 .account-dialog__content { position: relative; padding: 44px clamp(24px, 7vw, 92px) 36px; text-align: center; }
-.account-dialog__close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: #f5f5f5; color: #000000; font-size: 29px !important; line-height: 1; }
+.account-dialog__close { position: absolute; z-index: 5; top: 16px; right: 16px; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: #f5f5f5; color: #000000; font-size: 29px !important; line-height: 1; }
 .account-dialog__logo { position: relative; width: 168px; aspect-ratio: 131 / 40; margin: 0 auto 26px; overflow: hidden; }
 .account-dialog__logo img { position: absolute; top: 0; left: 0; display: block; width: 152.671756%; max-width: none; height: auto; transform: translate(-15.5%, -37.5%); }
 .account-dialog__eyebrow { margin: 0 0 10px; color: #000000; font-size: 11px; font-weight: 600; letter-spacing: .16em; }

@@ -31,11 +31,29 @@ MEMORY.md
 /public/assets/home/edit-4-*.webp
 /public/assets/home/category-accessories-*.webp
 
+# Replaced collection/category reference portraits remain local.
+/public/assets/home/for-him-*.webp
+/public/assets/home/for-her-*.webp
+/public/assets/home/for-kids-*.webp
+/public/assets/home/category-eyeglasses-*.webp
+/public/assets/home/category-men-*.webp
+/public/assets/home/category-women-*.webp
+/public/assets/home/category-kids-*.webp
+/public/assets/home/category-fashion-*.webp
+
 # Retired branded banner retained locally after the Signature Edit update.
 /public/assets/home/brand-banner-*.webp
 
 # Retired sample-brand campaign photos remain local for reference.
 /public/assets/editorial/brand-*.webp
+
+# Retired font families and the removed third hero video stay available locally.
+/public/assets/header/avenir-book.woff2
+/public/assets/editorial/gantari-latin.woff2
+/public/assets/editorial/playfair-latin.woff2
+/public/assets/editorial/playfair-italic-latin.woff2
+/public/assets/hero/slide-03-desktop.mp4
+/public/assets/hero/slide-03-mobile.mp4
 
 # Local credentials and environment settings
 .env

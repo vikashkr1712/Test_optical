@@ -2,26 +2,27 @@ import { memo, useEffect, useRef, useState } from 'react';
 import './FirstHeroCampaign.css';
 import HeroVideoCaption from './HeroVideoCaption.jsx';
 
-// The previous campaign soundtrack is looped into the supplied 20-second clip.
+// Fifteen images stay on screen for five seconds each; captions follow the video clock.
 const HAS_AUDIO = true;
+export const CAMPAIGN_SCENE_SECONDS = 5;
 
 export const campaignScenes = [
-  { start: 0, end: 1.25, headline: 'Your Next Look', tagline: 'Starts with CandiClie.', detail: 'Premium style. Everyday value.', tone: 'ink' },
-  { start: 1.25, end: 2.6, headline: 'Made for You', tagline: 'Everyday. Every occasion.', detail: 'Find a frame that feels like you.', tone: 'ink' },
-  { start: 2.6, end: 3.9, headline: 'Details That Matter', tagline: 'A sharper point of view.', detail: 'Considered from every angle.', tone: 'light' },
-  { start: 3.9, end: 5.25, headline: 'Go Beyond', tagline: 'For your next adventure.', detail: 'Take your own view with you.', tone: 'ink' },
-  { start: 5.25, end: 6.6, headline: 'Own Your Day', tagline: 'Quiet style. Clear confidence.', detail: 'From first light to last plans.', tone: 'ink' },
-  { start: 6.6, end: 7.9, headline: 'A Beautiful View', tagline: 'For your special moments.', detail: 'A little detail. A lasting impression.', tone: 'ink' },
-  { start: 7.9, end: 9.25, headline: 'Little Frames. Big Smiles.', tagline: 'A world to discover.', detail: 'Small looks with big personality.', tone: 'ink' },
-  { start: 9.25, end: 10.6, headline: 'Find Your People', tagline: 'Wear your own colour.', detail: 'Good style is yours to share.', tone: 'light' },
-  { start: 10.6, end: 11.9, headline: 'Simply Timeless', tagline: 'Less fuss. More you.', detail: 'Clean lines. Lasting character.', tone: 'ink' },
-  { start: 11.9, end: 13.25, headline: 'Everyday, Elevated', tagline: 'Your new favourite frame.', detail: 'Make the everyday your own.', tone: 'ink' },
-  { start: 13.25, end: 14.6, headline: 'Follow the Sun', tagline: 'A fresh perspective.', detail: 'Bring a little style outside.', tone: 'ink' },
-  { start: 14.6, end: 15.9, headline: 'Chase the Horizon', tagline: 'Made for the outdoors.', detail: 'Find a look for the open road.', tone: 'light' },
-  { start: 15.9, end: 17.25, headline: 'Your Signature Shape', tagline: 'A little more character.', detail: 'The finishing touch, made yours.', tone: 'ink' },
-  { start: 17.25, end: 18.6, headline: 'Keep Moving', tagline: 'See where life takes you.', detail: 'Your next chapter looks good.', tone: 'light' },
-  { start: 18.6, end: 20, headline: 'See Life. Your Way.', tagline: 'Find your frame at CandiClie.', detail: 'Your everyday starts here.', tone: 'ink' },
-];
+  { headline: 'Your Next Look', tagline: 'Starts with CandiClie.', detail: 'Premium style. Everyday value.', tone: 'ink' },
+  { headline: 'Made for You', tagline: 'Everyday. Every occasion.', detail: 'Find a frame that feels like you.', tone: 'ink' },
+  { headline: 'Details That Matter', tagline: 'A sharper point of view.', detail: 'Considered from every angle.', tone: 'light' },
+  { headline: 'Go Beyond', tagline: 'For your next adventure.', detail: 'Take your own view with you.', tone: 'ink' },
+  { headline: 'Own Your Day', tagline: 'Quiet style. Clear confidence.', detail: 'From first light to last plans.', tone: 'ink' },
+  { headline: 'A Beautiful View', tagline: 'For your special moments.', detail: 'A little detail. A lasting impression.', tone: 'ink' },
+  { headline: 'Little Frames. Big Smiles.', tagline: 'A world to discover.', detail: 'Small looks with big personality.', tone: 'ink' },
+  { headline: 'Find Your People', tagline: 'Wear your own colour.', detail: 'Good style is yours to share.', tone: 'light' },
+  { headline: 'Simply Timeless', tagline: 'Less fuss. More you.', detail: 'Clean lines. Lasting character.', tone: 'ink' },
+  { headline: 'Everyday, Elevated', tagline: 'Your new favourite frame.', detail: 'Make the everyday your own.', tone: 'ink' },
+  { headline: 'Follow the Sun', tagline: 'A fresh perspective.', detail: 'Bring a little style outside.', tone: 'ink' },
+  { headline: 'Chase the Horizon', tagline: 'Made for the outdoors.', detail: 'Find a look for the open road.', tone: 'light' },
+  { headline: 'Your Signature Shape', tagline: 'A little more character.', detail: 'The finishing touch, made yours.', tone: 'ink' },
+  { headline: 'Keep Moving', tagline: 'See where life takes you.', detail: 'Your next chapter looks good.', tone: 'light' },
+  { headline: 'See Life. Your Way.', tagline: 'Find your frame at CandiClie.', detail: 'Your everyday starts here.', tone: 'ink' },
+].map((scene, index) => ({ ...scene, start: index * CAMPAIGN_SCENE_SECONDS, end: (index + 1) * CAMPAIGN_SCENE_SECONDS }));
 
 function sceneAt(time) {
   for (let i = campaignScenes.length - 1; i >= 0; i--) if (time >= campaignScenes[i].start) return i;

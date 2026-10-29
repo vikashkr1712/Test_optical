@@ -56,7 +56,7 @@
   .home-community__hint, .designers-swipe-hint,
   .home-featured__swipe-guide { font-size: 15px; }
   .glasses-eyebrow, .story-eyebrow { font-size: 14px; }
-  .hero-image-campaign__eyebrow { font-size: 14px; }
+  .hero-image-campaign__eyebrow { font-size: 17.5px; }
 }
 @media (max-width: 767px) {
   .mobile-campaign-copy__eyebrow { font-size: 14px; letter-spacing: .17em; }
@@ -142,9 +142,9 @@
 .home-preview__specifications dd { overflow-wrap: anywhere; }
 
 @media (min-width: 1200px) {
-  .home-hero [data-campaign='first'] .hero-video-caption h2 { font-size: clamp(36px, 3.4cqw, 72px); line-height: 1.2; white-space: normal; }
-  .home-hero [data-campaign='first'] .hero-video-caption__tagline { font-size: clamp(20px, 1.8cqw, 30px); line-height: 1.6; white-space: normal; }
-  .home-hero [data-campaign='first'] .hero-video-caption__detail { font-size: clamp(18px, 1.4cqw, 24px); line-height: 1.6; white-space: normal; }
+  .home-hero [data-campaign='first'] .hero-video-caption h2 { font-size: clamp(61.2px, 5.78cqw, 122.4px); line-height: 1.2; white-space: normal; }
+  .home-hero [data-campaign='first'] .hero-video-caption__tagline { font-size: clamp(34px, 3.06cqw, 51px); line-height: 1.6; white-space: normal; }
+  .home-hero [data-campaign='first'] .hero-video-caption__detail { font-size: clamp(30.6px, 2.38cqw, 40.8px); line-height: 1.6; white-space: normal; }
 }
 
 @media (max-width: 767px) {
@@ -178,8 +178,8 @@
 .home-collections, .glasses-page, .offers-page, .seasonal-page,
 .gift-page, .cart-page, .home-preview, .shop-panel,
 .account-dialog, .site-footer { font-size: 17px; }
-.home-eyebrow, .gift-eyebrow, .site-footer__eyebrow,
-.hero-image-campaign__eyebrow { font-size: 14px; }
+.home-eyebrow, .gift-eyebrow, .site-footer__eyebrow { font-size: 14px; }
+.hero-image-campaign__eyebrow { font-size: 17.5px; }
 .home-featured .home-section__description, .home-section__description,
 .home-brand__caption > div > p:last-child, .home-editorial__intro > p,
 .home-guidance .home-guidance__description { font-size: 17px; line-height: 1.7; }
@@ -271,8 +271,8 @@
   .site-header__desktop-links .site-header__nav-trigger { font-size: clamp(14px, 1.13vw, 19px); padding-inline: clamp(4px, .5vw, 9px); }
 }
 @media (min-width: 768px) and (max-width: 1199px) {
-  .hero-image-campaign__description { font-size: 18px; }
-  .home-hero .hero-video-caption__detail { font-size: 17px; }
+  .hero-image-campaign__description { font-size: 22.5px; }
+  .home-hero .hero-video-caption__detail { font-size: 28.9px; }
 }
 @media (max-width: 767px) {
   .home-featured .home-product__info h2 { font-size: 16px; }
@@ -285,8 +285,8 @@
   .story-page { font-size: 17px; }
   .story-chapters a, .story-hero__visual figcaption { font-size: 15px; }
   .story-section-heading > p, .story-questions summary { font-size: 17px; }
-  .hero-image-campaign__description { font-size: 16px; }
-  .home-hero .hero-image-campaign .home-hero__cta { font-size: 15px; }
+  .hero-image-campaign__description { font-size: 20px; }
+  .home-hero .hero-image-campaign .home-hero__cta { font-size: 18.75px; }
   .cart-page__empty > p { font-size: 16px; }
   .cart-item h2 { font-size: 18px; }
   .gift-hero__copy > p:not(.gift-eyebrow, .gift-hero__status) { font-size: 17px; }
