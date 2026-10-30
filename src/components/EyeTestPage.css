@@ -232,8 +232,9 @@
 .eye-faq details:first-child { border-top: 1px solid #ccc; }
 .eye-faq summary { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 23px 0; font-size: 16px; font-weight: 500; list-style: none; transition: background 160ms ease; }
 .eye-faq summary::-webkit-details-marker { display: none; }
-.eye-faq summary > span { font-size: 24px; line-height: 1; font-weight: 400; transition: transform 150ms ease; }
-.eye-faq details[open] summary > span { transform: rotate(45deg); }
+.eye-faq summary > span { display: grid; place-items: center; flex: 0 0 24px; font-size: 24px; line-height: 1; font-weight: 400; }
+.eye-faq summary > span::before { content: '+'; }
+.eye-faq details[open] summary > span::before { content: '−'; }
 .eye-faq details > p { font-size: 14px; color: #626262; line-height: 1.85; padding: 0 30px 24px 0; }
 .eye-faq details[open] > p { animation: eye-step-enter 160ms ease-out both; }
 .eye-closing { display: flex; align-items: center; gap: 24px; padding: 34px var(--eye-inset); }

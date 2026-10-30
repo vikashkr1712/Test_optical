@@ -52,6 +52,7 @@ export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrows
   const product = selection?.brand;
   const isLens = selection?.type === 'Contact lenses';
   const isAccessory = selection?.type === 'Accessories';
+  const isFrame = ['Eyeglasses', 'Sunglasses'].includes(selection?.type);
   const browsePath = isAccessory ? '/accessories' : isLens ? '/contact-lenses' : '/eyewear';
   const savedLabel = isAccessory ? 'item' : isLens ? 'lenses' : 'frame';
   const specifications = !product ? [] : isAccessory
@@ -59,10 +60,11 @@ export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrows
     : isLens ? [['Replacement', selection.replacement], ['Lens design', selection.designs.join(' / ')], ['Pack size', selection.pack], ['Manufacturer', selection.manufacturer]]
     : selection.shape ? [['Shape', selection.shape], ['Frame style', selection.rim], ['Collection', selection.audiences.map(audience => audienceLabels[audience]).join(' / ')]] : [];
   const textOnly = selection?.navigation && !selection.media;
-  return <dialog ref={dialog} className={`home-preview${textOnly ? ' home-preview--text' : ''}${product ? ' home-preview--product' : ''}`} aria-labelledby="preview-title" onClose={event => { if (event.target === event.currentTarget) onClose(); }} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+  return <dialog ref={dialog} className={`home-preview${textOnly ? ' home-preview--text' : ''}${product ? ' home-preview--product' : ''}${isFrame ? ' home-preview--frame' : ''}`} aria-labelledby="preview-title" onClose={event => { if (event.target === event.currentTarget) onClose(); }} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
     {selection && <button type="button" className="home-preview__close" aria-label="Close preview" onClick={onClose} autoFocus>×</button>}
+    {isFrame && <div className="home-preview__frame-heading"><button type="button" onClick={onClose}><span aria-hidden="true">←</span>Back to collection</button><span>CANDICLIE / EYEWEAR</span></div>}
     {selection && <div className={`home-preview__content${textOnly ? ' home-preview__content--text' : ''}`}>
-      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : product ? <ProductGallery key={selection.id} product={selection} /> : !textOnly && <Photo name={selection.id} kind={selection.id.startsWith('for-') ? 'audience' : 'category'} alt={selection.title} />}
+      {selection.media ? <img {...selection.media} sizes="(max-width: 600px) 85vw, 430px" decoding="async" /> : product ? <ProductGallery key={selection.id} product={selection} saved={shopping.saved.includes(selection.id)} onToggleSaved={() => shopping.toggleSaved(selection.id)} /> : !textOnly && <Photo name={selection.id} kind={selection.id.startsWith('for-') ? 'audience' : 'category'} alt={selection.title} />}
       <div className="home-preview__copy">
         <p className="home-eyebrow">{product ? selection.type : selection.eyebrow || 'THE CANDICLIE EDIT'}</p>
         <h2 id="preview-title">{product ? isAccessory ? selection.model : selection.brand : selection.collection || selection.title}</h2>

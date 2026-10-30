@@ -49,6 +49,7 @@ MEMORY.md
 
 # Retired font families and the removed third hero video stay available locally.
 /public/assets/header/avenir-book.woff2
+/public/assets/hero/avenir-regular.woff2
 /public/assets/editorial/gantari-latin.woff2
 /public/assets/editorial/playfair-latin.woff2
 /public/assets/editorial/playfair-italic-latin.woff2

@@ -1,17 +1,43 @@
 @font-face {
-  font-family: 'Avenir';
-  src: url('/assets/hero/avenir-regular.woff2') format('woff2');
-  font-weight: 400 500;
+  font-family: 'Nunito Sans';
+  src: url('/assets/fonts/nunito-sans/nunito-sans-latin-ext-normal.woff2') format('woff2');
+  font-weight: 200 1000;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/assets/fonts/nunito-sans/nunito-sans-latin-normal.woff2') format('woff2');
+  font-weight: 200 1000;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/assets/fonts/nunito-sans/nunito-sans-latin-ext-italic.woff2') format('woff2');
+  font-weight: 200 1000;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/assets/fonts/nunito-sans/nunito-sans-latin-italic.woff2') format('woff2');
+  font-weight: 200 1000;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 :root {
-  --font-sans: 'Avenir', Arial, sans-serif;
-  --font-ui: Arial, sans-serif;
+  --font-sans: 'Nunito Sans', sans-serif;
+  --font-ui: var(--font-sans);
   --font-serif: 'Times New Roman', serif;
 }
 html { background: #fff; color: #0b0b0b; }
 body { margin: 0; font-family: var(--font-sans); line-height: 1.5; }
+button, input, optgroup, select, textarea { font-family: var(--font-sans); }
 #main:focus { outline: none; }
 .page-loading { padding: 64px 24px; text-align: center; color: #555; min-height: 240px; }
 #main, #icon-edit { scroll-margin-top: 112px; }
