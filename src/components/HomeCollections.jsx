@@ -29,6 +29,10 @@ function Arrow({ direction = 'right' }) {
   </svg>;
 }
 
+function nearestPage(positions, scrollLeft) {
+  return positions.reduce((nearest, position, index) => Math.abs(position - scrollLeft) < Math.abs(positions[nearest] - scrollLeft) ? index : nearest, 0);
+}
+
 function Photo({ name, alt, kind = 'category', className = '' }) {
   const sizes = kind === 'product' ? [400, 720] : kind === 'audience' ? [480, 900] : [320, 560];
   const replacement = homeCollectionPhotos[name];
@@ -88,8 +92,39 @@ export function PreviewDialog({ selection, onClose, shopping, onOpenBag, onBrows
 export default function HomeCollections({ onSelect: setSelection, shopping }) {
   const [tab, setTab] = useState('best');
   const [featuredPosition, setFeaturedPosition] = useState(0);
+  const [audiencePages, setAudiencePages] = useState([]);
+  const [audiencePosition, setAudiencePosition] = useState(0);
   const productRail = useRef(null);
   const categoryRail = useRef(null);
+  const audienceRail = useRef(null);
+  const audienceStops = useRef([]);
+
+  useEffect(() => {
+    const rail = audienceRail.current;
+    const handheld = matchMedia('(max-width: 1199px)');
+    const measure = () => {
+      const positions = [];
+      const maximum = rail.scrollWidth - rail.clientWidth;
+      if (handheld.matches && maximum > 1) {
+        const start = rail.firstElementChild.getBoundingClientRect().left;
+        for (const card of rail.children) {
+          const position = Math.min(maximum, Math.max(0, card.getBoundingClientRect().left - start));
+          // The last cards can share an end stop when two cards fit on tablets.
+          if (!positions.some(value => Math.abs(value - position) < 1)) positions.push(position);
+        }
+      }
+      audienceStops.current = positions;
+      setAudiencePages(current => current.length === positions.length && current.every((value, index) => value === positions[index]) ? current : positions);
+      setAudiencePosition(nearestPage(positions, rail.scrollLeft));
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(rail);
+    handheld.addEventListener('change', measure);
+    measure();
+    return () => { observer.disconnect(); handheld.removeEventListener('change', measure); };
+  }, []);
+
+  const showAudiencePage = position => audienceRail.current?.scrollTo({ left: position, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   const scrollRail = (ref, direction) => ref.current?.scrollBy({ left: direction * ref.current.clientWidth * .8, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   const selectTab = (value) => { setTab(value); setFeaturedPosition(0); if (productRail.current) productRail.current.scrollLeft = 0; };
   const showFeaturedPosition = position => {
@@ -140,10 +175,14 @@ export default function HomeCollections({ onSelect: setSelection, shopping }) {
 
     <section className="home-audiences home-section" id="collection-edits" aria-labelledby="audience-heading">
       <div className="home-audiences__intro"><p className="home-eyebrow">GOOD STYLE HAS NO SINGLE LOOK</p><h2 id="audience-heading">Find your kind of frame.</h2></div>
-      <div className="home-audiences__grid" role="region" aria-label="Browse collections for men, women and kids" tabIndex="0">{audiences.map(item => <button type="button" key={item.id} className="home-audience" onClick={() => setSelection(item)}>
+      <div className="home-audiences__grid" id="audience-collections" ref={audienceRail} role="region" aria-label="Browse collections for men, women and kids" tabIndex="0" onScroll={event => setAudiencePosition(nearestPage(audienceStops.current, event.currentTarget.scrollLeft))}>{audiences.map(item => <button type="button" key={item.id} className="home-audience" onClick={() => setSelection(item)}>
         <div className="home-audience__photo"><Photo name={item.id} kind="audience" alt={item.id === 'for-kids' ? 'Children wearing colourful glasses' : item.id === 'for-him' ? 'A man wearing statement eyewear' : 'A woman wearing statement eyewear'} /></div>
         <div className="home-audience__copy"><span className="home-eyebrow">{item.eyebrow}</span><h3>{item.title}</h3><span className="home-audience__link">Explore styles</span></div>
       </button>)}</div>
+      {audiencePages.length > 1 && <div className="home-audiences__navigation">
+        <span>Swipe to explore</span>
+        <div role="group" aria-label="Collection pages">{audiencePages.map((position, index) => <button className="home-audiences__page" type="button" key={index} aria-label={`Show collection page ${index + 1} of ${audiencePages.length}`} aria-controls="audience-collections" aria-current={audiencePosition === index ? 'true' : undefined} onClick={() => showAudiencePage(position)} />)}</div>
+      </div>}
     </section>
 
     <section className="home-brand" id="icon-edit" aria-labelledby="signature-heading">

@@ -57,7 +57,7 @@
   .home-product__bottom { margin-top: 14px; padding-top: 12px; font-size: 17px; }
   .home-audiences__intro { text-align: left; margin-bottom: 22px; }
   .home-audiences__intro h2, .home-categories h2 { font-size: 29px; }
-  .home-audiences__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 100%; gap: 16px; overflow-x: auto; }
+  .home-audiences__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%; gap: 16px; overflow-x: auto; }
   .home-audience__photo { aspect-ratio: 1.1; }
   .home-audience__copy { padding-top: 16px; }
   .home-audience__copy h3 { font-size: 24px; }
@@ -215,7 +215,7 @@
   .home-products { grid-auto-columns: 44%; gap: 20px; }
   .home-product__image { aspect-ratio: 1.2; }
   .home-audiences__intro { text-align: left; margin-bottom: 28px; }
-  .home-audiences__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc((100% - 20px) / 2); gap: 20px; overflow-x: auto; }
+  .home-audiences__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 44%; gap: 20px; overflow-x: auto; }
   .home-audience__photo { aspect-ratio: 1.1; }
   .home-audience__copy h3 { font-size: 26px; }
   .home-audience__copy .home-eyebrow { min-height: 0; font-size: 10px; }
@@ -332,6 +332,13 @@
   :is(.home-products, .home-audiences__grid, .home-categories__rail, .home-directory__rail, .home-benefits__grid, .home-lens-guide__grid, .glasses-types, .glasses-audiences, .shop-chips, .home-preview__angles)::-webkit-scrollbar { display: none; }
   .home-audiences__grid, .home-benefits__grid, .home-lens-guide__grid { scroll-snap-type: x mandatory; padding-bottom: 4px; }
   .home-audiences__grid > *, .home-benefits__grid > *, .home-lens-guide__grid > * { scroll-snap-align: start; }
+  .home-audience:focus-visible { outline-offset: -3px; }
+  .home-audiences__navigation { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+  .home-audiences__navigation > span { color: var(--home-muted); font-size: 13px; }
+  .home-audiences__navigation > div { display: flex; align-items: center; }
+  .home-audiences__page { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; }
+  .home-audiences__page::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #c5c5c5; }
+  .home-audiences__page[aria-current='true']::before { width: 8px; height: 8px; background: #000000; }
   .home-rail-controls, .home-rail-controls--categories, .home-directory__controls { display: none; }
   .home-community__controls button { display: none; }
   .home-community__controls { height: 0; margin: 0; }
