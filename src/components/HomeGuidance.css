@@ -53,6 +53,20 @@
   .home-guide-topic:hover { transform: translateY(-3px); }
   .home-guide-topic:hover .home-guide-topic__action > span, .home-guide-link:hover > span { transform: translate(2px, -2px); }
 }
+@media (hover: none) and (pointer: coarse) {
+  .home-guidance :is(.home-benefits__grid, .home-lens-guide__grid) { padding-block: 6px 18px; margin-bottom: -14px; }
+  .home-benefit[data-touch-highlight='true'] { border-color: var(--guidance-tone); box-shadow: 0 10px 24px rgb(0 0 0 / 6%); }
+  .home-benefit[data-touch-highlight='true']::before { width: 64px; }
+  .home-guide-topic[data-touch-highlight='true'] { border-color: var(--guidance-tone); background: var(--guidance-tint); }
+  .home-guidance [data-touch-highlight='true'] .home-guidance__symbol { border-color: var(--guidance-tone); background: var(--guidance-tone); color: #fff; }
+  .home-guide-topic[data-touch-highlight='true'] .home-guide-topic__action { text-decoration: underline; text-underline-offset: 4px; }
+}
+@media (hover: none) and (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  .home-benefit[data-touch-highlight='true'] { transform: translateY(-4px); }
+  .home-benefit[data-touch-highlight='true'] .home-guidance__symbol { transform: rotate(-4deg) scale(1.04); }
+  .home-guide-topic[data-touch-highlight='true'] { transform: translateY(-3px); }
+  .home-guide-topic[data-touch-highlight='true'] .home-guide-topic__action > span { transform: translate(2px, -2px); }
+}
 @media (max-width: 1100px) {
   .home-benefits__grid, .home-lens-guide__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

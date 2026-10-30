@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import './HomeGuidance.css';
 
 const tones = ['sage', 'sand', 'blue', 'rose'];
@@ -16,6 +17,64 @@ const guide = [
   { icon: 'care', title: 'Frame Care Tips', text: 'Simple tips for cleaning, storing and handling frames.', details: ['Follow the care instructions that come with your frames and lens coatings.', 'Use an appropriate lens cloth and keep your eyewear in a fitted case when you are not wearing it.'] },
 ];
 
+function useTouchRailHighlight(railRef) {
+  const [active, setActive] = useState(-1);
+  useEffect(() => {
+    const rail = railRef.current;
+    const touch = matchMedia('(hover: none) and (pointer: coarse)');
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const bounds = rail.getBoundingClientRect();
+      const headerBottom = Math.max(0, document.querySelector('.site-header')?.getBoundingClientRect().bottom || 0);
+      const visibleHeight = Math.min(bounds.bottom, innerHeight) - Math.max(bounds.top, headerBottom);
+      let nearest = -1;
+      let nearestDistance = Infinity;
+      if (visibleHeight >= Math.min(bounds.height * .4, 120)) {
+        const left = Math.max(0, bounds.left);
+        const right = Math.min(innerWidth, bounds.right);
+        const center = (left + right) / 2;
+        [...rail.children].forEach((card, index) => {
+          const box = card.getBoundingClientRect();
+          const visibleWidth = Math.min(box.right, right) - Math.max(box.left, left);
+          const distance = Math.abs((box.left + box.right) / 2 - center);
+          if (visibleWidth >= box.width * .55 && distance < nearestDistance - 1) {
+            nearest = index;
+            nearestDistance = distance;
+          }
+        });
+      }
+      setActive(nearest);
+    };
+    const schedule = () => { if (touch.matches && !frame) frame = requestAnimationFrame(update); };
+    const inputChanged = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      if (touch.matches) schedule();
+      else setActive(-1);
+    };
+    const visibility = new IntersectionObserver(schedule, { threshold: [0, .4, 1] });
+    const resize = new ResizeObserver(schedule);
+    visibility.observe(rail);
+    resize.observe(rail);
+    rail.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    touch.addEventListener('change', inputChanged);
+    schedule();
+    return () => {
+      cancelAnimationFrame(frame);
+      visibility.disconnect();
+      resize.disconnect();
+      rail.removeEventListener('scroll', schedule);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      touch.removeEventListener('change', inputChanged);
+    };
+  }, [railRef]);
+  return active;
+}
+
 function GuidanceIcon({ name }) {
   const paths = {
     authentic: <><path d="m16 3 10 4v8c0 7-10 13-10 13S6 22 6 15V7l10-4Z" /><path d="m11 15 3.5 3.5L22 11" /></>,
@@ -31,6 +90,10 @@ function GuidanceIcon({ name }) {
 }
 
 export default function HomeGuidance({ onPreview }) {
+  const benefitsRail = useRef(null);
+  const guideRail = useRef(null);
+  const activeBenefit = useTouchRailHighlight(benefitsRail);
+  const activeGuide = useTouchRailHighlight(guideRail);
   const openGuide = item => onPreview({
     navigation: true,
     title: item?.title || 'Lens & Care Guide',
@@ -46,13 +109,13 @@ export default function HomeGuidance({ onPreview }) {
         <div><p className="home-eyebrow home-guidance__eyebrow">THE CANDICLIE DIFFERENCE</p><h2 id="benefits-heading">Why Choose <em>CandiClie</em></h2></div>
         <p className="home-guidance__description">A little more thought in every detail.<br /> For frames that feel like you.</p>
       </div>
-      <div className="home-benefits__grid" role="region" aria-label="Why choose CandiClie" tabIndex="0">{benefits.map((item, index) => <article className="home-benefit" data-tone={tones[index]} key={item.title}>
+      <div className="home-benefits__grid" ref={benefitsRail} role="region" aria-label="Why choose CandiClie" tabIndex="0">{benefits.map((item, index) => <article className="home-benefit" data-tone={tones[index]} data-touch-highlight={activeBenefit === index ? 'true' : undefined} key={item.title}>
         <div className="home-benefit__top"><span className="home-guidance__symbol"><GuidanceIcon name={item.icon} /></span><span className="home-benefit__number" aria-hidden="true">0{index + 1}</span></div><h3>{item.title}</h3><p>{item.text}</p>
       </article>)}</div>
     </section>
     <section className="home-lens-guide home-section" id="lens-care-guide" aria-labelledby="lens-guide-heading">
       <div className="home-lens-guide__intro"><div><p className="home-eyebrow home-guidance__eyebrow">A LITTLE EVERYDAY KNOW-HOW</p><h2 id="lens-guide-heading">Lens &amp; <em>Care</em> Guide</h2><p className="home-guidance__description">Good lenses. Well-loved frames. Start here.</p></div><button type="button" className="home-guide-link" onClick={() => openGuide()} aria-haspopup="dialog">Learn more<span aria-hidden="true">↗</span></button></div>
-      <div className="home-lens-guide__grid" role="region" aria-label="Browse lens and care guides" tabIndex="0">{guide.map((item, index) => <button type="button" className="home-guide-topic" data-tone={tones[index]} key={item.title} onClick={() => openGuide(item)} aria-label={`Read about ${item.title}`} aria-haspopup="dialog">
+      <div className="home-lens-guide__grid" ref={guideRail} role="region" aria-label="Browse lens and care guides" tabIndex="0">{guide.map((item, index) => <button type="button" className="home-guide-topic" data-tone={tones[index]} data-touch-highlight={activeGuide === index ? 'true' : undefined} key={item.title} onClick={() => openGuide(item)} aria-label={`Read about ${item.title}`} aria-haspopup="dialog">
         <span className="home-guide-topic__top"><span className="home-guidance__symbol"><GuidanceIcon name={item.icon} /></span><span className="home-benefit__number" aria-hidden="true">0{index + 1}</span></span>
         <h3>{item.title}</h3><p>{item.text}</p><span className="home-guide-topic__action" aria-hidden="true">Read guide<span>↗</span></span>
       </button>)}</div>
