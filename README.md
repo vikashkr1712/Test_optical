@@ -2,6 +2,61 @@
 
 A React/Vite eyewear site branded candiclie, with a responsive header, seven locally hosted hero slides, featured selections of three larger product cards, glasses, contact lens and accessory catalogues, an unbranded Signature Edit campaign, five top categories, the CandiClie index and journal, a full cart page, and a responsive footer. The desktop campaign fills the browser width, including screens wider than 1920px.
 
+## Project structure
+
+Application code is grouped by website feature. Each feature keeps its page, styles, data and helpers together. Shared UI and hooks have their own folders.
+
+```text
+src/
+  main.jsx                    # Browser entry point and global style imports
+  app/
+    App.jsx                   # Page selection, navigation and shared application state
+  components/
+    layout/                   # SiteHeader, SiteFooter and siteNavigation
+    products/                 # ProductGallery and ProductFeed shared by catalogues
+  hooks/
+    useSwipe.js               # Shared touch/swipe handling
+  features/
+    accessories/              # Accessories page, catalogue helpers and product data
+    account/                  # Sign-in/create-account dialog
+    cart/                     # Cart page
+    contact-lenses/            # Contact lens page, catalogue helpers and product data
+    designer-brands/          # Brand directory and brand catalogue helpers
+    eye-test/                 # Booking page, store finder, map and booking helpers
+    gift-cards/               # Gift card page
+    glasses/                  # Glasses page, catalogue helpers and frame data
+    home/                     # Homepage collections, editorial and guidance sections
+      hero/                   # Hero carousel, heroSlides and campaign components
+    our-story/                # Our Story page
+    seasonal-edit/            # Seasonal collection page
+    shopping/                 # Search panel, shopping state and combined product data
+    special-offers/           # Special offers page
+  styles/
+    global.css                # Fonts and site-wide base styles
+    responsive.css            # Shared responsive layout rules
+    readability.css           # Shared typography rules
+public/
+  assets/                     # Runtime photos, videos, fonts and logos
+```
+
+Component files use `PascalCase.jsx` with matching `PascalCase.css` files beside them. Hooks use `useName.js`; data and helper modules use `camelCase.js`; folder names use lowercase words separated by hyphens. Imports point directly to the files they use.
+
+| Change to make | Start here |
+| --- | --- |
+| Page routing or application-wide dialogs | `src/app/App.jsx` |
+| Header, footer or navigation menus | `src/components/layout/` |
+| Homepage hero slides or campaign captions | `src/features/home/hero/` |
+| Homepage collections, editorial or guidance | `src/features/home/` |
+| Product photos, zoom or scrolling feed | `src/components/products/` |
+| Catalogue filters or product records | The relevant feature's `*Catalog.js` and `*Products.js` files |
+| Cart/saved state or combined search products | `src/features/shopping/useShopping.js` and `shopProducts.js` |
+| Eye-test booking or store search | `src/features/eye-test/` |
+| Site-wide fonts, responsive layout or typography | `src/styles/` |
+
+Some existing shared exports remain with their original components: `Icon`, `CollectionLink` and `FilterDrawer` are exported by `src/features/glasses/GlassesPage.jsx`; `PreviewDialog` is exported by `src/features/home/HomeCollections.jsx`. Other pages import those exports directly. The global stylesheet import order is defined in `src/main.jsx`.
+
+Root package files, `index.html`, `vite.config.js` and `vercel.json` remain the build and deployment entry points. The ignored `tools/`, `reference/`, `research/` and `validation/` directories contain local inspection tools, reference materials and verification results.
+
 ## Run
 
 Requires Node.js 22.12 or newer.
@@ -58,7 +113,7 @@ Why Choose CandiClie cards have a small hover lift, a soft shadow, filled icons 
 
 The footer combines dark styling and grouped navigation inspired by premium eyewear retailers, with in-page shopping/style/privacy help and a keyboard-accessible back-to-top control. Its links target existing sections, Our Story and the brand directory. It adds no image downloads, third-party scripts, or new dependencies.
 
-Typography uses two font families, centralized in `src/index.css`: Nunito Sans replaces Avenir and Arial throughout navigation, captions, body text, controls, product details, shopping dialogs, eye-test booking, journal labels, benefits, lens-care text and the footer. Times New Roman remains unchanged for decorative page and section headings, brand titles, product-preview headings, journal headings, gift-card messages and the phone campaign headline. Both sans-serif variables use Nunito Sans; the serif variable still uses the installed Times New Roman font. Upright and italic Nunito Sans variable WOFF2 files support weights 200–1000 and are hosted locally, with an extended character subset for rupee prices. The upright Latin font is preloaded; other variants load only when needed. The font's SIL Open Font License is included at `public/assets/fonts/nunito-sans/OFL.txt`; original source URLs and hashes remain ignored under `reference/typography`. Retired Avenir files are kept locally and excluded from Git. Font sizes, weights, spacing and the black-and-white interface theme are preserved. Browser scripts, screenshots and results remain local.
+Typography uses two font families, centralized in `src/styles/global.css`: Nunito Sans replaces Avenir and Arial throughout navigation, captions, body text, controls, product details, shopping dialogs, eye-test booking, journal labels, benefits, lens-care text and the footer. Times New Roman remains unchanged for decorative page and section headings, brand titles, product-preview headings, journal headings, gift-card messages and the phone campaign headline. Both sans-serif variables use Nunito Sans; the serif variable still uses the installed Times New Roman font. Upright and italic Nunito Sans variable WOFF2 files support weights 200–1000 and are hosted locally, with an extended character subset for rupee prices. The upright Latin font is preloaded; other variants load only when needed. The font's SIL Open Font License is included at `public/assets/fonts/nunito-sans/OFL.txt`; original source URLs and hashes remain ignored under `reference/typography`. Retired Avenir files are kept locally and excluded from Git. Font sizes, weights, spacing and the black-and-white interface theme are preserved. Browser scripts, screenshots and results remain local.
 
 Collection and editorial imagery is locally hosted as responsive WebP variants, loaded lazily with reserved layout space. A device requests only the applicable variants; community photos are not enlarged beyond the source resolution. A preloaded 40 KB first-frame poster keeps the hero visible while its video loads. Hero videos and autoplay pause when the hero leaves the viewport; distant hero images load only when active or next. No new JavaScript dependencies or third-party runtime requests are added.
 
