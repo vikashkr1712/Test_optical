@@ -3,6 +3,7 @@
   --story-muted: #5b5b5b;
   --story-line: #dddddd;
   --story-inset: max(40px, calc((100vw - 1320px) / 2));
+  --story-photo-radius: clamp(16px, 2vw, 28px);
   color: var(--story-ink);
   background: #fff;
   font: 400 17px/1.75 var(--font-sans);
@@ -391,9 +392,13 @@
   min-width: 0;
 }
 
+.story-approach__visual .story-photo,
+.story-everyday__visual .story-photo {
+  border-radius: var(--story-photo-radius);
+}
+
 .story-approach__visual .story-photo {
   height: 640px;
-  border-radius: 160px 0 0 0;
 }
 
 .story-approach__visual img {
@@ -468,7 +473,6 @@
 
 .story-everyday__visual .story-photo {
   height: 480px;
-  border-radius: 0 0 140px 0;
 }
 
 .story-everyday__visual img {
@@ -742,18 +746,8 @@
     font-size: 41px;
   }
 
-  .story-approach__visual .story-photo {
-    height: 640px;
-    border-top-left-radius: 110px;
-  }
-
   .story-approach li {
     padding-block: 17px;
-  }
-
-  .story-everyday__visual .story-photo {
-    height: 480px;
-    border-bottom-right-radius: 100px;
   }
 
   .story-everyday {
@@ -831,6 +825,25 @@
 
   .story-questions summary {
     min-height: 76px;
+  }
+}
+
+@media (max-width: 959px) {
+  .story-approach,
+  .story-everyday {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .story-approach__visual .story-photo,
+  .story-everyday__visual .story-photo {
+    height: auto;
+    max-height: 500px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .story-everyday__visual {
+    grid-row: 1;
   }
 }
 
@@ -994,14 +1007,7 @@
 
   .story-approach,
   .story-everyday {
-    grid-template-columns: 1fr;
     gap: 30px;
-  }
-
-  .story-approach__visual .story-photo {
-    height: auto;
-    aspect-ratio: 1.05;
-    border-top-left-radius: 85px;
   }
 
   .story-approach__visual figcaption,
@@ -1030,16 +1036,6 @@
 
   .story-everyday {
     padding-top: 10px;
-  }
-
-  .story-everyday__visual {
-    grid-row: 1;
-  }
-
-  .story-everyday__visual .story-photo {
-    height: auto;
-    aspect-ratio: 1.05;
-    border-bottom-right-radius: 85px;
   }
 
   .story-everyday__copy > p:not(.story-eyebrow) {
